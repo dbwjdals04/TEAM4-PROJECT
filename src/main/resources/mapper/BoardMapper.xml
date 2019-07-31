@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.bit.academy.mapper.BoardMapper">
+
+    <!-- Board insert -->
+    <insert id="insertBoard"
+            parameterType="com.bit.academy.model.BoardVO"
+            useGeneratedKeys="true"
+            keyProperty="qna_no">
+        <![CDATA[
+            INSERT INTO qna (
+                m_no, qna_context, qna_passwd, qna_regdate
+            )
+            VALUES (
+                #{m_no}, #{qna_context}, password(#{qna_passwd}), now()
+            )
+        ]]>
+    </insert>
+
+    <update id="updateBoard" parameterType="com.bit.academy.model.BoardVO">
+        UPDATE qna
+        SET
+            qna_context = #{qna_context}
+        WHERE qna_no = #{qna_no}
+
+    </update>
+
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM qna WHERE qna_no = #{qna_no}
+    </delete>
+
+    <select id="selectBoard" parameterType="Integer" resultType="com.bit.academy.model.BoardVO">
+        SELECT
+            qna_no, m_no, qna_context, qna_passwd, qna_regdate
+        FROM qna
+        WHERE qna_no = #{qna_no}
+    </select>
+
+    <select id="selectBoardList" resultType="com.bit.academy.model.BoardVO">
+        SELECT
+            q.qna_no, q.m_no, q.qna_context, q.qna_regdate
+            , m.m_id, m.m_name
+        FROM qna q
+            inner join member m on q.m_no = m.m_no
+        ORDER BY q.qna_no DESC
+    </select>
+
+
+
+
+</mapper>

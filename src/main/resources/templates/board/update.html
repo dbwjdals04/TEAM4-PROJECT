@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Board Insert</h1>
+
+
+    <form name="updateForm" id="updateForm" method="post"
+    style="width:600px;">
+        <div>
+            <span>글번호</span> <span th:text="${board.qna_no}">11111</span>
+            <input type="hidden" name="qna_no" id="qna_no" th:value="${board.qna_no}"/>
+        </div>
+        <div>
+            <span>회원번호</span>
+            <input type="text" name="m_no" id="m_no" value="1" th:value="${board.m_no}"/>
+        </div>
+        <div>
+            <span>비밀번호</span>
+            <input type="password" name="qna_passwd" id="qna_passwd" value="" />
+        </div>
+        <div>
+            <span>상세</span>
+            <textarea name="qna_context" id="qna_context" style="width: 100%; height: 100px;"><th:block th:text="${board.qna_context}"></th:block></textarea>
+        </div>
+    </form>
+
+    <input type="button" value="수정" onclick="update();"/>
+
+    <script type="text/javascript">
+        var update = function(){
+
+            if($.trim($('#qna_passwd').val())==''){
+                alert('비밀번호를 입력해주세요');
+                return;
+            }
+
+            $('#updateForm')
+                .attr('action','/board/update')
+                .submit();
+        };
+    </script>
+
+</body>
+</html>

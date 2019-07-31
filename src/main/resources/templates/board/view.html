@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Board View</h1>
+
+
+    <form name="viewForm" id="viewForm" method="get" style="width:600px;">
+
+        <div><span>글번호</span> <span th:text="${board.qna_no}">글번호</span></div>
+
+        <div><span>회원번호</span> <span th:text="${board.m_no}">회원번호</span></div>
+
+        <div><span>등록일자</span> <span th:text="${#dates.format(board.qna_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
+
+        <div>
+            <span>상세</span>
+            <div th:text="${board.qna_context}"></div>
+        </div>
+    </form>
+
+    <input type="button" value="수정" onclick="modifyBoard();"/>
+    <input type="button" value="삭제" onclick="deleteBoard();"/>
+    <input type="button" value="목록" onclick="listBoard();"/>
+
+
+    <script type="text/javascript" th:inline="javascript">
+        
+        var qna_no = /*[[ ${board.qna_no} ]]*/;
+        
+        var modifyBoard = function(){
+            $('#viewForm')
+                .attr('action','/board/update/' + qna_no)
+                .attr('method','get')
+                .submit();
+        };
+        
+        
+        var deleteBoard = function(){
+            if(confirm('삭제하시겠습니까?')){
+                $('#viewForm')
+                    .attr('action','/board/delete/' + qna_no)
+                    .attr('method','post')
+                    .submit();
+            }
+        };
+        var listBoard = function(){
+            location.href='/board/list';
+        };
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+    <style>
+        table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #444444;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Board List</h1>
+
+
+    <table>
+        <thead>
+            <tr>
+
+                <td>글번호</td>
+                <td>아이디</td>
+                <td>내용</td>
+                <td>등록일</td>
+            </tr>
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="board:${boardList}">
+            <td th:text="${board.qna_no}">글번호</td>
+            <td th:text="${board.m_id}">아이디</td>
+            <td><a th:href="@{'/board/view/' + ${board.qna_no}}"><span th:text="${board.qna_context}"></span></a></td>
+            <td th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <input type="button" value="등록" onclick="location.href='/board/insert';"/>
+
+
+</body>
+</html>
