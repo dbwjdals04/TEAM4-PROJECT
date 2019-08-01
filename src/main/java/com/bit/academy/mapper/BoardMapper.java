@@ -1,5 +1,6 @@
 package com.bit.academy.mapper;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.BoardVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,12 @@ public interface BoardMapper {
      * 게시물 목록 조회
      * @return
      */
-    List<BoardVO> selectBoardList();
+    List<BoardVO> selectBoardList(BoardPaging boardPaging);
+
+    /**
+     * 게시물 갯수 조회
+     * @return
+     */
+    int selectBoardListCount(BoardPaging boardPaging);
 
 }

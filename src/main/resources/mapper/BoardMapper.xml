@@ -38,13 +38,31 @@
         WHERE qna_no = #{qna_no}
     </select>
 
-    <select id="selectBoardList" resultType="com.bit.academy.model.BoardVO">
+    <select id="selectBoardList"
+            parameterType="com.bit.academy.model.BoardPaging"
+            resultType="com.bit.academy.model.BoardVO">
         SELECT
             q.qna_no, q.m_no, q.qna_context, q.qna_regdate
             , m.m_id, m.m_name
         FROM qna q
             inner join member m on q.m_no = m.m_no
+        WHERE 1=1
+        <if test="searchKeyword != null and searchKeyword != ''">
+            AND q.qna_context like concat('%', ${searchKeyword}, '%')
+        </if>
         ORDER BY q.qna_no DESC
+        LIMIT #{limitBegin}, #{articleCount}
+    </select>
+
+
+    <select id="selectBoardListCount"
+            parameterType="com.bit.academy.model.BoardPaging"
+            resultType="int">
+        select count(1) from qna
+        WHERE 1=1
+        <if test="searchKeyword != null and searchKeyword != ''">
+            AND q.qna_context like concat('%', ${searchKeyword}, '%')
+        </if>
     </select>
 
 

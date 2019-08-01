@@ -1,9 +1,11 @@
 package com.bit.academy.service;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.BoardVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 public interface BoardService {
 
@@ -36,5 +38,5 @@ public interface BoardService {
      * 게시물 목록 조회
      * @return
      */
-    List<BoardVO> selectBoardList();
+    Map<String,Object> selectBoardList(BoardPaging boardPaging);
 }
