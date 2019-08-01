@@ -1,0 +1,49 @@
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<style>
+		table { border: 1px solid #333333; border-collapse: collapse; }
+		td { padding: 10px; border: 1px solid #333333; }
+		input { padding:5px; }
+		</style>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td style="width:150px;">우편번호</td>
+				<td style="width:500px;">
+					<input type="text" name="postcode" style="width:100px;" readonly>
+					<input type="button" value="주소찾기" onclick="postcode();">
+				</td>
+			</tr>
+			<tr>
+				<td style="width:150px;">주소</td>
+				<td style="width:500px;">
+					<input type="text" name="addr1" style="width:100%;" readonly>
+					<input type="text" name="addr2" style="width:100%;"	>
+				</td>
+			</tr>
+		</table>
+
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    var postcode = function(){
+    	new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+			console.log('zonecode : ' + data.zonecode);
+			console.log('roadAddress : ' + data.roadAddress);
+
+			$('input[name="postcode"]').val(data.zonecode);
+			$('input[name="addr1"]').val(data.roadAddress);
+			$('input[name="addr2"]').focus();
+        }
+    }).open();
+    };
+</script>
+
+	</body>
+</html>

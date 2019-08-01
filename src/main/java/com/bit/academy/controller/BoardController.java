@@ -82,4 +82,9 @@ public class BoardController {
 
         return "board/list";
     }
+
+    @GetMapping("/postcode")
+    public String posrtocde(){
+        return "postcode";
+    }
 }
