@@ -57,22 +57,16 @@
     <div style="text-align: center; width:100%;">
         <table>
             <tr>
-                <td><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
-                <td>&lt;</td>
+                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
+                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> <!--이전페이지-->
 
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
+                <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">
+                    <!--현재페이지인 경우--><a th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>
+                    <!--현재페이가 아닌 경우--><a th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>
+                </td>
 
-                <td>&gt;</td>
-                <td><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
+                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> <!--다음페이지-->
+                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
             </tr>
         </table>
     </div>
@@ -88,9 +82,14 @@
 
     var goPage = function(p){
         var page = $(p).data('page');
+
         console.log(page);
-        $('#currentPage').val(page);
-        $('#boardPaging').submit();
+
+        if(page>0){
+            $('#currentPage').val(page);
+            $('#boardPaging').submit();
+        }
+
     };
 
 
