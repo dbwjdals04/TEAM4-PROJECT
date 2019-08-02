@@ -11,6 +11,8 @@
     <form name="insertForm" id="insertForm" method="post" action="/board/insert"
     style="width:600px;">
         <div><span>회원번호</span> <input type="text" name="m_no" id="m_no" value="1" /></div>
+        <div><span>이름</span> <input type="text" name="m_name" id="m_name"
+                                    th:value="${ session.member!=null ? session.member.m_name : '' }" /></div>
         <div><span>비밀번호</span> <input type="password" name="qna_passwd"
                                       id="qna_passwd" value="abcd1234" /></div>
         <div>

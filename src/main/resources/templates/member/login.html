@@ -1,0 +1,53 @@
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<style>
+		table { border: 1px solid #333333; border-collapse: collapse; }
+		td { padding: 10px; border: 1px solid #333333; }
+		input { padding:5px; }
+		</style>
+	</head>
+	<body>
+
+		<form name="loginForm" id="loginForm" method="post" action="/member/login">
+		<table>
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input type="text" name="m_id" id="m_id">
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<input type="password" name="m_password" id="m_password">
+				</td>
+			</tr>
+		</table>
+
+		</form>
+
+		<input type="button" value="로그인" onclick="login();"/>
+
+	<script type="text/javascript">
+		var login = function(){
+			if($.trim($('#m_id').val())==''){
+				alert('아이디를 입력하세요.');
+				$('#m_id').focus();
+				return;
+			}
+			if($.trim($('#m_password').val())==''){
+				alert('비밀번호를 입력하세요.');
+				$('#m_password').focus();
+				return;
+			}
+
+			$('#loginForm').submit();
+		};
+	</script>
+
+
+
+	</body>
+</html>
