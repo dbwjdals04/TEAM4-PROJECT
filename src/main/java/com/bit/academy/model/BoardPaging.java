@@ -9,7 +9,7 @@ public class BoardPaging {
 
     private int currentPage; // 현재 페이지 수
 
-    private int articleCount = 20; // 한 페이지당 게시물 갯수 - 20
+    private int articleCount = 10; // 한 페이지당 게시물 갯수 - 20
 
     private int pageCount = 10; // 1 2 3 4 ~ 10 // 페이지 갯수
 

@@ -5,76 +5,145 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 
+
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/agency.min.css" rel="stylesheet">
+
+
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
+        div.row { float: left; clear: both; width: 100%; padding: 10px;}
+        body{
+            width:60%;
+            margin: auto;
+            font-family: sunflower;
+        }
+        input.btn-dark-blue{
+            color:white; width:90px; height: 40px; background-color: #237fbc;
+            border-color: #237fbc; -webkit-box-shadow: 0 3px 0 #1a5c87; box-shadow: 0 3px 0 #1a5c87;}
+        input.btn-dark-blue:hover{background-color:#166ea8;}
+        input.btn-dark-blue:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
         table {
+
             width: 100%;
-            border: 1px solid #444444;
+            margin: auto;
             border-collapse: collapse;
         }
-        th, td {
-            border: 1px solid #444444;
+        td.title:hover{
+
+            background:#003366; color:#fff;
+
         }
+
+        th, td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        td.left{
+            width:50px;
+            text-align: center;
+            padding-left: 20px;
+            padding-right: 30px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+        }
+        td.right{
+            width:100px;
+            text-align: center;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+        td.zzz{
+            width:80px;
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 50px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        td.title{
+
+        padding-top: 13px;
+        padding-bottom: 13px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;}
+
+
+
+
+
     </style>
 
 </head>
 <body>
-    <h1>Board List</h1>
+<h1 class="coco">Q&A 게시판</h1>
 
 
+<table>
+    <thead>
+    <tr>
+        <td colspan="99" style="text-align:right;">
+            전체 게시물 갯수 : <span th:text="${boardPaging.totalCount}">00</span>개
+        </td>
+    </tr>
+    <tr>
+
+        <td class="left">글번호</td>
+        <td class="id">아이디</td>
+        <td class="title">제목</td>
+        <td class="right">등록일</td>
+    </tr>
+    </thead>
+
+
+    <tbody>
+
+
+
+    <tr th:each="board:${boardList}">
+        <td class="left" th:text="${board.qna_no}" >글번호</td>
+        <td class="zzz" th:text="${board.m_id}" >아이디</td>
+        <td class="title" onclick="passcheck(this)"th:attr="data-qna_no = ${board.qna_no}"><span th:text="${board.qna_title}"></span></td>
+        <td class="right" th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="row"><input class="btn-dark-blue" type="button" value="등록" onclick="location.href='/board/insert';"/></div>
+<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href='/board/insert'>등록</a>
+
+
+<div style="text-align: center; width:100%;">
     <table>
-        <thead>
-            <tr>
-                <td colspan="99" style="text-align:right;">
-                    전체 게시물 갯수 : <span th:text="${boardPaging.totalCount}">00</span>개
-                </td>
-            </tr>
-            <tr>
+        <tr>
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> <!--이전페이지-->
 
-                <td>글번호</td>
-                <td>아이디</td>
-                <td>내용</td>
-                <td>등록일</td>
-            </tr>
-        </thead>
+            <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">
+                <!--현재페이지인 경우--><a th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>
+                <!--현재페이가 아닌 경우--><a th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>
+            </td>
 
-
-        <tbody>
-
-
-
-        <tr th:each="board:${boardList}">
-            <td th:text="${board.qna_no}">글번호</td>
-            <td th:text="${board.m_id}">아이디</td>
-            <td><a th:href="@{'/board/view/' + ${board.qna_no}}"><span th:text="${board.qna_context}"></span></a></td>
-            <td th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> <!--다음페이지-->
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
         </tr>
-        </tbody>
     </table>
-
-    <input type="button" value="등록" onclick="location.href='/board/insert';"/>
-
-
-    <div style="text-align: center; width:100%;">
-        <table>
-            <tr>
-                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
-                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> <!--이전페이지-->
-
-                <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">
-                    <!--현재페이지인 경우--><a th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>
-                    <!--현재페이가 아닌 경우--><a th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>
-                </td>
-
-                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> <!--다음페이지-->
-                <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
-            </tr>
-        </table>
-    </div>
+</div>
 
 <form name="boardPaging" id="boardPaging" method="get" action="/board/list">
     <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>
     <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>
 </form>
+
 
 <script type="text/javascript" th:inline="javascript">
 
@@ -93,7 +162,51 @@
     };
 
 
-</script>
 
+    var passcheck = function(obj){
+        var qna_no = $(obj).data("qna_no");
+
+        console.log(qna_no);
+
+        var passwd = prompt("비밀번호를 입력하세요");
+
+        console.log(passwd);
+
+        var param = {qna_no:qna_no,qna_passwd:passwd};
+
+        // ajax
+        $.ajax({
+            type : 'get',
+            url : '/board/passck',
+            data : param,
+            error : function(error) {
+                console.error("Error!");
+            },
+            success : function(data) {
+                console.log("success!");
+                console.log(data);
+                console.log(data.count);
+
+
+                if(data.count==0){
+                    alert("비밀번호 틀림")
+                    // 비밀번호 틀림
+                }
+                else{
+                    location.href ='/board/view/'+qna_no;
+                    // 상세화면으로 이동
+                }
+            },
+            complete : function() {
+                console.log("complete!");
+            }
+        });
+
+        console.log('aaa');
+
+    }
+
+
+</script>
 </body>
 </html>

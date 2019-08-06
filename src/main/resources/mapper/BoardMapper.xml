@@ -11,10 +11,24 @@
             keyProperty="qna_no">
         <![CDATA[
             INSERT INTO qna (
-                m_no, qna_context, qna_passwd, qna_regdate
+                m_no,qna_originno, qna_title , qna_context, qna_passwd, qna_regdate
             )
             VALUES (
-                #{m_no}, #{qna_context}, password(#{qna_passwd}), now()
+                #{m_no},(SELECT IFNULL(max(qna_no)+1,1)FROM qna q),#{qna_title} ,#{qna_context}, password(#{qna_passwd}), now()
+            )
+        ]]>
+    </insert>
+
+    <insert id="replyBoard"
+            parameterType="com.bit.academy.model.BoardVO"
+            useGeneratedKeys="true"
+            keyProperty="qna_no">
+        <![CDATA[
+            INSERT INTO qna (
+                m_no, qna_originno, qna_title, qna_context, qna_passwd, qna_regdate, qna_groupOrd
+            )
+            VALUES (
+                #{m_no},(select qna_no FROM qna q where qna_no=#{qna_no}),concat(" └RE :", #{qna_title}), #{qna_context}, password(#{qna_passwd}), now(), #{qna_groupOrd}+1
             )
         ]]>
     </insert>
@@ -33,7 +47,7 @@
 
     <select id="selectBoard" parameterType="Integer" resultType="com.bit.academy.model.BoardVO">
         SELECT
-            qna_no, m_no, qna_context, qna_passwd, qna_regdate
+            qna_no, m_no, qna_context, qna_passwd, qna_regdate, qna_title
         FROM qna
         WHERE qna_no = #{qna_no}
     </select>
@@ -42,7 +56,7 @@
             parameterType="com.bit.academy.model.BoardPaging"
             resultType="com.bit.academy.model.BoardVO">
         SELECT
-            q.qna_no, q.m_no, q.qna_context, q.qna_regdate
+            q.qna_no, q.m_no, q.qna_title, q.qna_regdate,q.qna_originno, q.qna_groupOrd
             , m.m_id, m.m_name
         FROM qna q
             inner join member m on q.m_no = m.m_no
@@ -50,7 +64,7 @@
         <if test="searchKeyword != null and searchKeyword != ''">
             AND q.qna_context like concat('%', ${searchKeyword}, '%')
         </if>
-        ORDER BY q.qna_no DESC
+        ORDER BY q.qna_originno DESC, q.qna_groupOrd ASC
         LIMIT #{limitBegin}, #{articleCount}
     </select>
 
@@ -63,6 +77,12 @@
         <if test="searchKeyword != null and searchKeyword != ''">
             AND q.qna_context like concat('%', ${searchKeyword}, '%')
         </if>
+    </select>
+
+    <select id="passck" parameterType="com.bit.academy.model.BoardVO" resultType="int">
+        SELECT count(1) as cnt FROM qna
+        where qna_no = #{qna_no}
+        and qna_passwd = password(#{qna_passwd});
     </select>
 
 

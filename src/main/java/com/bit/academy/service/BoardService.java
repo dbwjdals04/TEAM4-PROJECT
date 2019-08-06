@@ -16,6 +16,12 @@ public interface BoardService {
     void insertBoard(BoardVO boardVO);
 
     /**
+     * 답변 등록
+     * @param boardVO
+     */
+    void replyBoard(BoardVO boardVO);
+
+    /**
      * 게시물 수정
      * @param boardVO
      */
@@ -39,4 +45,6 @@ public interface BoardService {
      * @return
      */
     Map<String,Object> selectBoardList(BoardPaging boardPaging);
+
+    int passck(BoardVO boardVO);
 }

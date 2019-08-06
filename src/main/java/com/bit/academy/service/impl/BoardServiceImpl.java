@@ -25,6 +25,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public void replyBoard(BoardVO boardVO) { this.boardMapper.replyBoard(boardVO); }
+
+    @Override
     public void updateBoard(BoardVO boardVO) {
         this.boardMapper.updateBoard(boardVO);
     }
@@ -62,7 +65,7 @@ public class BoardServiceImpl implements BoardService {
          */
         if(boardPaging.getCurrentPage()==0){
             boardPaging.setCurrentPage(1); // 1page 부터 조회
-            boardPaging.setArticleCount(20); // 페이지당 게시물 갯수
+            boardPaging.setArticleCount(10); // 페이지당 게시물 갯수
         }
 
         boardPaging.setTotalCount(this.boardMapper.selectBoardListCount(boardPaging));
@@ -71,5 +74,10 @@ public class BoardServiceImpl implements BoardService {
         map.put("boardList", this.boardMapper.selectBoardList(boardPaging));
 
         return map;
+    }
+
+    @Override
+    public int passck(BoardVO boardVO) {
+        return this.boardMapper.passck(boardVO);
     }
 }

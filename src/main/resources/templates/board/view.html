@@ -16,12 +16,15 @@
 
         <div><span>등록일자</span> <span th:text="${#dates.format(board.qna_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
 
+        <div><span>제목</span> <span th:text="${board.qna_title}">제목</span></div>
+
         <div>
             <span>상세</span>
             <div th:text="${board.qna_context}"></div>
         </div>
     </form>
 
+    <input type="button" value="답글" onclick="replyBoard();"/>
     <input type="button" value="수정" onclick="modifyBoard();"/>
     <input type="button" value="삭제" onclick="deleteBoard();"/>
     <input type="button" value="목록" onclick="listBoard();"/>
@@ -30,7 +33,15 @@
     <script type="text/javascript" th:inline="javascript">
         
         var qna_no = /*[[ ${board.qna_no} ]]*/;
-        
+
+        var replyBoard = function () {
+            $('#viewForm')
+                .attr('action','/board/reply/' + qna_no)
+                .attr('method','get')
+                .submit();
+
+        }
+
         var modifyBoard = function(){
             $('#viewForm')
                 .attr('action','/board/update/' + qna_no)

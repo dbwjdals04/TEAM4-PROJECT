@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Board Insert After</h1>
+
+
+    <form name="insertForm" id="insertForm" method="get" style="width:600px;">
+
+        <div><span>글번호</span> <span th:text="${board.qna_no}">글번호</span></div>
+
+        <div><span>회원번호</span> <span th:text="${board.m_no}">회원번호</span></div>
+
+        <div><span>등록일자</span> <span th:text="${#dates.format(board.qna_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
+
+        <div>
+            <span>상세</span>
+            <div th:text="${board.qna_context}"></div>
+        </div>
+    </form>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        var qna_no = /*[[ ${board.qna_no} ]]*/;
+
+        $(document).ready(function(){
+
+            $('#insertForm').attr('action','/board/view/' + qna_no).submit();
+
+        });
+    </script>
+
+</body>
+</html>

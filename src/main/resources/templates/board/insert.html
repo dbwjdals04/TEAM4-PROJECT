@@ -5,7 +5,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Board Insert</h1>
+    <h1>글쓰기</h1>
 
 
     <form name="insertForm" id="insertForm" method="post" action="/board/insert"
@@ -15,16 +15,13 @@
                                     th:value="${ session.member!=null ? session.member.m_name : '' }" /></div>
         <div><span>비밀번호</span> <input type="password" name="qna_passwd"
                                       id="qna_passwd" value="abcd1234" /></div>
+        <div><span>제목</span> <input type="text" name="qna_title" id="qna_title"
+                                    value="" /></div>
         <div>
             <span>상세</span>
             <textarea name="qna_context" id="qna_context" style="width: 100%; height: 100px;">
 상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
+
             </textarea>
         </div>
     </form>

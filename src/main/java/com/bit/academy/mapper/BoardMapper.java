@@ -18,6 +18,12 @@ public interface BoardMapper {
     void insertBoard(BoardVO boardVO);
 
     /**
+     * 답변 등록
+     * @param boardVO
+     */
+    void replyBoard(BoardVO boardVO);
+
+    /**
      * 게시물 수정
      * @param boardVO
      */
@@ -47,5 +53,12 @@ public interface BoardMapper {
      * @return
      */
     int selectBoardListCount(BoardPaging boardPaging);
+
+    /**
+     * 비밀번호 체크
+     * @return
+     */
+    int passck(BoardVO boardVO);
+
 
 }

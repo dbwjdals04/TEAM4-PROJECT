@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -28,6 +30,8 @@ public class BoardController {
         return "board/insert";
     }
 
+
+
     @PostMapping("/board/insert")
     public String boardInsertExecute(Model model, @ModelAttribute BoardVO boardVO){
 
@@ -43,6 +47,27 @@ public class BoardController {
         model.addAttribute("board", boardVO);
 
         return "board/insert_after";
+    }
+
+    @GetMapping("/board/reply/{qna_no}")
+    public String replyInsert(Model model, @PathVariable int qna_no){
+        model.addAttribute("board", this.boardService.selectBoard(qna_no));
+        return "board/reply";
+    }
+    @PostMapping("/board/reply")
+    public String boardreplyExecute(Model model, @ModelAttribute BoardVO boardVO){
+        log.debug("##### 답변 등록 요청 처리 ####");
+        log.debug(boardVO.toString());
+        this.boardService.replyBoard(boardVO);
+
+        log.debug("##### 답변 등록 결과 ####");
+        log.debug(boardVO.toString());
+
+        boardVO = this.boardService.selectBoard(boardVO.getQna_no());
+
+        model.addAttribute("board", boardVO);
+
+        return "board/reply_after";
     }
 
 
@@ -73,6 +98,8 @@ public class BoardController {
 
     @GetMapping("/board/list")
     public String boardList(Model model, @ModelAttribute BoardPaging boardPaging){
+        log.debug("############## 리스트 확인 ##########");
+        log.debug(boardPaging.toString());
         model.addAllAttributes(this.boardService.selectBoardList(boardPaging));
         return "board/list";
     }
@@ -80,5 +107,23 @@ public class BoardController {
     @GetMapping("/postcode")
     public String posrtocde(){
         return "postcode";
+    }
+
+    @ResponseBody
+    @GetMapping("/board/passck")
+    public Map<String,Object> passck(Model model, @ModelAttribute BoardVO boardVO){
+
+        log.debug("############## 비밀번호 확인 ##########");
+        log.debug(boardVO.toString());
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("count", this.boardService.passck(boardVO));
+
+        return map;
+    }
+
+    @GetMapping("/main/index")
+    public String index(){
+        return "main/index";
     }
 }
