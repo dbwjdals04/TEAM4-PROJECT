@@ -1,0 +1,290 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">ADMIN PAGE <sup>2</sup></div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>상품관리</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Components:</h6>
+                    <a class="collapse-item" href="buttons.html">Buttons</a>
+                    <a class="collapse-item" href="cards.html">Cards</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>주문관리</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                </div>
+            </div>
+        </li>
+
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/memberList" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>회원관리</span>            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Login Screens:</h6>
+                    <a class="collapse-item" href="login.html">Login</a>
+                    <a class="collapse-item" href="register.html">Register</a>
+                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                    <div class="collapse-divider"></div>
+                    <h6 class="collapse-header">Other Pages:</h6>
+                    <a class="collapse-item" href="404.html">404 Page</a>
+                    <a class="collapse-item" href="blank.html">Blank Page</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="charts.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>게시판관리</span></a>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul><div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <section class="page-section" id="services">
+            <select id = "search-select">
+                <option th:value="m_no">회원번호</option>
+                <option th:value="m_name">회원 성명</option>
+                <option th:value="m_phone">전화번호</option>
+            </select>
+
+            <input type="text" id="search" />
+
+            <input type="button" value="검색" onclick="searchMember();" />
+
+            <table>
+                <thead>
+                <tr>
+
+                    <td>회원번호</td>
+                    <td>성명</td>
+                    <td>아이디</td>
+                </tr>
+                </thead>
+
+
+                <tbody id = "table">
+
+                <tr th:each="member: ${memberList}" onclick="selectMember(this);" th:attr="data-m_no=${member.m_no}">
+                    <td><span th:text="${member.m_no}"></span></td>
+                    <td><span th:text="${member.m_name}"></span></a></td>
+                    <td><span th:text="${member.m_id}"></span></a></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <div id = "memberModal" style="display: none" class = "w3-modal">
+                <div class="w3-modal-content w3-animate-opacity w3-card-4">
+                    <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('memberModal').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+                        <h2>상세 회원 정보</h2>
+                    </header>
+                    <table>
+                        <thead>
+                        <tr>
+
+                            <td>회원번호</td>
+                            <td>성명</td>
+                            <td>아이디</td>
+                            <td>전화번호</td>
+                            <td>주소</td>
+                            <td>등록날짜</td>
+                        </tr>
+                        </thead>
+
+
+                        <tbody id = "modal-table">
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2019</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+
+    var selectMember = function(obj){
+        var modal = document.getElementById("memberModal");
+        var m_no = $(obj).data('m_no');
+        if(m_no == undefined){
+            var m_no = obj.data.m_no;
+        }
+
+        console.log(m_no);
+
+        $.ajax({
+            url: '/admin/member/'+m_no,
+            type: 'get',
+            data: {
+                // data1:'abcd', data2:'bdee' // for test
+            },
+            dataType: 'json',
+            success : function(data) {
+                // 성공 시 동작
+                console.log('성공');
+                console.log(data);
+                $("#modal-table").empty();
+                $("#modal-table").append('<td>' + data.m_no + '</td>');
+                $("#modal-table").append('<td>' + data.m_name + '</td>');
+                $("#modal-table").append('<td>' + data.m_id + '</td>');
+                $("#modal-table").append('<td>' + data.m_phone + '</td>');
+                $("#modal-table").append('<td>' + data.m_address + '</td>');
+                $("#modal-table").append('<td>' + data.m_regdate + '</td>');
+
+                modal.style.display = "block";
+
+            },
+            error: function(error) {
+                // 실패 시 동작
+                console.error('실패');
+                console.error(error);
+            },
+            complete: function(response) {
+                // 성공하든 실패하든 항상 할 동작
+                console.log('수행 요청이 완료되었습니다.');
+            }
+        });
+    };
+
+    var searchMember = function(){
+
+        var option = $.trim(($("#search-select option:selected").val()));
+        var keyword = $.trim($("#search").val());
+        console.log(option);
+        location.href = '/admin/member/'+option + '/' + keyword;
+    };
+
+
+</script>
+</body>
+</html>

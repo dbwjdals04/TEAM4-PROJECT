@@ -47,4 +47,7 @@ public interface BoardService {
     Map<String,Object> selectBoardList(BoardPaging boardPaging);
 
     int passck(BoardVO boardVO);
+
+    int idchk(BoardVO boardVO);
+
 }

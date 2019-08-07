@@ -80,4 +80,9 @@ public class BoardServiceImpl implements BoardService {
     public int passck(BoardVO boardVO) {
         return this.boardMapper.passck(boardVO);
     }
+
+    @Override
+    public int idchk(BoardVO boardVO) {
+        return this.boardMapper.idchk(boardVO);
+    }
 }

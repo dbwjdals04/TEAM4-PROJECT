@@ -1,0 +1,105 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org" dir = "ltr">
+<head>
+    <meta charset="utf-8">
+    <title>회원찾기</title>
+    <link href="../static/css/style.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+<script>
+    $(document).ready(function(){
+        function idfind(){
+            alert(1);
+        }
+
+        var idFind = function(){
+            console.log("동작하니?");
+            $('#idFind')
+                .attr('action', '/member/idFind')
+                .attr('method','post')
+                .submit();
+
+        }
+
+    });
+
+</script>
+</head>
+<body>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org" dir = "ltr">
+<head>
+    <meta charset="utf-8">
+    <title>회원찾기</title>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+
+
+</head>
+<body>
+<!--아이디찾기-->
+
+<form name = "idFind"  class="id-Find" id = "idFind" >
+    <h1>아이디찾기</h1>
+    <div class="txtb">
+        <input type="text" id = "m_name" name = "m_name">
+        <span data-placeholder="이름을 입력하세요."></span>
+    </div>
+    <div class="txtb">
+        <input type="text" id="m_phone" name = "m_phone">
+        <span data-placeholder="휴대폰번호를 입력하세요."></span>
+    </div>
+    <input type="button" class="logbtn" value="아이디찾기" onclick="idfind();"/>
+</form>
+
+<!--비밀번호찾기-->
+
+<form name = "pwFind"class="pw-Find" id = "pwFind">
+    <h1>비밀번호찾기</h1>
+
+    <div class="txtb">
+        <input type="text" id = "m_id" name = "m_id">
+        <span data-placeholder="가입하신 이메일을 입력해주세요"></span>
+    </div>
+
+    <div class="txtb">
+        <input type="text"  name = "m_phone">
+        <span data-placeholder="휴대폰번호를 입력하세요."></span>
+    </div>
+    <input type="button" class="logbtn" value="비밀번호찾기" onclick="pwFind();"/>
+    <br>
+    <div class = "bottom-text">
+        <a href = "/member/login">로그인하러가기!</a>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+
+
+
+    function pwFind(){
+        $('#pwFind')
+            .attr('action', '/member/pwFind')
+            .attr('method','post')
+            .submit();
+    }
+
+    //css
+    $(".txtb input").on("focus",function(){
+        $(this).addClass("focus");
+    })
+
+    $(".txtb input").on("blur",function(){
+        if($(this).val() == "")
+            $(this).removeClass("focus");
+    })
+
+</script>
+
+
+</body>
+</html>
