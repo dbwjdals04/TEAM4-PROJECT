@@ -108,7 +108,6 @@ public class MemberController {
     public String registExecute(Model model, @ModelAttribute MemberVO memberVO) {
         log.debug("---------회원가입 요청 처리-------");
         log.debug(memberVO.toString());
-        this.memberService.regist(memberVO);
 
         log.debug("--------게시글 등록 결과---------");
         log.debug(memberVO.toString());

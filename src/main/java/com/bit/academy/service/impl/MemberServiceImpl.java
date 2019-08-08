@@ -84,6 +84,7 @@ public class MemberServiceImpl implements MemberService {
         log.debug(memberVO.toString());
 
 
+
         MemberVO DBmemberVO = (MemberVO) this.memberMapper.login(memberVO);
 
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+
+</head>
+<body>
+<div class="modern" id='modern' name ="hi">
+    <a href='javascript: searchProduct();' ><img src='./images/dislike.png' ></a>
+</div>
+<div class ="antique" id='antique' name ="hi">
+    <a href='javascript: searchProduct();' ><img src='./images/dislike.png' ></a>
+</div>
+<div class = "warm" id='warm' name = "hi">
+    <a href='javascript: searchProduct();'><img src='./images/dislike.png' ></a>
+</div>
+
+<a href = 'javascript: searchProductDetail();' id = "MS">Simple<</a>
+
+
+
+        <script type="text/javascript"  th:inline="javascript">
+
+// 객체반환 (큰 카테고리에서 전체보기)
+
+        var searchProduct = function(){
+
+            var cid = document.getElementsByName( 'hi' ).getAttribute( 'id' );
+            var arr = [];
+
+            if(cid == 'modern'){
+                arr.push(1);
+                arr.push(2);
+                arr.push(3);
+                console.log(cid);
+            }
+            else if(cid =='antique'){
+                arr.push(4);
+                arr.push(5);
+                arr.push(6);
+                console.log(cid);
+            }
+            else if(cid =='warm'){
+                arr.push(7);
+                arr.push(8);
+                arr.push(9);
+                console.log(cid);
+
+            }
+            var ojb = { "c_no" : arr};
+
+
+            console.log("aJax 연결 전");
+        console.log(ojb);
+
+        $.ajax({
+        url : '/product/searchProductAll',
+        type : 'get',
+        data :  ojb,
+        dataType : 'json',
+
+        success : function(data){
+        alert("성공!");
+        console.log(data);
+        },
+        error : function(error){
+        alert("실패!");
+        }
+        })
+        };
+
+
+        var searchProductDetail = function(){
+
+
+            $.ajax({
+                url : '/product/searchProduct',
+                type : 'get',
+                data :  {c_no : 1},
+                dataType : 'json',
+
+                success : function(data){
+                    alert("성공!");
+                    console.log(data);
+                },
+                error : function(error){
+                    alert("실패!");
+                    console.log(data);
+                }
+            })
+        };
+
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bit.academy.mapper.ProductMapper">
+
+    <select id = "productSearchAll" parameterType="List" resultType="com.bit.academy.model.ProductVO">
+
+    SELECT *
+    FROM product AS p
+    JOIN category_product AS cp
+    ON p.p_id = cp.p_id
+    JOIN category c
+    ON cp.category_no = c.category_no
+    WHERE c.category_no IN
+
+    <foreach collection="list" item="type" open="(" close=")" separator=",">
+        #{type}
+    </foreach>
+    </select>
+
+    <select id = "productSearch" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
+
+        SELECT *
+        FROM product AS p
+        JOIN category_product AS cp
+        ON p.p_id = cp.p_id
+        JOIN category c
+        ON cp.category_no = c.category_no
+        WHERE c.category_no = ${c_no};
+
+    </select>
+
+</mapper>
+
