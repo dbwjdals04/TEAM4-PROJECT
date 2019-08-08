@@ -73,12 +73,17 @@ public class BoardController {
 
     @GetMapping("/board/view/{qna_no}")
     public String boardView(Model model, @PathVariable int qna_no){
+
+
         model.addAttribute("board", this.boardService.selectBoard(qna_no));
         return "board/view";
     }
 
+
+
     @PostMapping("/board/delete/{qna_no}")
     public String boardDelete(HttpServletRequest request, @PathVariable int qna_no){
+
         this.boardService.deleteBoard(request, qna_no);
         return "board/delete_after";
     }
@@ -125,5 +130,18 @@ public class BoardController {
     @GetMapping("/main/index")
     public String index(){
         return "main/index";
+    }
+
+    @ResponseBody
+    @GetMapping("/board/idchk")
+    public Map<String,Object> idchk(Model model, @ModelAttribute BoardVO boardVO){
+
+        log.debug("############## 아이디 중복체크 확인 ##########");
+        log.debug(boardVO.toString());
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("count", this.boardService.idchk(boardVO));
+
+        return map;
     }
 }

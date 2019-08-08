@@ -60,5 +60,7 @@ public interface BoardMapper {
      */
     int passck(BoardVO boardVO);
 
+    int idchk(BoardVO boardVO);
+
 
 }

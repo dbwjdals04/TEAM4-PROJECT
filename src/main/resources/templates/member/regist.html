@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link href="../static/css/style.css" rel="stylesheet">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
+<form name = "insertForm" id = "insertForm" method = "post" action = "/member/regist"
+      class ="insertForm" style = "width:600px;">
+
+    <h1>회원가입</h1>
+
+    <div class ="txtb"><input type = "text" name = "m_name" id ="m_name"/>
+        <span data-placeholder="Username"></span></div>
+    <div id="checkName"></div>
+    <div class="check_font" id="id_check"></div>
+
+
+
+    <div class ="txtb"><input type="text" name ="m_id" id="m_id" />
+        <span data-placeholder="ID"></span></div>
+    <div id="checkId"></div>
+    <input type = "button" value = "중복체크" onclick="idChk()">
+
+
+    <div class ="txtb"><input type="password" name ="m_password" id="m_password"/>
+        <span data-placeholder="Password"></span></div>
+    <div id =checkPassword></div>
+
+
+    <div class ="txtb"><input type="password" id="PwCheck"/>
+        <span data-placeholder="Password check"></span></div>
+    <div id="checkPwd"></div>
+
+    <div class ="txtb"><input type="text" name ="m_phone" id="m_phone"/>
+        <span data-placeholder="Phone number"></span></div>
+    <div id="checkPhone"></div>
+
+
+    <input type = "button" class= "logbtn" value = "회원가입" onclick="insert();"/>
+
+</form>
+
+
+    <script type = "text/javascript">
+      //html 설정
+
+        $(".txtb input").on("focus",function(){
+            $(this).addClass("focus");
+        });
+
+        $(".txtb input").on("blur",function(){
+            if($(this).val() == "")
+                $(this).removeClass("focus");
+        });
+
+    //빈칸입력방지 및 폼 제출
+
+        var insert = function(){
+
+
+            if($.trim($('#m_name').val())==''){
+                document.getElementById("checkName").innerHTML = "이름을 입력해주세요.";
+                document.getElementById("checkName").style.color = "red";
+                return false;
+            }
+
+            if($.trim($('#m_id').val())==''){
+                document.getElementById("checkId").innerHTML = "ID를 입력해주세요.";
+                document.getElementById("checkId").style.color = "red";
+                return false;
+            }
+
+
+
+            if($.trim($('#m_password').val())==''){
+                document.getElementById("checkPassword").innerHTML = "비밀번호를 입력해주세요.";
+                document.getElementById("checkPassword").style.color = "red";
+                return false;
+            }
+
+            if($.trim($('#m_phone').val())==''){
+                document.getElementById("checkPhone").innerHTML = "휴대폰 번호를 입력해주세요.";
+                document.getElementById("checkPhone").style.color = "red";
+                return false;
+            }
+
+            if($.trim($('#m_password').val())!=$.trim($('#PwCheck').val())){
+                document.getElementById("checkPwd").innerHTML = "비밀번호를 확인해주세요.";
+                document.getElementById("checkPwd").style.color = "red";
+                return false;
+            }
+
+            else{
+                alert("회원가입에 성공하셨습니다. 인테리아에 오신걸 환영합니다");
+            }
+
+            $('#insertForm')
+                .attr('action','/member/regist')
+                .submit();
+        };
+
+
+      $("#m_password").change(function(){
+          checkPassword($('#m_password').val(),$('#m_id').val());
+      });
+      function checkPassword(password,id){
+
+          if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)){
+              document.getElementById("checkPassword").innerHTML = "숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.";
+              document.getElementById("checkPassword").style.color = "red";
+              $('#password').val('').focus();
+              return false;
+          }else{
+              document.getElementById("checkPassword").innerHTML = "사용가능한 비밀번호입니다";
+              document.getElementById("checkPassword").style.color = "blue";
+              return false;
+          }
+
+
+          return true;
+      }
+
+      var idChk =function(){
+          var ck_id = $('#m_id').val();
+
+          console.log(ck_id);
+
+          var param = {m_id:ck_id};
+          //ajax
+          $.ajax({
+              type : 'get',
+              url : '/board/idchk',
+              data : param,
+              error : function(error) {
+                  console.error("Error!");
+              },
+              success : function(data) {
+                  console.log("success!");
+                  console.log(data);
+                  console.log(data.count);
+                  if(data.count==0){
+                      document.getElementById("checkId").innerHTML = "사용 가능한 아이디 입니다.";
+                      document.getElementById("checkId").style.color = "blue";
+                      // 아이디 중복 없음
+                  }
+                  else{
+                      document.getElementById("checkId").innerHTML = "사용 불가능한 아이디 입니다.";
+                      document.getElementById("checkId").style.color = "red";
+                      // 아이디 중복
+                  }
+
+              },
+              complete : function() {
+                  console.log("complete!");
+              }
+          });
+          }
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
+

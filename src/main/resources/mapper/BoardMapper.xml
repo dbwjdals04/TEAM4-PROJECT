@@ -86,6 +86,11 @@
     </select>
 
 
+    <select id="idchk" parameterType="com.bit.academy.model.BoardVO" resultType="int">
+        SELECT count(1) as cnt FROM member
+        where m_id = #{m_id};
+    </select>
+
 
 
 </mapper>

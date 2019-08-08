@@ -193,9 +193,10 @@
                     // 비밀번호 틀림
                 }
                 else{
-                    location.href ='/board/view/'+qna_no;
+                    location.href ='/board/view/'+$(obj).data("qna_no");
                     // 상세화면으로 이동
                 }
+
             },
             complete : function() {
                 console.log("complete!");
