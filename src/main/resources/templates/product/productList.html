@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>ADMIN PAGE</title>
+
+</head>
+<body>
+<checkbox>
+    <input type="checkbox" id="modern_furniture">모던-가구
+    <input type="checkbox" id="modern_light">모던-조명
+    <input type="checkbox" id="modern_prop">모던-소품
+    <input type="checkbox" id="antique_furniture">앤틱-가구
+    <input type="checkbox" id="antique_light">앤틱-조명
+    <input type="checkbox" id="antique_prop">앤틱-소품
+</checkbox>
+<div id ="product-div">
+
+</div>
+<input type="button" id="openModal" value="상품 등록" onclick="add();" >
+
+<div id = "addModal" style="display: none">
+    <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/product/add">
+        제품명<input type="text" id="p_name" name="p_name"><br>
+        가격<input type="text" id="p_price" name="p_price"><br>
+        제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
+        기본 설명<input type="text" id="p_spec" name="p_spec"><br>
+        썸네일 <input type="file" id="thumbnail" name = "thumbnail"><br>
+        상세이미지 <input type="file" id="detailImg" name = "detailImg"><br>
+        <div class="select_thumbnail"><img src="" /></div>
+        <div class="select_detailImg"><img src=""></div>
+        <input type="submit" value="upload"/>
+        <input type="button" value="등록" onclick="addProduct();">
+
+    </form>
+</div>
+
+</body>
+<script>
+    var add = function () {
+        var modal = document.getElementById("addModal");
+        modal.style.display = "block";
+    };
+    $("#thumbnail").change(function(){
+        if(this.files && this.files[0]) {
+            var reader = new FileReader;
+            reader.onload = function(data) {
+                $(".select_thumbnail img").attr("src", data.target.result).width(500);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+    $("#detailImg").change(function(){
+        if(this.files && this.files[0]) {
+            var reader = new FileReader;
+            reader.onload = function(data) {
+                $(".select_detailImg img").attr("src", data.target.result).width(500);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+    var test = function(){
+    };
+    var addProduct = function () {
+        $("#insertProduct").submit();
+    }
+</script>
+</html>
