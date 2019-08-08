@@ -5,11 +5,11 @@ import com.bit.academy.model.ProductVO;
 import com.bit.academy.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.bit.academy.service.UploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,6 +19,9 @@ public class ProductController {
     @Autowired
 
     private ProductService productService;
+
+    @Autowired
+    private UploadService uploadService;
 
     @GetMapping("/product/main")
     public String product(){
@@ -48,6 +51,27 @@ public class ProductController {
         ProductVO result = this.productService.productSearch(c_no);
 
         return result;
+    }
+
+    @GetMapping("/admin/product")
+    public String productlist(){
+        return "admin/productList";
+    }
+
+    @PostMapping("/admin/product/add")
+    public String productAdd (@ModelAttribute ProductVO productVO, Model model,
+                              @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile){
+        String returnValue = "start";
+        try {
+            //this.productService.insertProduct(productVO);
+            //log.debug(this.uploadService.saveImage(imageFile, productVO).toString());
+            this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error saving photo ", e);
+            returnValue = "error";
+        }
+        return "admin/productList";
     }
 }
 //(@RequestBody List fileVOList)

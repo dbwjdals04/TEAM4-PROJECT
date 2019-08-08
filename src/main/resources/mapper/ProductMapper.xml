@@ -31,5 +31,20 @@
 
     </select>
 
+    <insert id="insertProduct"
+            parameterType="com.bit.academy.model.ProductVO"
+            useGeneratedKeys="true">
+        <![CDATA[
+            INSERT INTO product (
+                p_name, p_price, p_brand, p_spec, thumb_name, thumb_route, thumb_100, thumb_300, thumb_600, detailimg_name, detailimg_route
+            )
+            VALUES (
+                #{p_name}, #{p_price}, #{p_brand}, #{p_spec}, #{thumb_name}, #{thumb_route}, #{thumb_100}, #{thumb_300}, #{thumb_600}, #{detailimg_name}, #{detailimg_route}
+            )
+        ]]>
+    </insert>
+
+
+
 </mapper>
 

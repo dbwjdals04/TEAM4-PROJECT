@@ -16,4 +16,10 @@ public interface ProductService {
      */
     ProductVO productSearch(Integer c_no);
 
+    /**
+     *
+     * 상품추가
+     */
+    void insertProduct(ProductVO productVO);
+
 }

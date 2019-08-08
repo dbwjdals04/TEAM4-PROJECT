@@ -28,4 +28,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductVO productSearch(Integer c_no) {
         return this.productMapper.productSearch(c_no);
     }
+
+    @Override
+    public void insertProduct(ProductVO productVO) {
+
+        this.productMapper.insertProduct(productVO);
+    }
+
 }

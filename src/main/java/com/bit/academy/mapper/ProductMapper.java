@@ -23,4 +23,10 @@ public interface ProductMapper {
      */
     ProductVO productSearch(Integer c_no);
 
+    /**
+     * 상품추가기능
+     * @param productVO
+     */
+    void insertProduct(ProductVO productVO);
+
 }

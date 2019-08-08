@@ -1,53 +1,65 @@
-<html lang="ko">
-	<head>
-		<meta charset="utf-8">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<style>
-		table { border: 1px solid #333333; border-collapse: collapse; }
-		td { padding: 10px; border: 1px solid #333333; }
-		input { padding:5px; }
-		</style>
-	</head>
-	<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" dir = "ltr">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+	<link href="../static/css/style.css" rel="stylesheet">
 
-		<form name="loginForm" id="loginForm" method="post" action="/member/login">
-		<table>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input type="text" name="m_id" id="m_id">
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td>
-					<input type="password" name="m_password" id="m_password">
-				</td>
-			</tr>
-		</table>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
 
-		</form>
+<form name = "loginForm" action="/member/login" class="login-form" id = loginForm method ="post" >
+	<h1>Login</h1>
+	<div class="txtb">
+		<input type="text" id = "m_id" name = "m_id">
+		<span data-placeholder="Email"></span>
+	</div>
+	<div id = loginIdCheck></div>
 
-		<input type="button" value="로그인" onclick="login();"/>
+	<div class="txtb">
+		<input type="password" id="m_password" name = "m_password">
+		<span data-placeholder="Password"></span>
+	</div>
+	<div id =loginPasswordCheck></div>
 
-	<script type="text/javascript">
-		var login = function(){
-			if($.trim($('#m_id').val())==''){
-				alert('아이디를 입력하세요.');
-				$('#m_id').focus();
-				return;
-			}
-			if($.trim($('#m_password').val())==''){
-				alert('비밀번호를 입력하세요.');
-				$('#m_password').focus();
-				return;
-			}
+	<input type="button" class="logbtn" value="Login" onclick="login();"/>
 
-			$('#loginForm').submit();
-		};
-	</script>
+	<div class="bottom-text">
+		Don't have account? <a href="regist">Sign up</a>
+	</div>
+	<div class ="bottom-text">
+		<a href = "/member/idPwFind">아이디나 비밀번호를 잊어버리셨나요?</a>
+	</div>
+
+	<!--    <input type = "button" class = "logbtn" value = "아이디나 비밀번호를 잊어버리셨나요?" onclick = "idPwFind();"/>-->
+
+</form>
+
+<script type="text/javascript">
+	//css
+	$(".txtb input").on("focus",function(){
+		$(this).addClass("focus");
+	});
+	$(".txtb input").on("blur",function(){
+		if($(this).val() == "")
+			$(this).removeClass("focus");
+	});
+	var login = function() {
+		$('#loginForm')
+				.attr('action', '/member/login')
+				.submit();
+	};
+	//
+	// var idPwFind = function(){
+	//     $('#loginForm')
+	//         .attr('action', '/member/idPwFind')
+	//         .attr('method','get')
+	//         .submit();
+	// }
+</script>
 
 
-
-	</body>
+</body>
 </html>
