@@ -185,9 +185,9 @@ public class MemberController {
     }
 
     //로그아웃
-    @PostMapping("member/logOut")
+    @GetMapping("member/logOut")
     public String logOut(HttpServletRequest request){
         this.memberService.logOut(request);
-        return "member/main";
+        return "main/index";
     }
 }

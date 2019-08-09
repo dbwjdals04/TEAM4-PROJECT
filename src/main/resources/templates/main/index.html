@@ -39,9 +39,6 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/payment/cart">CART</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
           </li>
           <li class="nav-item">
@@ -49,11 +46,14 @@
           </li>
             <script th:inline="javascript">
               var memberk = /*[[${session.member}]]*/
+
                       console.log("세션정보");
-              console.log(memberk);
               if(memberk!=null){
-              document.write("<li class=\"nav-item\">\n" +
-                      "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">LOGOUT</a>\n" +
+                document.write("<li class=\"nav-item\">\n" +
+                        "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\" location.href='/payment/cart/'+memberk.m_no\">CART</a>\n" +
+                        "          </li>");
+              document.write("<li class=\"nav-item\" id='logOut'>\n" +
+                      "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
                       "            </li>");
               document.write("<li class=\"nav-item\">\n" +
                       "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">MY PAGE</a>\n" +
@@ -62,12 +62,20 @@
               }
               else{
                 document.write("<li class=\"nav-item\">\n" +
+                        "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=carterror()>CART</a>\n" +
+                        "          </li>");
+                document.write("<li class=\"nav-item\">\n" +
                         "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/login\">LOGIN</a>\n" +
                         "            </li>\n");
                 document.write("<li class=\"nav-item\">\n" +
                         "            <a class=\"nav-link js-scroll-trigger\" href=\"/member/regist\">REGIST</a>\n" +
                         "          </li>");
 
+              }
+
+              function carterror() {
+                alert("로그인 하세요");
+                location.href='/member/login'
               }
             </script>
 
@@ -386,6 +394,15 @@
 
   <!-- Custom scripts for this template -->
   <script src="/static/js/agency.min.js"></script>
+  <script type="text/javascript" th:inline="javascript">
+
+    var logOut = function(){
+              $('#logOut')
+                      .attr('action', '/member/logOut')
+                      .attr('method','get')
+                      .submit();
+            }
+  </script>
 
 
 </body>
