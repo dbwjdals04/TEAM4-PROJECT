@@ -47,17 +47,17 @@
     <select id = "idFind" parameterType="com.bit.academy.model.MemberVO" resultType="com.bit.academy.model.MemberVO">
         SELECT m_id
         FROM member
-        WHERE m_name = ${m_name}
-        AND m_phone = ${m_phone}
+        WHERE m_name = #{m_name}
+        AND m_phone = #{m_phone}
     </select>
 
     <!--pwFind-->
 
     <select id = "pwFind" parameterType="com.bit.academy.model.MemberVO" resultType="com.bit.academy.model.MemberVO">
-        SELECT m_pw
+        SELECT m_password
         FROM member
-        WHERE m_id = ${m_id}
-        AND m_phone = ${m_phone}
+        WHERE m_id = #{m_id}
+        AND m_phone = #{m_phone}
     </select>
 
     <!-- Member Regist-->
