@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,34 +150,42 @@ public class MemberController {
         return "member/idPwFind";
     }
 
+
     //아이디찾기
+    @ResponseBody
     @GetMapping("/member/idFind")
-    public String idFind(){
-        return "/member/login";
-    }
-
-    @PostMapping("/member/idFind")
-    public String idFindExecute(@ModelAttribute MemberVO memberVO, Model model, HttpServletRequest request){
-        memberVO = this.memberService.idFind(memberVO,request);
-        model.addAttribute("member",memberVO);
-
-        return "member/login";
+    public MemberVO idFind(@RequestParam("m_name") String m_name,
+                           @RequestParam("m_phone") String m_phone,
+                           HttpServletResponse response,
+                           MemberVO memberVO) {
+        log.debug(m_name);
+        log.debug(m_phone);
+        memberVO.setM_name(m_name);
+        memberVO.setM_phone(m_phone);
+        MemberVO membervo = this.memberService.idFind(memberVO);
+        log.debug(String.valueOf(membervo));
+        return membervo;
     }
     //비밀번호찾기
+    @ResponseBody
     @GetMapping("/member/pwFind")
-    public String pwFind(){
-        return "/member/login";
-    }
-    @PostMapping("/member/pwFind")
-    public String pwFindExcute(@ModelAttribute MemberVO memberVO, Model model){
-        memberVO = this.memberService.pwFind(memberVO);
-        model.addAttribute("member",memberVO);
+    public MemberVO pwFind(@RequestParam("m_id") String m_id,
+                           @RequestParam("m_phone") String m_phone,
+                           HttpServletResponse response,
+                           MemberVO memberVO){
+        log.debug(m_id);
+        log.debug(m_phone);
+        memberVO.setM_id(m_id);
+        memberVO.setM_phone(m_phone);
+        log.debug(memberVO.toString());
+        MemberVO membervo = this.memberService.pwFind(memberVO);
 
-        return "member/login";
+        return membervo;
+
     }
 
     //로그아웃
-    @PostMapping("member/main")
+    @PostMapping("member/logOut")
     public String logOut(HttpServletRequest request){
         this.memberService.logOut(request);
         return "member/main";

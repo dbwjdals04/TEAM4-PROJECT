@@ -51,11 +51,11 @@ public class MemberServiceImpl implements MemberService {
         log.debug(memberVO.toString());
 
 
-        if(memberVO.getM_password().equals(chk_pw)){
+        if (memberVO.getM_password().equals(chk_pw)) {
             //request.getSession().setAttribute("member", memberVO);
             log.debug("success");
             return memberVO;
-        }else{
+        } else {
             log.debug("fail");
             return null;
         }
@@ -84,7 +84,6 @@ public class MemberServiceImpl implements MemberService {
         log.debug(memberVO.toString());
 
 
-
         MemberVO DBmemberVO = (MemberVO) this.memberMapper.login(memberVO);
 
 
@@ -105,25 +104,21 @@ public class MemberServiceImpl implements MemberService {
     }
 
     //아이디찾기
+    //아이디찾기
 
     @Override
-    public MemberVO idFind(MemberVO memberVO, HttpServletRequest request) {
-        MemberVO IdMember = this.memberMapper.idFind(memberVO);
-        if (IdMember != null) {
-            request.getSession().setAttribute("member", IdMember);
-            request.getSession().setMaxInactiveInterval(60 * 30);
-        } else if (IdMember == null) {
-            request.getSession().setAttribute("member", IdMember);
-        }
+    public MemberVO idFind(MemberVO memberVO) {
+        MemberVO amemberVO = this.memberMapper.idFind(memberVO);
 
-        return IdMember;
+        return amemberVO;
     }
 
     //비번찾기
 
     @Override
     public MemberVO pwFind(MemberVO memberVO) {
-        return this.memberMapper.pwFind(memberVO);
+        MemberVO amemberVO = this.memberMapper.pwFind(memberVO);
+        return amemberVO;
     }
 
     @Override
