@@ -3,6 +3,7 @@ package com.bit.academy.service;
 import com.bit.academy.model.ProductVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductService {
 
@@ -22,4 +23,8 @@ public interface ProductService {
      */
     void insertProduct(ProductVO productVO);
 
+    /**
+     * 상품상세페이지조회
+     */
+    Map<String, Object> productDetail(Integer p_id);
 }

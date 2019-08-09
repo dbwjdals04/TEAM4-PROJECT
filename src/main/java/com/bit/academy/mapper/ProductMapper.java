@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -29,4 +30,10 @@ public interface ProductMapper {
      */
     void insertProduct(ProductVO productVO);
 
+    /**
+     * 상품상세페이지
+     * @Param p_no
+     * @return
+     */
+    Map<String, Object> productDetail(Integer p_id);
 }

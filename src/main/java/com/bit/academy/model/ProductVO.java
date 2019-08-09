@@ -1,7 +1,6 @@
 package com.bit.academy.model;
 
 import lombok.Data;
-
 @Data
 public class ProductVO {
 
@@ -17,6 +16,8 @@ public class ProductVO {
     private String thumb_600;
     private String detailimg_name;
     private String detailimg_route;
+
+
 
     public int getP_id() {
         return p_id;

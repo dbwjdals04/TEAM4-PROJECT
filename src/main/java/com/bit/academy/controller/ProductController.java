@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
 public class ProductController {
-    @Autowired
 
+    @Autowired
     private ProductService productService;
 
     @Autowired
@@ -27,21 +28,18 @@ public class ProductController {
     public String product(){
         return "/product/productMain";
     }
-
+    //상품검색(카테고리)
     @ResponseBody
     @GetMapping("/product/searchProductAll")
     public ProductVO searchProductAll(ProductVO productVO,
                                       @RequestParam("c_no[]") List c_no,
-                                      Model model)
-    {
+                                      Model model){
 
         log.debug(String.valueOf(c_no));
-
         ProductVO result = this.productService.productSearchAll(c_no);
-
         return result;
     }
-
+    //상품검색(세부)
     @ResponseBody
     @GetMapping("/product/searchProduct")
     public ProductVO searchProduct(ProductVO productVO,
@@ -57,7 +55,7 @@ public class ProductController {
     public String productlist(){
         return "admin/productList";
     }
-
+    //상품등록
     @PostMapping("/admin/product/add")
     public String productAdd (@ModelAttribute ProductVO productVO, Model model,
                               @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile){
@@ -70,8 +68,15 @@ public class ProductController {
             e.printStackTrace();
             log.error("Error saving photo ", e);
             returnValue = "error";
+            //(@RequestBody List fileVOList)
         }
         return "admin/productList";
     }
+    @GetMapping("/product/productDetail")
+    public String productDetail(Integer p_id, Model model){
+        Map<String, Object> map= this.productService.productDetail(p_id);
+        model.addAttribute("product", map);
+        return "/product/productDetail";
+    }
+
 }
-//(@RequestBody List fileVOList)
