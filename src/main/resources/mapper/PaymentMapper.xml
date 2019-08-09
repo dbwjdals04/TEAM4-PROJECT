@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.bit.academy.mapper.PaymentMapper">
+
+    <select id="cartview" parameterType="Integer" resultType="com.bit.academy.model.CartVO">
+        SELECT
+            c.cart_no, c.m_no, c.p_id, c.cart_amount, c.po_id, p.thumb_300, p.p_name, p.p_price
+        FROM cart c
+        join product p
+        on c.p_id = p.p_id
+        WHERE m_no = #{m_no}
+    </select>
+
+
+</mapper>

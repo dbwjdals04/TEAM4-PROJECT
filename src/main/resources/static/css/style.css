@@ -23,6 +23,29 @@ body{
     transform: translate(-50%,-50%);
 }
 
+.id-Find{
+    width: 450px;
+    background: #f1f1f1;
+    height: 350px;
+    padding: 35px 35px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%,-50%);
+}
+.pw-Find{
+    width: 450px;
+    background: #f1f1f1;
+    height: 350px;
+    padding: 35px 35px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 72%;
+    transform: translate(-50%,-50%);
+}
+
 .insertForm{
     width: 400px;
     background: #f1f1f1;

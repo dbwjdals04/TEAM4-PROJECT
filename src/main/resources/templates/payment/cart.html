@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>카트입니다</h1>
+/*[[${session.member}]]*/
+<form name="viewForm" id="viewForm" method="get" style="width:600px;">
+    <div><span>회원번호</span> <span th:text="${cart.m_no}">회원번호</span></div>
+    <div><span>카트번호</span> <span th:text="${cart.cart_no}">카트번호</span></div>
+    <div><img th:src="${cart.thumb_300}"/></div>
+    <div><img th:src="${cart.thumb_300}"/></div>
+</form>
+</body>
+</html>
