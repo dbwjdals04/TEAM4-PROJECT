@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -39,20 +39,39 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+            <a class="nav-link js-scroll-trigger" href="/payment/cart">CART</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/member/login">LOGIN</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/member/regist">REGIST</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href='/board/list'>Q&A</a>
           </li>
+            <script th:inline="javascript">
+              var memberk = /*[[${session.member}]]*/
+                      console.log("세션정보");
+              console.log(memberk);
+              if(memberk!=null){
+              document.write("<li class=\"nav-item\">\n" +
+                      "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">LOGOUT</a>\n" +
+                      "            </li>");
+              document.write("<li class=\"nav-item\">\n" +
+                      "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">MY PAGE</a>\n" +
+                      "            </li>");
+
+              }
+              else{
+                document.write("<li class=\"nav-item\">\n" +
+                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/login\">LOGIN</a>\n" +
+                        "            </li>\n");
+                document.write("<li class=\"nav-item\">\n" +
+                        "            <a class=\"nav-link js-scroll-trigger\" href=\"/member/regist\">REGIST</a>\n" +
+                        "          </li>");
+
+              }
+            </script>
+
+
 
         </ul>
       </div>
@@ -367,6 +386,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="/static/js/agency.min.js"></script>
+
 
 </body>
 
