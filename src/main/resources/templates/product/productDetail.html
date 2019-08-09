@@ -1,0 +1,130 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/agency.min.css" rel="stylesheet">
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
+        div.row { float: left; clear: both; width: 100%; padding: 10px;}
+        body{
+            width:60%;
+            margin: auto;
+            font-family: sunflower;
+        }
+        input.btn-dark-blue{
+            color:white; width:90px; height: 40px; background-color: #237fbc;
+            border-color: #237fbc; -webkit-box-shadow: 0 3px 0 #1a5c87; box-shadow: 0 3px 0 #1a5c87;}
+        input.btn-dark-blue:hover{background-color:#166ea8;}
+        input.btn-dark-blue:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
+        table {
+
+            width: 100%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        td.title:hover{
+
+            background:#003366; color:#fff;
+
+        }
+
+        th, td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        td.left{
+            width:50px;
+            text-align: center;
+            padding-left: 20px;
+            padding-right: 30px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+        }
+        td.right{
+            width:100px;
+            text-align: center;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+        td.zzz{
+            width:80px;
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 50px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        td.title{
+
+            padding-top: 13px;
+            padding-bottom: 13px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;}
+
+
+
+
+
+    </style>
+
+</head>
+<body>
+<h1 class="coco">상품상세</h1>
+
+
+<table>
+
+    <tr th:each="result:${result}">
+        <td class="left" th:text="${result.p_id}" >상품이미지</td>
+        <td class="zzz" th:text="${board.m_id}" >상품번호</td>
+        <td class="title" onclick="passcheck(this)"th:attr="data-qna_no = ${board.qna_no}">상품이름<span th:text="${board.qna_title}"></span></td>
+        <td class="right" th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">상품가</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="row"><input class="btn-dark-blue" type="button" value="등록" onclick="location.href='/board/insert';"/></div>
+<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href='/board/insert'>등록</a>
+
+
+<div style="text-align: center; width:100%;">
+    <table>
+        <tr>
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> <!--이전페이지-->
+
+            <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">
+                <!--현재페이지인 경우--><a th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>
+                <!--현재페이가 아닌 경우--><a th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>
+            </td>
+
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> <!--다음페이지-->
+            <td style="text-align:center;"><a href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
+        </tr>
+    </table>
+</div>
+
+<form name="boardPaging" id="boardPaging" method="get" action="/board/list">
+    <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>
+    <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>
+</form>
+
+
+</body>
+</html>

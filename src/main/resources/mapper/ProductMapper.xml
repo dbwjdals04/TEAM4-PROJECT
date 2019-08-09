@@ -3,9 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bit.academy.mapper.ProductMapper">
-
+<!--    카테고리별 조회(현대적인, 따듯한, 구제)-->
     <select id = "productSearchAll" parameterType="List" resultType="com.bit.academy.model.ProductVO">
-
     SELECT *
     FROM product AS p
     JOIN category_product AS cp
@@ -13,14 +12,12 @@
     JOIN category c
     ON cp.category_no = c.category_no
     WHERE c.category_no IN
-
     <foreach collection="list" item="type" open="(" close=")" separator=",">
         #{type}
     </foreach>
     </select>
-
+<!--    카테고리분류 이후 가구 소품 조명 분리-->
     <select id = "productSearch" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
-
         SELECT *
         FROM product AS p
         JOIN category_product AS cp
@@ -28,9 +25,8 @@
         JOIN category c
         ON cp.category_no = c.category_no
         WHERE c.category_no = ${c_no};
-
     </select>
-
+<!--상품등록-->
     <insert id="insertProduct"
             parameterType="com.bit.academy.model.ProductVO"
             useGeneratedKeys="true">
@@ -43,7 +39,14 @@
             )
         ]]>
     </insert>
+<!--상품상세페이지-->
 
+    <select id ="productDetail" parameterType="Integer" resultType="Map">
+        SELECT *
+        FROM product p JOIN
+        product_option po on p.p_id = po.p_id
+        WHERE p.p_id = ${p_id};
+    </select>
 
 
 </mapper>

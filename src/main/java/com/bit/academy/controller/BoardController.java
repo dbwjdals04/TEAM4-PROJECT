@@ -72,7 +72,7 @@ public class BoardController {
 
 
     @GetMapping("/board/view/{qna_no}")
-    public String boardView(Model model, @PathVariable int qna_no){
+        public String boardView(Model model, @PathVariable int qna_no){
 
 
         model.addAttribute("board", this.boardService.selectBoard(qna_no));

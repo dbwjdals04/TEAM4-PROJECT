@@ -6,90 +6,125 @@
 
 </head>
 <body>
-<div class="modern" id='modern' name ="hi">
-    <a href='javascript: searchProduct();' ><img src='./images/dislike.png' ></a>
-</div>
-<div class ="antique" id='antique' name ="hi">
-    <a href='javascript: searchProduct();' ><img src='./images/dislike.png' ></a>
-</div>
-<div class = "warm" id='warm' name = "hi">
-    <a href='javascript: searchProduct();'><img src='./images/dislike.png' ></a>
-</div>
 
-<a href = 'javascript: searchProductDetail();' id = "MS">Simple<</a>
+<!--카테고리 모던(전체보기, 가구 소품 조명)-->
+<div class="modern" id='modern' name ="hi">
+    <a href='#' class ="category" ><img src='./images/dislike.png' ></a>
+    <div id = "1" name = "modern-furniture">
+        <a href = '#' class ="categoryDetail">가구</a>
+    </div>
+    <div id = "2" name = "modern-furniture">
+        <a href = '#' class ="categoryDetail">소품</a>
+    </div>
+    <div id = "3" name = "modern-furniture">
+        <a href = '#' class ="categoryDetail">조명</a>
+    </div>
+</div>
+<!--카테고리 antique(전체보기, 가구 소품 조명)-->
+<div class ="antique" id='antique' name ="hi">
+    <a href='#' class ="category"><img src='./images/dislike.png' ></a>
+    <div id = "4" name = "antique-furniture">
+        <a href = '#' class ="categoryDetail">가구</a>
+    </div>
+    <div id = "5" name = "antique-furniture">
+        <a href = '#' class ="categoryDetail">소품</a>
+    </div>
+    <div id = "6" name = "antique-furniture">
+        <a href = '#' class ="categoryDetail">조명</a>
+    </div>
+</div>
+<!--카테고리 따듯한(전체보기, 가구 소품 조명)-->
+<div class = "warm" id='warm' name = "hi">
+    <a href='#' class ="category"><img src='./images/dislike.png' ></a>
+    <div id = "7" name = "warm-furniture">
+        <a href = '#' class ="categoryDetail">가구</a>
+    </div>
+    <div id = "8" name = "warm-furniture">
+        <a href = '#' class ="categoryDetail">소품</a>
+    </div>
+    <div id = "9" name = "warm-furniture">
+        <a href = '#' class ="categoryDetail">조명</a>
+    </div>
+</div>
 
 
 
         <script type="text/javascript"  th:inline="javascript">
 
-// 객체반환 (큰 카테고리에서 전체보기)
+            // 객체반환 (큰 카테고리에서 전체보기)
+            // 전체문서가 실행될 때 실행되고, 그 내부에 다시 함수를 두어 클릭하면 cid값 가져오기. closet함수!기억
+           $(document).ready(function(){
+                $(document).on("click", ".category", function(){
+                    console.log($(this));
+                    var cid =$(this).closest("div").attr("id");
 
-        var searchProduct = function(){
+                    console.log(cid);
+                    var arr = [];
 
-            var cid = document.getElementsByName( 'hi' ).getAttribute( 'id' );
-            var arr = [];
+                    if(cid == 'modern'){
+                        arr.push(1);
+                        arr.push(2);
+                        arr.push(3);
+                        console.log(cid);
+                    }
+                    else if(cid =='antique'){
+                        arr.push(4);
+                        arr.push(5);
+                        arr.push(6);
+                        console.log(cid);
+                    }
+                    else if(cid =='warm'){
+                        arr.push(7);
+                        arr.push(8);
+                        arr.push(9);
+                        console.log(cid);
 
-            if(cid == 'modern'){
-                arr.push(1);
-                arr.push(2);
-                arr.push(3);
-                console.log(cid);
-            }
-            else if(cid =='antique'){
-                arr.push(4);
-                arr.push(5);
-                arr.push(6);
-                console.log(cid);
-            }
-            else if(cid =='warm'){
-                arr.push(7);
-                arr.push(8);
-                arr.push(9);
-                console.log(cid);
+                    }
+                    var ojb = { "c_no" : arr};
 
-            }
-            var ojb = { "c_no" : arr};
+                    console.log("aJax 연결 전");
+                    console.log(ojb);
 
+                    $.ajax({
+                        url : '/product/searchProductAll',
+                        type : 'get',
+                        data :  ojb,
+                        dataType : 'json',
 
-            console.log("aJax 연결 전");
-        console.log(ojb);
+                        success : function(data){
+                            alert("성공!");
+                            console.log(data);
+                        },
+                        error : function(error){
+                            alert("실패!");
+                        }
+                    })
+                })
 
-        $.ajax({
-        url : '/product/searchProductAll',
-        type : 'get',
-        data :  ojb,
-        dataType : 'json',
+               $(document).on("click", ".categoryDetail", function(){
+                   console.log($(this));
+                   var cid =$(this).closest("div").attr("id");
+                   console.log(cid);
 
-        success : function(data){
-        alert("성공!");
-        console.log(data);
-        },
-        error : function(error){
-        alert("실패!");
-        }
-        })
-        };
+                   $.ajax({
+                       url : '/product/searchProduct',
+                       type : 'get',
+                       data :  {c_no : cid},
+                       dataType : 'json',
 
+                       success : function(data){
+                           alert("성공!");
+                           console.log(data);
+                       },
+                       error : function(error){
+                           alert("실패!");
+                           console.log(data);
+                       }
+                   })
 
-        var searchProductDetail = function(){
-
-
-            $.ajax({
-                url : '/product/searchProduct',
-                type : 'get',
-                data :  {c_no : 1},
-                dataType : 'json',
-
-                success : function(data){
-                    alert("성공!");
-                    console.log(data);
-                },
-                error : function(error){
-                    alert("실패!");
-                    console.log(data);
-                }
+               })
             })
-        };
+
 
 
 
