@@ -112,7 +112,7 @@
     <tr th:each="board:${boardList}">
         <td class="left" th:text="${board.qna_no}" >글번호</td>
         <td class="zzz" th:text="${board.m_id}" >아이디</td>
-        <td class="title" onclick="passcheck(this)"th:attr="data-qna_no = ${board.qna_no}"><span th:text="${board.qna_title}"></span></td>
+        <form name="view" id="view"><td class="title" onclick="passcheck(this)"th:attr="data-qna_no = ${board.qna_no}"><span th:text="${board.qna_title}"></span></td></form>
         <td class="right" th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>
     </tr>
     </tbody>
@@ -120,6 +120,7 @@
 
 <div class="row"><input class="btn-dark-blue" type="button" value="등록" onclick="location.href='/board/insert';"/></div>
 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href='/board/insert'>등록</a>
+<input type="button" value="테스트" th:method="post" onclick="location.href='/board/view/13';"/>
 
 
 <div style="text-align: center; width:100%;">
@@ -193,7 +194,11 @@
                     // 비밀번호 틀림
                 }
                 else{
-                    location.href ='/board/view/'+$(obj).data("qna_no");
+                    $('#view')
+                        .attr('method', 'post')
+                        .attr('action', '/board/view/'+qna_no)
+                        .submit();
+                    //location.href ='/board/view/'+$(obj).data("qna_no");
                     // 상세화면으로 이동
                 }
 
