@@ -71,7 +71,7 @@ public class BoardController {
     }
 
 
-    @GetMapping("/board/view/{qna_no}")
+    @PostMapping("/board/view/{qna_no}")
         public String boardView(Model model, @PathVariable int qna_no){
 
 
