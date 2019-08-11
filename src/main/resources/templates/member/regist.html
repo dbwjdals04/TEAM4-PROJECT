@@ -124,48 +124,48 @@
           return true;
       }
 
-      document.
-      // var idChk =function(){
-      //     var ck_id = $('#m_id').val();
-      //
-      //     console.log(ck_id);
-      //
-      //     var param = {m_id:ck_id};
-      //     //ajax
-      //     $.ajax({
-      //         type : 'get',
-      //         url : '/board/idchk',
-      //         data : param,
-      //         error : function(error) {
-      //             console.error("Error!");
-      //         },
-      //         success : function(data) {
-      //             console.log("success!");
-      //             console.log(data);
-      //             console.log(data.count);
-      //             if(data.count==0){
-      //                 if(param.m_id==""){
-      //                     document.getElementById("checkId").innerHTML = "사용 불가능한 아이디 입니다.";
-      //                     document.getElementById("checkId").style.color = "red";
-      //
-      //                 }
-      //                 else{
-      //                 document.getElementById("checkId").innerHTML = "사용 가능한 아이디 입니다.";
-      //                 document.getElementById("checkId").style.color = "blue";}
-      //                 // 아이디 중복 없음
-      //             }
-      //             else{
-      //                 document.getElementById("checkId").innerHTML = "사용 불가능한 아이디 입니다.";
-      //                 document.getElementById("checkId").style.color = "red";
-      //                 // 아이디 중복
-      //             }
-      //
-      //         },
-      //         complete : function() {
-      //             console.log("complete!");
-      //         }
-      //     });
-      //     }
+
+      var idChk =function(){
+           var ck_id = $('#m_id').val();
+
+           console.log(ck_id);
+
+           var param = {m_id:ck_id};
+           //ajax
+           $.ajax({
+               type : 'get',
+               url : '/board/idchk',
+               data : param,
+               error : function(error) {
+                   console.error("Error!");
+               },
+               success : function(data) {
+                   console.log("success!");
+                   console.log(data);
+                   console.log(data.count);
+                   if(data.count==0){
+                       if(param.m_id==""){
+                           document.getElementById("checkId").innerHTML = "사용 불가능한 아이디 입니다.";
+                           document.getElementById("checkId").style.color = "red";
+
+                       }
+                       else{
+                       document.getElementById("checkId").innerHTML = "사용 가능한 아이디 입니다.";
+                       document.getElementById("checkId").style.color = "blue";}
+                       // 아이디 중복 없음
+                   }
+                   else{
+                       document.getElementById("checkId").innerHTML = "사용 불가능한 아이디 입니다.";
+                       document.getElementById("checkId").style.color = "red";
+                       // 아이디 중복
+                   }
+
+               },
+               complete : function() {
+                   console.log("complete!");
+               }
+           });
+           }
 
 
 
