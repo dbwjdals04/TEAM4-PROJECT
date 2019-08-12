@@ -8,18 +8,18 @@
 <body>
 
 <!--카테고리 모던(전체보기, 가구 소품 조명)-->
-<div class="modern" id='modern' name ="hi">
-    <a href='#' class ="category" ><img src='./images/dislike.png' ></a>
-    <div id = "1" name = "modern-furniture">
-        <a href = '#' class ="categoryDetail">가구</a>
-    </div>
-    <div id = "2" name = "modern-furniture">
-        <a href = '#' class ="categoryDetail">소품</a>
-    </div>
-    <div id = "3" name = "modern-furniture">
-        <a href = '#' class ="categoryDetail">조명</a>
-    </div>
-</div>
+        <div class="modern" id='modern' name ="hi">
+            <a href='#' class ="category" ><img src='./images/dislike.png' ></a>
+            <div id = "1" name = "modern-furniture">
+                <a href = '#' class ="categoryDetail">가구</a>
+            </div>
+            <div id = "2" name = "modern-furniture">
+                <a href = '#' class ="categoryDetail">소품</a>
+            </div>
+            <div id = "3" name = "modern-furniture">
+                <a href = '#' class ="categoryDetail">조명</a>
+            </div>
+        </div>
 <!--카테고리 antique(전체보기, 가구 소품 조명)-->
 <div class ="antique" id='antique' name ="hi">
     <a href='#' class ="category"><img src='./images/dislike.png' ></a>
@@ -46,8 +46,7 @@
         <a href = '#' class ="categoryDetail">조명</a>
     </div>
 </div>
-
-
+    <div id = "siyoung"></div>
 
         <script type="text/javascript"  th:inline="javascript">
 
@@ -92,11 +91,17 @@
                         dataType : 'json',
 
                         success : function(data){
-                            alert("성공!");
+                            $("#siyoung").empty();
+                            alert("성공");
                             console.log(data);
+                            $.each(data, function(i){
+                                $("#siyoung").append('<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '<br>'+'<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
+                            });
                         },
                         error : function(error){
                             alert("실패!");
+                            console.log(error);
+
                         }
                     })
                 })
@@ -113,12 +118,16 @@
                        dataType : 'json',
 
                        success : function(data){
+                           $("#siyoung").empty();
                            alert("성공!");
                            console.log(data);
+                           $.each(data, function(i){
+                               $("#siyoung").append('<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
+                           });
                        },
                        error : function(error){
                            alert("실패!");
-                           console.log(data);
+                           console.log(error);
                        }
                    })
 

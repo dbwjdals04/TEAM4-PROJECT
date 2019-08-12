@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,24 +32,23 @@ public class ProductController {
     //상품검색(카테고리)
     @ResponseBody
     @GetMapping("/product/searchProductAll")
-    public ProductVO searchProductAll(ProductVO productVO,
+    public List<ProductVO> searchProductAll(ProductVO productVO,
                                       @RequestParam("c_no[]") List c_no,
                                       Model model){
-
         log.debug(String.valueOf(c_no));
-        ProductVO result = this.productService.productSearchAll(c_no);
-        return result;
+        List<ProductVO> product = this.productService.productSearchAll(c_no);
+
+        return product;
     }
     //상품검색(세부)
     @ResponseBody
     @GetMapping("/product/searchProduct")
-    public ProductVO searchProduct(ProductVO productVO,
+    public List<ProductVO> searchProduct(ProductVO productVO,
                                    @RequestParam("c_no") Integer c_no
                                    ){
         log.debug(String.valueOf(c_no));
-        ProductVO result = this.productService.productSearch(c_no);
-
-        return result;
+        List<ProductVO> product = this.productService.productSearch(c_no);
+        return product;
     }
 
     @GetMapping("/admin/product")
