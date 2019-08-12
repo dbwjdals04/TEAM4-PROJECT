@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Slf4j
@@ -19,14 +22,14 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/payment/cart/{m_no}")
-    public String cartview(Model model, @PathVariable int m_no){
+    @PostMapping("/payment/cart/{m_no}")
+    public String cartview(Model model, @PathVariable int m_no, HttpServletRequest request){
 
 
-        model.addAttribute("cart", this.paymentService.cartview(m_no));
+        model.addAttribute("cart", this.paymentService.cartview(m_no,request));
         return "payment/cart";
     }
-    @GetMapping("/payment/cart")
+    @PostMapping("/payment/cart")
     public String index(){
         return "payment/cart";
     }
