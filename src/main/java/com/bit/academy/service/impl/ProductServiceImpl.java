@@ -1,6 +1,7 @@
 package com.bit.academy.service.impl;
 
 import com.bit.academy.mapper.ProductMapper;
+import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 import com.bit.academy.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     //상품검색(카테고리)
     @Override
-    public ProductVO productSearchAll(List list) {
+    public List<ProductVO> productSearchAll(List list) {
+        // this.productMapper.productList(list);
         return this.productMapper.productSearchAll(list);
     }
     //상품검색(세분)
@@ -29,9 +31,11 @@ public class ProductServiceImpl implements ProductService {
     }
     //상품등록
     @Override
-    public void insertProduct(ProductVO productVO, Integer category_no) {
+    public void insertProduct(ProductVO productVO, Integer category_no, OptionVO optionVO) {
         this.productMapper.insertProduct(productVO);
         this.productMapper.insertCategory(category_no);
+        this.productMapper.insertOption(optionVO);
+
 
     }
     //상품상세페이지조회

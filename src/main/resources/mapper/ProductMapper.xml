@@ -4,7 +4,7 @@
 
 <mapper namespace="com.bit.academy.mapper.ProductMapper">
 <!--    카테고리별 조회(현대적인, 따듯한, 구제)-->
-    <select id = "productSearchAll" parameterType="List" resultType="com.bit.academy.model.ProductVO">
+    <select id = "productSearchAll" resultType="com.bit.academy.model.ProductVO">
     SELECT *
     FROM product AS p
     JOIN category_product AS cp
@@ -16,6 +16,8 @@
         #{type}
     </foreach>
     </select>
+
+
 <!--    카테고리분류 이후 가구 소품 조명 분리-->
     <select id = "productSearch" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
         SELECT *
@@ -51,7 +53,26 @@
             )
         ]]>
     </insert>
+
+    <insert id="insertOption"
+            parameterType="com.bit.academy.model.OptionVO"
+            useGeneratedKeys="true">
+        <![CDATA[
+            INSERT INTO product_option (p_id, po_value, po_price, po_stock)
+            VALUES (
+                (SELECT IFNULL(max(p_id),1)FROM product p), #{po_value}, #{po_price}, #{po_stock}
+            )
+        ]]>
+    </insert>
+
 <!--상품상세페이지-->
+
+<!--    <select id ="productDetail" parameterType="Integer" resultType="Map">-->
+<!--        SELECT *-->
+<!--        FROM product p JOIN-->
+<!--        product_option po on p.p_id = po.p_id-->
+<!--        WHERE p.p_id = ${p_id};-->
+<!--    </select>-->
 
     <select id ="productDetail" parameterType="Integer" resultType="Map">
         SELECT *
@@ -59,7 +80,6 @@
         product_option po on p.p_id = po.p_id
         WHERE p.p_id = ${p_id};
     </select>
-
 
 </mapper>
 

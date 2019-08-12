@@ -1,5 +1,6 @@
 package com.bit.academy.service;
 
+import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface ProductService {
     /**
      * 상품검색(카테고리)
      */
-    ProductVO productSearchAll(List list);
+    List<ProductVO> productSearchAll(List list);
 
     /**
      * 상품검색(세부)
@@ -21,7 +22,7 @@ public interface ProductService {
      *
      * 상품추가
      */
-    void insertProduct(ProductVO productVO, Integer category_no);
+    void insertProduct(ProductVO productVO, Integer category_no, OptionVO optionVO);
 
     /**
      * 상품상세페이지조회
