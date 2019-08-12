@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,8 +96,7 @@ public class ProductController {
     }
     @GetMapping("/product/productDetail")
     public String productDetail(Integer p_id, Model model){
-        Map<String, Object> map= this.productService.productDetail(p_id);
-        model.addAttribute("product", map);
+        model.addAttribute("product", this.productService.productDetail(p_id));
         return "/product/productDetail";
     }
 
