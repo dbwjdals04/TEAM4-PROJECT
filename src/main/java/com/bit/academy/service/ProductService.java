@@ -26,5 +26,5 @@ public interface ProductService {
     /**
      * 상품상세페이지조회
      */
-    Map<String, Object> productDetail(Integer p_id);
+   ProductVO productDetail(Integer p_id);
 }
