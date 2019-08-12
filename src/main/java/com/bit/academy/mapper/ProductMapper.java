@@ -29,6 +29,7 @@ public interface ProductMapper {
      * @param productVO
      */
     void insertProduct(ProductVO productVO);
+    void insertCategory(Integer category_no);
 
     /**
      * 상품상세페이지
