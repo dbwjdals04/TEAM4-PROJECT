@@ -37,5 +37,5 @@ public interface ProductMapper {
      * @Param p_no
      * @return
      */
-    Map<String, Object> productDetail(Integer p_id);
+   ProductVO productDetail(Integer p_id);
 }
