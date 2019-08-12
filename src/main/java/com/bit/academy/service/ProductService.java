@@ -10,12 +10,12 @@ public interface ProductService {
     /**
      * 상품검색(카테고리)
      */
-    ProductVO productSearchAll(List list);
+    List<ProductVO> productSearchAll(List list);
 
     /**
      * 상품검색(세부)
      */
-    ProductVO productSearch(Integer c_no);
+    List<ProductVO> productSearch(Integer c_no);
 
     /**
      *

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +20,15 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     //상품검색(카테고리)
     @Override
-    public ProductVO productSearchAll(List list) {
-        return this.productMapper.productSearchAll(list);
+    public List<ProductVO> productSearchAll(List list) {
+        List<ProductVO> result = this.productMapper.productSearchAll(list);
+        return result;
     }
     //상품검색(세분)
     @Override
-    public ProductVO productSearch(Integer c_no) {
-        return this.productMapper.productSearch(c_no);
+    public List<ProductVO> productSearch(Integer c_no) {
+        List<ProductVO> list = this.productMapper.productSearch(c_no);
+        return list;
     }
     //상품등록
     @Override

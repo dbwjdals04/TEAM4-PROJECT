@@ -12,7 +12,6 @@ public class PaymentServiceImpl implements PaymentService{
     @Autowired
     private PaymentMapper paymentMapper;
 
-
     @Override
     public CartVO cartview(int m_no) {
         return this.paymentMapper.cartview(m_no);

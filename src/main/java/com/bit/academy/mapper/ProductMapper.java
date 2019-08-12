@@ -16,13 +16,14 @@ public interface ProductMapper {
      * 상품검색기능
      * @param c_no
      */
-    ProductVO productSearchAll(List c_no);
+
+    List<ProductVO> productSearchAll(List c_no);
 
     /**
      * 상품검색기능(세부)
      * @param c_no
      */
-    ProductVO productSearch(Integer c_no);
+    List<ProductVO> productSearch(Integer c_no);
 
     /**
      * 상품추가기능
