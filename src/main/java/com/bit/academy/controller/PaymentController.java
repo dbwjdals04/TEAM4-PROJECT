@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
+
 @Slf4j
 @Controller
 public class PaymentController {
@@ -26,14 +27,14 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/payment/cart/{m_no}")
-    public String cartview(Model model, @PathVariable int m_no){
+    @PostMapping("/payment/cart/{m_no}")
+    public String cartview(Model model, @PathVariable int m_no, HttpServletRequest request){
 
 
-        model.addAttribute("cart", this.paymentService.cartview(m_no));
+        model.addAttribute("cart", this.paymentService.cartview(m_no,request));
         return "payment/cart";
     }
-    @GetMapping("/payment/cart")
+    @PostMapping("/payment/cart")
     public String index(){
         return "payment/cart";
     }

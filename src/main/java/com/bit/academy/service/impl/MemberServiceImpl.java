@@ -91,6 +91,7 @@ public class MemberServiceImpl implements MemberService {
             request.getSession().setAttribute("member", DBmemberVO);
             request.getSession().setMaxInactiveInterval(60 * 30);
 
+            log.debug(String.valueOf(request.getSession().getAttribute("member")));
 
         } else if (DBmemberVO == null) {
             request.getSession(false);
