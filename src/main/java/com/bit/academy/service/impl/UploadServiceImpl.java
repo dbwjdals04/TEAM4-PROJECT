@@ -22,8 +22,8 @@ public class UploadServiceImpl implements UploadService {
         String newThumbnailName = "thumb_"+uid + "_" + thumbnail.getOriginalFilename();
         String newDetailImgName = "detailImg_" + uid + "_" + detailImg.getOriginalFilename();
 
-        String thumbFolder=System.getProperty("user.dir")+"/uploads/thumbnail/";
-        String detailImgFolder=System.getProperty("user.dir")+"/uploads/detailImg/";
+        String thumbFolder=System.getProperty("user.dir")+"/src/main/resources/uploads/thumbnail/";
+        String detailImgFolder=System.getProperty("user.dir")+"/src/main/resources/uploads/detailImg/";
 
         byte[] thumbBytes= thumbnail.getBytes();
         byte[] detailImgBytes = detailImg.getBytes();

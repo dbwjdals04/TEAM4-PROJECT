@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div th:fragment="nav">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink " id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/main/index">INTERIA</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href='/board/list'>Q&A</a>
+                </li>
+                <script th:inline="javascript">
+                    var memberk = /*[[${session.member}]]*/
+
+                        console.log("세션정보");
+                    if(memberk!=null){
+                        document.write("<li class=\"nav-item\">\n" +
+                            "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\" location.href='/payment/cart/'+memberk.m_no\">CART</a>\n" +
+                            "          </li>");
+                        document.write("<li class=\"nav-item\" id='logOut'>\n" +
+                            "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
+                            "            </li>");
+                        document.write("<li class=\"nav-item\">\n" +
+                            "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">MY PAGE</a>\n" +
+                            "            </li>");
+
+                    }
+                    else{
+                        document.write("<li class=\"nav-item\">\n" +
+                            "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=carterror()>CART</a>\n" +
+                            "          </li>");
+                        document.write("<li class=\"nav-item\">\n" +
+                            "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/login\">LOGIN</a>\n" +
+                            "            </li>\n");
+                        document.write("<li class=\"nav-item\">\n" +
+                            "            <a class=\"nav-link js-scroll-trigger\" href=\"/member/regist\">REGIST</a>\n" +
+                            "          </li>");
+
+                    }
+
+                    function carterror() {
+                        alert("로그인 하세요");
+                        location.href='/member/login'
+                    }
+                </script>
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+</body>
+</html>

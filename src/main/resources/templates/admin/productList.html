@@ -8,15 +8,31 @@
 
 </head>
 <body>
-<checkbox>
-    <input type="checkbox" id="modern_furniture">모던-가구
-    <input type="checkbox" id="modern_light">모던-조명
-    <input type="checkbox" id="modern_prop">모던-소품
-    <input type="checkbox" id="antique_furniture">앤틱-가구
-    <input type="checkbox" id="antique_light">앤틱-조명
-    <input type="checkbox" id="antique_prop">앤틱-소품
+<checkbox id = "category">
+    <input type="checkbox" th:value="1">모던-가구
+    <input type="checkbox" th:value="2">모던-조명
+    <input type="checkbox" th:value="3">모던-소품
+    <input type="checkbox" th:value="4">앤틱-가구
+    <input type="checkbox" th:value="5">앤틱-조명
+    <input type="checkbox" th:value="6">앤틱-소품
 </checkbox>
 <div id ="product-div">
+    <table>
+        <thead>
+        <tr>
+
+            <td>제품 번호</td>
+            <td>제품명</td>
+            <td>가격</td>
+        </tr>
+        </thead>
+
+
+        <tbody id = "product-table">
+
+
+        </tbody>
+    </table>
 
 </div>
 <input type="button" id="openModal" value="상품 등록" onclick="add();" >
@@ -24,6 +40,14 @@
 <div id = "addModal" style="display: none">
     <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/product/add">
         제품명<input type="text" id="p_name" name="p_name"><br>
+        카테고리 <select name = "category_no">
+        <option value="1">모던-가구</option>
+        <option value="2">모던-조명</option>
+        <option value="3">모던-소품</option>
+        <option value="4">앤틱-가구</option>
+        <option value="5">앤틱-조명</option>
+        <option value="6">앤틱-소품</option>
+    </select><br>
         가격<input type="text" id="p_price" name="p_price"><br>
         제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
         기본 설명<input type="text" id="p_spec" name="p_spec"><br>
@@ -32,13 +56,13 @@
         <div class="select_thumbnail"><img src="" /></div>
         <div class="select_detailImg"><img src=""></div>
         <input type="submit" value="upload"/>
-        <input type="button" value="등록" onclick="addProduct();">
 
     </form>
 </div>
 
 </body>
 <script>
+
     var add = function () {
         var modal = document.getElementById("addModal");
         modal.style.display = "block";
@@ -61,10 +85,31 @@
             reader.readAsDataURL(this.files[0]);
         }
     });
-    var test = function(){
-    };
-    var addProduct = function () {
-        $("#insertProduct").submit();
-    }
+    $("#category").change(function () {
+        var arr = [];
+        $("input:checkbox:checked").each(function (index) {
+            arr.push($(this).val());
+        });
+        alert(arr);
+        $.ajax({
+            url : '/admin/product/'+arr,
+            type : 'get',
+            data :  {category_no : arr},
+            dataType : 'json',
+
+            success : function(data){
+                alert("성공!");
+                console.log(data);
+                $("#product-table").empty();
+                $("#product-table").append('<td>' + data.p_id + '</td>');
+                $("#product-table").append('<td>' + data.p_name + '</td>');
+                $("#product-table").append('<td>' + data.p_price + '</td>');
+            },
+            error : function(error){
+                alert("실패!");
+                console.log(data);
+            }
+        })
+    });
 </script>
 </html>

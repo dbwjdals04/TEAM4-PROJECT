@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
+div.row { float: left; clear: both; width: 100%; padding: 10px;}
+body{
+    width:60%;
+    margin: auto;
+    font-family: sunflower;
+}
+input.btn-dark-blue{
+    color:white; width:90px; height: 40px; background-color: #237fbc;
+    border-color: #237fbc; -webkit-box-shadow: 0 3px 0 #1a5c87; box-shadow: 0 3px 0 #1a5c87;}
+input.btn-dark-blue:hover{background-color:#166ea8;}
+input.btn-dark-blue:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
+table {
+
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+}
+td.title:hover{
+
+    background:#fed136; color:#fff;
+
+}
+
+th, td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+td.left{
+    width:50px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 30px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+td.right{
+    width:100px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+td.zzz{
+    width:80px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 50px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+td.titlehead{
+
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;}
+td.title{
+
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;}
+
+td.page{
+    color: black;
+}
+
+.boardbtn {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    font-weight: 700;
+    color: white;
+}
+
+.boardbtn-xl {
+    font-size: 18px;
+    padding: 5px 10px;
+    position: absolute;
+}
+.boardbtn-primary {
+    background-color: #fed136;
+    border-color: #fed136;
+}
+
+.boardbtn-primary:active, .boardbtn-primary:focus, .boardbtn-primary:hover {
+    background-color: #fec810 !important;
+    border-color: #fec810 !important;
+    color: white;
+}
+
+.boardbtn-primary:active, .boardbtn-primary:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
+    box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
+}

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,18 +53,38 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String productlist(){
+    public String productlist(Model model){
+
+        /*model.addAttribute("productList", this.productService.productSearchAll());
+        List<ProductVO> productList = new ArrayList<>();
+
+        for(ProductVO productVO:productList){
+
+        }*/
         return "admin/productList";
     }
+
+    @ResponseBody
+    @GetMapping("/admin/product/{category_no}")
+    public Model productList(Model model, @PathVariable String category_no){
+        List c_noList = Arrays.asList(category_no.split(","));
+        log.debug("!!!!!!!!!!!!!"+c_noList);
+        model.addAttribute("productList", this.productService.productSearchAll(c_noList));
+        //ProductVO result = this.productService.productSearchAll(c_noList);
+        log.debug("------- result : "+model);
+        return model;
+    };
+
+
+
     //상품등록
     @PostMapping("/admin/product/add")
     public String productAdd (@ModelAttribute ProductVO productVO, Model model,
-                              @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile){
+                              @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile, @RequestParam("category_no") Integer category_no){
         String returnValue = "start";
         try {
             //this.productService.insertProduct(productVO);
-            //log.debug(this.uploadService.saveImage(imageFile, productVO).toString());
-            this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO));
+            this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO), category_no);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Error saving photo ", e);

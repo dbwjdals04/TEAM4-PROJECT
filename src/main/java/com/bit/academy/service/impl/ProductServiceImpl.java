@@ -32,8 +32,10 @@ public class ProductServiceImpl implements ProductService {
     }
     //상품등록
     @Override
-    public void insertProduct(ProductVO productVO) {
+    public void insertProduct(ProductVO productVO, Integer category_no) {
         this.productMapper.insertProduct(productVO);
+        this.productMapper.insertCategory(category_no);
+
     }
     //상품상세페이지조회
     @Override
