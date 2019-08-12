@@ -21,7 +21,7 @@ public interface ProductService {
      *
      * 상품추가
      */
-    void insertProduct(ProductVO productVO);
+    void insertProduct(ProductVO productVO, Integer category_no);
 
     /**
      * 상품상세페이지조회

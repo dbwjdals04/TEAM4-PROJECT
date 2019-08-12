@@ -26,6 +26,7 @@
         ON cp.category_no = c.category_no
         WHERE c.category_no = ${c_no};
     </select>
+
 <!--상품등록-->
     <insert id="insertProduct"
             parameterType="com.bit.academy.model.ProductVO"
@@ -36,6 +37,17 @@
             )
             VALUES (
                 #{p_name}, #{p_price}, #{p_brand}, #{p_spec}, #{thumb_name}, #{thumb_route}, #{thumb_100}, #{thumb_300}, #{thumb_600}, #{detailimg_name}, #{detailimg_route}
+            )
+        ]]>
+    </insert>
+
+    <insert id="insertCategory"
+            parameterType="Integer"
+            useGeneratedKeys="true">
+        <![CDATA[
+            INSERT INTO category_product (p_id, category_no)
+            VALUES (
+                (SELECT IFNULL(max(p_id),1)FROM product p), #{category_no}
             )
         ]]>
     </insert>
