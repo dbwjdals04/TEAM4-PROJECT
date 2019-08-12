@@ -58,17 +58,28 @@
 
                       }
 
-              if(memberk!=null){
+              if(memberk!=null && memberk.m_no!=1){
                 document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
                         "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
                         "          </li></form>")
-              document.write("<li class=\"nav-item\" id='logOut'>\n" +
-                      "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
-                      "            </li>");
-              document.write("<li class=\"nav-item\">\n" +
-                      "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">MY PAGE</a>\n" +
-                      "            </li>");
+                document.write("<li class=\"nav-item\" id='logOut'>\n" +
+                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
+                        "            </li>");
+                document.write("<li class=\"nav-item\">\n" +
+                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">MY PAGE</a>\n" +
+                        "            </li>");
 
+              }
+              else if(memberk!=null && memberk.m_no==1){
+                document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
+                        "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
+                        "          </li></form>")
+                document.write("<li class=\"nav-item\" id='logOut'>\n" +
+                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
+                        "            </li>");
+                document.write("<li class=\"nav-item\">\n" +
+                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/admin/\">ADMIN PAGE</a>\n" +
+                        "            </li>");
               }
               else{
                 document.write("<li class=\"nav-item\">\n" +
