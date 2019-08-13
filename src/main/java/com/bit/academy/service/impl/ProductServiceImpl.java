@@ -22,13 +22,16 @@ public class ProductServiceImpl implements ProductService {
     //상품검색(카테고리)
     @Override
     public List<ProductVO> productSearchAll(List list) {
-        // this.productMapper.productList(list);
-        return this.productMapper.productSearchAll(list);
+
+        List<ProductVO> result = this.productMapper.productSearchAll(list);
+        return result;
+
     }
     //상품검색(세분)
     @Override
-    public ProductVO productSearch(Integer c_no) {
-        return this.productMapper.productSearch(c_no);
+    public List<ProductVO> productSearch(Integer c_no) {
+        List<ProductVO> list = this.productMapper.productSearch(c_no);
+        return list;
     }
     //상품등록
     @Override
@@ -50,12 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
     //상품상세페이지조회
     @Override
-    public Map<String, Object> productDetail(Integer p_id) {
-        log.debug(this.productMapper.productDetail(p_id).toString());
-        Map<String, Object> map = new HashMap<String, Object>();
-        //map.putthis.productMapper.productDetail(p_id);
-        return map;
-    }
+
 
     //상품 조회
     @Override
@@ -63,5 +61,9 @@ public class ProductServiceImpl implements ProductService {
         Map<String, Object> map = this.productMapper.selectProduct(p_id);
         map.put("option", this.productMapper.selectOption(p_id));
         return map;
+
+    public ProductVO productDetail(Integer p_id) {
+        return this.productMapper.productDetail(p_id);
+
     }
 }

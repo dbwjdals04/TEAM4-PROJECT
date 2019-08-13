@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.*;
 
 @Slf4j
@@ -29,17 +28,26 @@ public class ProductController {
         return "/product/productMain";
     }
 
+    //상품검색(카테고리)
+    @ResponseBody
+    @GetMapping("/product/searchProductAll")
+    public List<ProductVO> searchProductAll(ProductVO productVO,
+                                      @RequestParam("c_no[]") List c_no,
+                                      Model model){
+        log.debug(String.valueOf(c_no));
+        List<ProductVO> product = this.productService.productSearchAll(c_no);
 
+        return product;
+    }
     //상품검색(세부)
     @ResponseBody
     @GetMapping("/product/searchProduct")
-    public ProductVO searchProduct(ProductVO productVO,
+    public List<ProductVO> searchProduct(ProductVO productVO,
                                    @RequestParam("c_no") Integer c_no
                                    ){
         log.debug(String.valueOf(c_no));
-        ProductVO result = this.productService.productSearch(c_no);
-
-        return result;
+        List<ProductVO> product = this.productService.productSearch(c_no);
+        return product;
     }
 
     @GetMapping("/admin/productList")
@@ -109,8 +117,7 @@ public class ProductController {
     }
     @GetMapping("/product/productDetail")
     public String productDetail(Integer p_id, Model model){
-        Map<String, Object> map= this.productService.productDetail(p_id);
-        model.addAttribute("product", map);
+        model.addAttribute("product", this.productService.productDetail(p_id));
         return "/product/productDetail";
     }
 

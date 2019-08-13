@@ -16,7 +16,7 @@ public interface ProductService {
     /**
      * 상품검색(세부)
      */
-    ProductVO productSearch(Integer c_no);
+    List<ProductVO> productSearch(Integer c_no);
 
     /**
      *
@@ -28,10 +28,14 @@ public interface ProductService {
     /**
      * 상품상세페이지조회
      */
-    Map<String, Object> productDetail(Integer p_id);
+
+ 
 
     /**
      * 상품조회
      */
     Map<String, Object> selectProduct(Integer p_id);
+
+   ProductVO productDetail(Integer p_id);
+
 }

@@ -1,0 +1,110 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <style>
+        table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #444444;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Payment Test</h1>
+
+
+<table>
+    <tbody>
+    <tr>
+        <th>
+            상품명
+        </td>
+        <td>
+            <input type="text" name="goods_name" id="goods_name" value="테스트 쇼핑몰 상품 외 3건"/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            결제금액
+        </td>
+        <td>
+            <input type="text" name="amount" id="amount" value="500"/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            결제수단
+        </td>
+        <td>
+            <select name="pay_method" id="pay_method">
+                <option value="card">신용카드</option>
+                <option value="vbank">가상계좌</option>
+                <option value="phone">휴대폰소액결제</option>
+                <option value="cultureland">문화상품권</option>
+            </select>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+<input type="button" value="Payment" onclick="payment();"/>
+
+
+
+
+<form name="paymentForm" id="paymentForm" >
+
+</form>
+
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    var payment = function(){
+        var IMP = window.IMP; // 생략해도 괜찮습니다.
+        IMP.init("imp23149039"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+        var pay_method = $('#pay_method:selected').val();
+        var merchant_uid = /*[[${merchant_uid}]]*/;
+        var amount = $('#amount').val();
+        var goods_name = $('#goods_name').val();
+        // IMP.request_pay(param, callback) 호출
+        IMP.request_pay({ // param
+            pg: "html5_inicis",
+            pay_method: pay_method,
+            merchant_uid: merchant_uid,
+            name: goods_name,
+            amount: amount,
+            buyer_email: "zenice@gmail.com",
+            buyer_name: "이상준",
+            buyer_tel: "010-6512-0600",
+            buyer_addr: "서울시 종로구 비봉길 1111",
+            buyer_postcode: "00000"
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                // 결제 성공 시 로직
+                console.log(rsp);
+                Object.keys(rsp).forEach(function (key) {
+                    $('#paymentForm').append('<input type="text" name="'+key+'" value="'+rsp[key]+'"/><br/>');
+                });
+                $('#paymentForm')
+                    .attr('method', 'post')
+                    .attr('action', '/payment')
+                    .submit();
+            } else {
+                // 결제 실패 시 로직,
+                console.error(rsp);
+            }
+        });
+    };
+</script>
+
+</body>
+</html>

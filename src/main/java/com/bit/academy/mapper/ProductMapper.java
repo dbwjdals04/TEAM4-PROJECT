@@ -18,11 +18,12 @@ public interface ProductMapper {
      * @param c_no
      */
     List<ProductVO> productSearchAll(List c_no);
+
     /**
      * 상품검색기능(세부)
      * @param c_no
      */
-    ProductVO productSearch(Integer c_no);
+    List<ProductVO> productSearch(Integer c_no);
 
     /**
      * 상품추가기능
@@ -37,7 +38,7 @@ public interface ProductMapper {
      * @Param p_id
      * @return
      */
-    Map<String, Object> productDetail(Integer p_id);
+
 
     /**
      * 상품 조회
@@ -46,4 +47,6 @@ public interface ProductMapper {
      */
     Map<String, Object> selectProduct(Integer p_id);
     List<OptionVO> selectOption(Integer p_id);
+   ProductVO productDetail(Integer p_id);
+
 }

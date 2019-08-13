@@ -19,7 +19,8 @@
 
 
 <!--    카테고리분류 이후 가구 소품 조명 분리-->
-    <select id = "productSearch" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
+    <select id = "productSearch"  parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
+
         SELECT *
         FROM product AS p
         JOIN category_product AS cp
@@ -81,8 +82,8 @@
 
 <!--상품상세페이지-->
 
-    <select id ="productDetail" parameterType="Integer" resultType="Map">
-        SELECT *
+    <select id ="productDetail" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
+        SELECT p.p_id,po.po_price
         FROM product p JOIN
         product_option po on p.p_id = po.p_id
         WHERE p.p_id = ${p_id};

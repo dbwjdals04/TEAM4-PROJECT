@@ -2,6 +2,7 @@ package com.bit.academy.service;
 
 import com.bit.academy.model.CartVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public interface PaymentService {
@@ -11,5 +12,5 @@ public interface PaymentService {
      * @param m_no
      * @return
      */
-    CartVO cartview(int m_no);
+    CartVO cartview(int m_no, HttpServletRequest request);
 }
