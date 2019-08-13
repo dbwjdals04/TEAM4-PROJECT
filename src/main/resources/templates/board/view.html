@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/agency.min.css" rel="stylesheet">
+    <link href="/static/css/board.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Board View</h1>
+<div th:include="include/nav::nav"></div>
+<div style="height: 80px"></div>
+    <h1><span th:text="${board.qna_title}">제목</span></h1>
 
 
     <form name="viewForm" id="viewForm" method="get" style="width:600px;">
+        <table>
+            <tr>
+                <td colspan="99" style="text-align:left;">
+                    <span>글번호:</span> <span th:text="${board.qna_no}">글번호</span>
+                    <span>　작성자:</span> <span th:text="${board.m_name}">작성자</span>
+                    <span>　등록일자:</span> <span th:text="${#dates.format(board.qna_regdate, 'YYYY-MM-dd HH:mm')}">등록일자</span>
+                </td>
+            </tr>
 
-        <div><span>글번호</span> <span th:text="${board.qna_no}">글번호</span></div>
-
-        <div><span>회원번호</span> <span th:text="${board.m_no}">회원번호</span></div>
-
-        <div><span>등록일자</span> <span th:text="${#dates.format(board.qna_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
-
-        <div><span>제목</span> <span th:text="${board.qna_title}">제목</span></div>
-
-        <div>
-            <span>상세</span>
+        <td class="view">
+            <span>　</span>
             <div th:text="${board.qna_context}"></div>
-        </div>
+        </td>
+        </table>
     </form>
 
-    <input type="button" value="답글" onclick="replyBoard();"/>
-    <input type="button" value="수정" onclick="modifyBoard();"/>
-    <input type="button" value="삭제" onclick="deleteBoard();"/>
-    <input type="button" value="목록" onclick="listBoard();"/>
+    <input class="button" type="button" value="답글" onclick="replyBoard();"/>
+    <input class="button button-modify" type="button" value="수정" onclick="modifyBoard();"/>
+    <input class="button button-delete" type="button" value="삭제" onclick="passcheck(this)" th:attr="data-qna_no = ${board.qna_no}" />
+    <input class="button" type="button" value="목록" onclick="listBoard();"/>
 
-
+<div style="width: 100%" th:include="include/footer::footer"></div>
     <script type="text/javascript" th:inline="javascript">
         
         var qna_no = /*[[ ${board.qna_no} ]]*/;
@@ -51,7 +62,7 @@
         
         
         var deleteBoard = function(){
-            if(confirm('삭제하시겠습니까?')){
+            if(confirm('정말로 삭제하시겠습니까?')){
                 $('#viewForm')
                     .attr('action','/board/delete/' + qna_no)
                     .attr('method','post')
@@ -61,6 +72,52 @@
         var listBoard = function(){
             location.href='/board/list';
         };
+
+        var passcheck = function(obj){
+            var qna_no = $(obj).data("qna_no");
+            console.log(privateck);
+
+
+
+
+            var passwd = prompt("비밀번호를 입력하세요");
+
+            console.log(passwd);
+
+            var param = {qna_no:qna_no,qna_passwd:passwd};
+
+            // ajax
+            $.ajax({
+                type : 'get',
+                url : '/board/passck',
+                data : param,
+                error : function(error) {
+                    console.error("Error!");
+                },
+                success : function(data) {
+                    console.log("success!");
+                    console.log(data);
+                    console.log(data.count);
+
+
+                    if(data.count==0){
+                        alert("비밀번호 틀림")
+                        // 비밀번호 틀림
+                    }
+                    else{
+                        deleteBoard();
+                    }
+
+                },
+                complete : function() {
+                    console.log("complete!");
+                }
+            });
+
+            console.log('aaa');
+
+        }
+
         
     </script>
 

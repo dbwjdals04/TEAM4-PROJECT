@@ -56,6 +56,18 @@ td.zzz{
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
+td.view{
+    width:80px;
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 50px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
 td.titlehead{
 
     padding-top: 13px;
@@ -71,6 +83,10 @@ td.title{
 
 td.page{
     color: black;
+}
+td.lockimg{
+    width: 20px;
+    padding: 0px;
 }
 
 .boardbtn {
@@ -98,4 +114,18 @@ td.page{
 .boardbtn-primary:active, .boardbtn-primary:focus {
     -webkit-box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
     box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
+}
+
+.button{
+    padding: 5px 10px;
+    border: 0px;
+    border-radius: 3px;
+    background-color: black;
+    color: white;
+}
+.button-delete {
+    background-color: #be2617;
+}
+.button-modify{
+    background-color: #c69500;
 }
