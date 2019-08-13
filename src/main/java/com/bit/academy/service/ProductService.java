@@ -22,10 +22,16 @@ public interface ProductService {
      *
      * 상품추가
      */
-    void insertProduct(ProductVO productVO, Integer category_no, OptionVO optionVO);
+    void insertProduct(ProductVO productVO, Integer category_no, List<OptionVO> list);
+    //test //void insertTest(List<OptionVO> list);
 
     /**
      * 상품상세페이지조회
      */
     Map<String, Object> productDetail(Integer p_id);
+
+    /**
+     * 상품조회
+     */
+    Map<String, Object> selectProduct(Integer p_id);
 }

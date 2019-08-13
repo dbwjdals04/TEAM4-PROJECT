@@ -45,6 +45,9 @@
         <option value="4">앤틱-가구</option>
         <option value="5">앤틱-조명</option>
         <option value="6">앤틱-소품</option>
+        <option value="7">따뜻한-가구</option>
+        <option value="8">따뜻한-조명</option>
+        <option value="9">따뜻한-소품</option>
     </select><br>
         가격<input type="text" id="p_price" name="p_price"><br>
         제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
@@ -70,7 +73,8 @@
 
     var i=0;
     var addOption = function(){
-        $("#div-option").append('<input type="text" id="po_value" name="OptionVOList[0].po_value" value="옵션명"> <input type="text" id="po_price" name="OptionVOList[0].po_price" value="옵션별 추가 가격"> <input type="text" id="po_stock" name="OptionVOList[0].po_stock" value="옵션별 재고"><br>');
+
+        $("#div-option").append('<input type="text" name="OptionVOList['+i+'].po_value" value="옵션명" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_price" value="옵션별 추가 가격" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_stock" value="옵션별 재고" onclick=this.value=""><br>');
         i++;
     };
 
@@ -127,6 +131,7 @@
                         success : function (data) {
                             var modal = document.getElementById("addProductModal");
                             modal.style.display = "block";
+                            $("#p_name").val(data.p_id);
                             console.log(data);
                         },
                         error : function(error){

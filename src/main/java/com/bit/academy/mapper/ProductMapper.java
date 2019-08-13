@@ -34,8 +34,16 @@ public interface ProductMapper {
 
     /**
      * 상품상세페이지
-     * @Param p_no
+     * @Param p_id
      * @return
      */
     Map<String, Object> productDetail(Integer p_id);
+
+    /**
+     * 상품 조회
+     * @Param p_id
+     * @return
+     */
+    Map<String, Object> selectProduct(Integer p_id);
+    List<OptionVO> selectOption(Integer p_id);
 }

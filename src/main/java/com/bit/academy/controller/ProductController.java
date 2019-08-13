@@ -12,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -47,13 +44,6 @@ public class ProductController {
 
     @GetMapping("/admin/productList")
     public String productlist(Model model){
-
-        /*model.addAttribute("productList", this.productService.productSearchAll());
-        List<ProductVO> productList = new ArrayList<>();
-
-        for(ProductVO productVO:productList){
-
-        }*/
         return "admin/productList";
     }
 
@@ -70,20 +60,45 @@ public class ProductController {
     @ResponseBody
     @PostMapping("/admin/product/{p_id}")
     public Map<String, Object> SelectProduct(Model model, @PathVariable int p_id){
-        Map<String, Object> map= this.productService.productDetail(p_id);
+        Map<String, Object> map= this.productService.selectProduct(p_id);
         return map;
     }
 
 
     //상품등록
+
+//test
+//    @PostMapping("/admin/productList/add")
+//    public String TestproductAdd (@ModelAttribute OptionVO optionVO, Model model) {
+//        OptionVO op1 = new OptionVO();
+//        op1.setPo_value("option1");
+//        op1.setPo_price(1000);
+//        op1.setPo_stock(1);
+//        OptionVO op2 = new OptionVO();
+//        op2.setPo_value("option2");
+//        op2.setPo_price(2000);
+//        op2.setPo_stock(2);
+//        List<OptionVO> list = new ArrayList<OptionVO>();
+//        list.add(op1);
+//        list.add(op2);
+//        log.debug("=========list=========");
+//        log.debug(list.toString());
+//        log.debug("===================");
+//        //log.debug(optionVO.getOptionVOList().toString());
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("list", list);
+//        map.put("p_id", 45);
+//        this.productService.insertTest(list);
+//        return "admin/productList";
+//    }
+
     @PostMapping("/admin/productList/add")
     public String productAdd (@ModelAttribute ProductVO productVO, @ModelAttribute OptionVO optionVO, Model model,
                               @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile, @RequestParam("category_no") Integer category_no){
-        log.debug("----------------------"+optionVO);
+
         String returnValue = "start";
         try {
-            //this.productService.insertProduct(productVO);
-            this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO), category_no, optionVO);
+            this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO), category_no, optionVO.getOptionVOList());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Error saving photo ", e);
