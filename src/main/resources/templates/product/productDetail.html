@@ -19,10 +19,9 @@
 <div th:include="include/nav::nav"></div>
 <div style="height: 80px"></div>
 <h1>제품 상세페이지</h1>
-<form>
 <table>
     <tr>
-        <td rowspan="4">
+        <td rowspan="5">
             <div><img th:src="@{/uploads/thumbnail/}+${product.thumb_300 }" /></div>
         </td>
         <td>
@@ -43,6 +42,11 @@
     </tr>
     <tr>
         <td>
+            hello
+        </td>
+    </tr>
+    <tr>
+        <td>
             <input type="button" id = "cart" value ="장바구니 담기" onclick ="goCart(this)"th:attr="data-p_id=${product.p_id}">
             <input type="button" id = "buy" value = "구매하기" onclick = "buy();">
         </td>
@@ -51,7 +55,6 @@
     <div style="size: 0.3px"><span>상품상세 :</span> <span th:text="${product.p_spec}"></span>
         <img th:src = "@{/uploads/detailimg/}+${product.detailimg_name}"/>
     </div>
-</form>
 
 <script type="text/javascript">
     var cart = function(obj){
