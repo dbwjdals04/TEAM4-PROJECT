@@ -53,7 +53,9 @@ public class ProductServiceImpl implements ProductService {
 
     //상품상세페이지조회
     @Override
-
+    public ProductVO productDetail(Integer p_id){
+        return this.productMapper.productDetail(p_id);
+    }
 
     //상품 조회
     @Override
@@ -61,9 +63,5 @@ public class ProductServiceImpl implements ProductService {
         Map<String, Object> map = this.productMapper.selectProduct(p_id);
         map.put("option", this.productMapper.selectOption(p_id));
         return map;
-
-    public ProductVO productDetail(Integer p_id) {
-        return this.productMapper.productDetail(p_id);
-
     }
 }

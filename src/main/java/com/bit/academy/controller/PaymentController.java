@@ -27,6 +27,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
+    //카트조회(로그인 후 자기 장바구니)
     @PostMapping("/payment/cart/{m_no}")
     public String cartview(Model model, @PathVariable int m_no, HttpServletRequest request){
 
@@ -34,14 +35,21 @@ public class PaymentController {
         model.addAttribute("cart", this.paymentService.cartview(m_no,request));
         return "payment/cart";
     }
+    //
     @PostMapping("/payment/cart")
     public String index(){
         return "payment/cart";
     }
 
+    //카트에등록
+    @PostMapping("/payment/goCart/")
+    public String goCart(Model model, @ModelAttribute CartVO cartVO, HttpServletRequest request){
+
+        model.addAttribute("result",this.paymentService.goCart(cartVO,request));
+        return "payment/cart";
+    }
+
     //결제
-
-
     @GetMapping("/payment")
     public String paymentForm(Model model){
 
@@ -73,5 +81,7 @@ public class PaymentController {
 
         return "payment/payment";
     }
+
+
 
 }

@@ -13,4 +13,7 @@ public interface PaymentMapper {
      * @return
      */
     CartVO cartview(int m_no);
+
+    //장바구니담기
+    void goCart(CartVO cartVO);
 }
