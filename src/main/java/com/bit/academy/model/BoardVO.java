@@ -16,6 +16,7 @@ public class BoardVO {
     private String qna_passwd;
     private Date qna_regdate;
     private  int qna_groupOrd;
+    private int privateck;
 
     private String m_id;
     private String m_name;

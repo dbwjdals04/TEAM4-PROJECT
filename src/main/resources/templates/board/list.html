@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/agency.min.css" rel="stylesheet">
-    <link href="../static/css/board.css" rel="stylesheet">
+    <link href="/static/css/board.css" rel="stylesheet">
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
@@ -62,12 +62,14 @@
     <tr>
         <td colspan="99" style="text-align:right;">
             전체 게시물 갯수 : <span th:text="${boardPaging.totalCount}">00</span>개
+
         </td>
     </tr>
     <tr>
 
         <td class="left">글번호</td>
         <td class="id">아이디</td>
+        <td class="pivateck"></td>
         <td class="titlehead">제목</td>
         <td class="right">등록일</td>
     </tr>
@@ -81,13 +83,17 @@
     <tr th:each="board:${boardList}">
         <td class="left" th:text="${board.qna_no}" >글번호</td>
         <td class="zzz" th:text="${board.m_id}" >아이디</td>
-        <form name="view" id="view"><td class="title" onclick="passcheck(this)"th:attr="data-qna_no = ${board.qna_no}"><span th:text="${board.qna_title}"></span></td></form>
+        <td class="lockimg" th:if="${board.privateck}=='1'" ><img src="/static/img/lock.png"/></td>
+        <td class="lockimg" th:unless="${board.privateck}=='1'" ></td>
+        <form name="view" id="view"><td class="title" id = "kkkk" onclick="passcheck(this)"th:attr="data-qna_no = ${board.qna_no},  data-privateck = ${board.privateck}">
+            <span th:text="${board.qna_title}"></span></td></form>
         <td class="right" th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>
     </tr>
     </tbody>
 </table>
 
-<div style="height: 41px; padding: 2px"><a class="boardbtn boardbtn-primary boardbtn-xl text-uppercase js-scroll-trigger" href='/board/insert'>등록</a></div>
+<div style="height: 41px; padding: 2px"><input class="button button-modify" type="button" value="등록" onclick="submit();"/></div>
+
 
 
 
@@ -131,18 +137,35 @@
 
     };
 
+    var submit = function () {
+        var memberk = /*[[${session.member}]]*/
+        if(memberk==null){
+            alert("로그인해주세요");
+        }
+        else{
+            location.href="/board/insert"
+        }
+    }
+
+
 
 
     var passcheck = function(obj){
         var qna_no = $(obj).data("qna_no");
+        var privateck = $(obj).data("privateck");
+
 
         console.log(qna_no);
+        console.log(privateck);
+
+        if(privateck==1){
 
         var passwd = prompt("비밀번호를 입력하세요");
 
         console.log(passwd);
 
         var param = {qna_no:qna_no,qna_passwd:passwd};
+
 
         // ajax
         $.ajax({
@@ -180,6 +203,13 @@
         console.log('aaa');
 
     }
+    else{
+        $('#view')
+            .attr('method', 'post')
+            .attr('action', '/board/view/'+qna_no)
+            .submit();
+    }}
+
 </script>
 <!-- Bootstrap core JavaScript -->
 <script src="/static/vendor/jquery/jquery.min.js"></script>

@@ -11,10 +11,10 @@
             keyProperty="qna_no">
         <![CDATA[
             INSERT INTO qna (
-                m_no,qna_originno, qna_title , qna_context, qna_passwd, qna_regdate
+                m_no,qna_originno, qna_title , qna_context, qna_passwd, qna_regdate,privateck
             )
             VALUES (
-                #{m_no},(SELECT IFNULL(max(qna_no)+1,1)FROM qna q),#{qna_title} ,#{qna_context}, password(#{qna_passwd}), now()
+                #{m_no},(SELECT IFNULL(max(qna_no)+1,1)FROM qna q),#{qna_title} ,#{qna_context}, password(#{qna_passwd}), now(), #{privateck}
             )
         ]]>
     </insert>
@@ -47,16 +47,17 @@
 
     <select id="selectBoard" parameterType="Integer" resultType="com.bit.academy.model.BoardVO">
         SELECT
-            qna_no, m_no, qna_context, qna_passwd, qna_regdate, qna_title
-        FROM qna
-        WHERE qna_no = #{qna_no}
+            q.qna_no, q.m_no, m.m_name, q.qna_context, q.qna_passwd, q.qna_regdate, q.qna_title, q.privateck
+        FROM qna q
+        inner join member m on q.m_no = m.m_no
+        WHERE q.qna_no = #{qna_no}
     </select>
 
     <select id="selectBoardList"
             parameterType="com.bit.academy.model.BoardPaging"
             resultType="com.bit.academy.model.BoardVO">
         SELECT
-            q.qna_no, q.m_no, q.qna_title, q.qna_regdate,q.qna_originno, q.qna_groupOrd
+            q.qna_no, q.m_no, q.qna_title, q.qna_regdate,q.qna_originno, q.qna_groupOrd, q.privateck
             , m.m_id, m.m_name
         FROM qna q
             inner join member m on q.m_no = m.m_no
