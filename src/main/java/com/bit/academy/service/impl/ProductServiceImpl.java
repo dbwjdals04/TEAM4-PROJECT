@@ -55,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductVO productDetail(Integer p_id){
         return this.productMapper.productDetail(p_id);
+
     }
 
     //상품 조회
@@ -64,4 +65,5 @@ public class ProductServiceImpl implements ProductService {
         map.put("option", this.productMapper.selectOption(p_id));
         return map;
     }
+
 }
