@@ -3,99 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
-
-
-    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
-    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/agency.min.css" rel="stylesheet">
-
-
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
-        div.row { float: left; clear: both; width: 100%; padding: 10px;}
-        body{
-            width:60%;
-            margin: auto;
-            font-family: sunflower;
-        }
-        input.btn-dark-blue{
-            color:white; width:90px; height: 40px; background-color: #237fbc;
-            border-color: #237fbc; -webkit-box-shadow: 0 3px 0 #1a5c87; box-shadow: 0 3px 0 #1a5c87;}
-        input.btn-dark-blue:hover{background-color:#166ea8;}
-        input.btn-dark-blue:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
-        table {
-
-            width: 100%;
-            margin: auto;
-            border-collapse: collapse;
-        }
-        td.title:hover{
-
-            background:#003366; color:#fff;
-
-        }
-
-        th, td {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-        }
-        td.left{
-            width:50px;
-            text-align: center;
-            padding-left: 20px;
-            padding-right: 30px;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            border-left: 1px solid #ddd;
-        }
-        td.right{
-            width:100px;
-            text-align: center;
-            padding-left: 20px;
-            padding-right: 20px;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-        }
-        td.zzz{
-            width:80px;
-            text-align: center;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 20px;
-            padding-right: 50px;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-        }
-        td.title{
-
-            padding-top: 13px;
-            padding-bottom: 13px;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;}
-
-
-
-
-
-    </style>
-
 </head>
 <body>
-<h1 class="coco">상품상세</h1>
+<h1>Board View</h1>
+
+<form name="viewForm" id="viewForm" method="get" style="width:600px;">
 
 
-<table>
+    <div><span>글번호</span> <span th:text="${product.p_price}">글번호</span></div>
 
-    <tr th:each="result:${result}">
-        <td class="left" th:text="${result.p_id}" >상품이미지</td>
-        </tr>
-    </tbody>
-</table>
-
+</form>
 </body>
 </html>
-

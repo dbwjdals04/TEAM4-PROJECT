@@ -83,7 +83,7 @@
 <!--상품상세페이지-->
 
     <select id ="productDetail" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
-        SELECT p.p_id,po.po_price
+        SELECT *
         FROM product p JOIN
         product_option po on p.p_id = po.p_id
         WHERE p.p_id = ${p_id};
