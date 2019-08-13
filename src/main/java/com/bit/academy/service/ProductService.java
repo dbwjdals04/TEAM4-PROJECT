@@ -1,5 +1,6 @@
 package com.bit.academy.service;
 
+import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 
 import java.util.List;
@@ -21,10 +22,20 @@ public interface ProductService {
      *
      * 상품추가
      */
-    void insertProduct(ProductVO productVO, Integer category_no);
+    void insertProduct(ProductVO productVO, Integer category_no, List<OptionVO> list);
+    //test //void insertTest(List<OptionVO> list);
 
     /**
      * 상품상세페이지조회
      */
+
+ 
+
+    /**
+     * 상품조회
+     */
+    Map<String, Object> selectProduct(Integer p_id);
+
    ProductVO productDetail(Integer p_id);
+
 }

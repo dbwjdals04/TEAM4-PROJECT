@@ -17,28 +17,26 @@
     <input type="checkbox" th:value="6">앤틱-소품
 </checkbox>
 <div id ="product-div">
-    <table>
+
+
+
+    <table id="example-table-1" width="100%" class="table table-bordered table-hover text-center">
         <thead>
         <tr>
-
-            <td>제품 번호</td>
-            <td>제품명</td>
-            <td>가격</td>
+            <th> 제품 번호 </th>
+            <th> 제품명 </th>
+            <th> 가격 </th>
         </tr>
         </thead>
-
-
-        <tbody id = "product-table">
-
+        <tbody id="test-tbody">
 
         </tbody>
     </table>
-
 </div>
-<input type="button" id="openModal" value="상품 등록" onclick="add();" >
+<input type="button" id="openModal" value="상품 등록" onclick="addProduct();" >
 
-<div id = "addModal" style="display: none">
-    <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/product/add">
+<div id = "addProductModal" style="display: none">
+    <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/productList/add">
         제품명<input type="text" id="p_name" name="p_name"><br>
         카테고리 <select name = "category_no">
         <option value="1">모던-가구</option>
@@ -47,12 +45,21 @@
         <option value="4">앤틱-가구</option>
         <option value="5">앤틱-조명</option>
         <option value="6">앤틱-소품</option>
+        <option value="7">따뜻한-가구</option>
+        <option value="8">따뜻한-조명</option>
+        <option value="9">따뜻한-소품</option>
     </select><br>
         가격<input type="text" id="p_price" name="p_price"><br>
         제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
         기본 설명<input type="text" id="p_spec" name="p_spec"><br>
         썸네일 <input type="file" id="thumbnail" name = "thumbnail"><br>
         상세이미지 <input type="file" id="detailImg" name = "detailImg"><br>
+        <div id="div-option">
+            옵션
+            <input type="button"  onclick="addOption();" value="옵션 추가">
+            <div class="col-lg-12" id="ex1_Result1" ></div>
+
+        </div>
         <div class="select_thumbnail"><img src="" /></div>
         <div class="select_detailImg"><img src=""></div>
         <input type="submit" value="upload"/>
@@ -60,13 +67,23 @@
     </form>
 </div>
 
+
 </body>
 <script>
 
-    var add = function () {
-        var modal = document.getElementById("addModal");
+    var i=0;
+    var addOption = function(){
+
+        $("#div-option").append('<input type="text" name="OptionVOList['+i+'].po_value" value="옵션명" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_price" value="옵션별 추가 가격" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_stock" value="옵션별 재고" onclick=this.value=""><br>');
+        i++;
+    };
+
+    var addProduct = function () {
+        var modal = document.getElementById("addProductModal");
         modal.style.display = "block";
     };
+
+
     $("#thumbnail").change(function(){
         if(this.files && this.files[0]) {
             var reader = new FileReader;
@@ -90,20 +107,41 @@
         $("input:checkbox:checked").each(function (index) {
             arr.push($(this).val());
         });
-        alert(arr);
         $.ajax({
-            url : '/admin/product/'+arr,
-            type : 'get',
+            url : '/admin/productList/'+arr,
+            type : 'post',
             data :  {category_no : arr},
             dataType : 'json',
 
             success : function(data){
-                alert("성공!");
+                $("#test-tbody").empty();
                 console.log(data);
-                $("#product-table").empty();
-                $("#product-table").append('<td>' + data.p_id + '</td>');
-                $("#product-table").append('<td>' + data.p_name + '</td>');
-                $("#product-table").append('<td>' + data.p_price + '</td>');
+                $.each(data, function(i){
+                    $("#test-tbody").append('<tr>'+'<td>' + data[i].p_id + '</td>'+'<td>' + data[i].p_name + '</td>'+'<td>' + data[i].p_price + '</td>'+'</tr>');
+                });
+                $("#example-table-1 tr").click(function(){
+
+                    var p_id = $(this).children().eq(0).text();
+
+                    $.ajax({
+                        url : '/admin/product/'+p_id,
+                        type : 'post',
+                        data : {},
+                        dataType : 'json',
+                        success : function (data) {
+                            var modal = document.getElementById("addProductModal");
+                            modal.style.display = "block";
+                            $("#p_name").val(data.p_id);
+                            console.log(data);
+                        },
+                        error : function(error){
+                            alert("실패!");
+                            console.log(data);
+                        }
+                    })
+
+                    $("#ex1_Result1").html(p_id);
+                });
             },
             error : function(error){
                 alert("실패!");

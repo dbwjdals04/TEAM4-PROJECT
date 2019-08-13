@@ -1,6 +1,7 @@
 
 package com.bit.academy.controller;
 
+import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 import com.bit.academy.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,12 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -31,6 +27,7 @@ public class ProductController {
     public String product(){
         return "/product/productMain";
     }
+
     //상품검색(카테고리)
     @ResponseBody
     @GetMapping("/product/searchProductAll")
@@ -53,39 +50,63 @@ public class ProductController {
         return product;
     }
 
-    @GetMapping("/admin/product")
+    @GetMapping("/admin/productList")
     public String productlist(Model model){
-
-        /*model.addAttribute("productList", this.productService.productSearchAll());
-        List<ProductVO> productList = new ArrayList<>();
-
-        for(ProductVO productVO:productList){
-
-        }*/
         return "admin/productList";
     }
 
+    //카테고리별 상품 리스트 출력
     @ResponseBody
-    @GetMapping("/admin/product/{category_no}")
-    public Model productList(Model model, @PathVariable String category_no){
+    @PostMapping("/admin/productList/{category_no}")
+    public List<ProductVO> productList(Model model, @PathVariable String category_no){
         List c_noList = Arrays.asList(category_no.split(","));
-        log.debug("!!!!!!!!!!!!!"+c_noList);
-        model.addAttribute("productList", this.productService.productSearchAll(c_noList));
-        //ProductVO result = this.productService.productSearchAll(c_noList);
-        log.debug("------- result : "+model);
-        return model;
+        List<ProductVO> List = this.productService.productSearchAll(c_noList);
+        return List;
     };
 
+    //상품 상세정보 출력
+    @ResponseBody
+    @PostMapping("/admin/product/{p_id}")
+    public Map<String, Object> SelectProduct(Model model, @PathVariable int p_id){
+        Map<String, Object> map= this.productService.selectProduct(p_id);
+        return map;
+    }
 
 
     //상품등록
-    @PostMapping("/admin/product/add")
-    public String productAdd (@ModelAttribute ProductVO productVO, Model model,
+
+//test
+//    @PostMapping("/admin/productList/add")
+//    public String TestproductAdd (@ModelAttribute OptionVO optionVO, Model model) {
+//        OptionVO op1 = new OptionVO();
+//        op1.setPo_value("option1");
+//        op1.setPo_price(1000);
+//        op1.setPo_stock(1);
+//        OptionVO op2 = new OptionVO();
+//        op2.setPo_value("option2");
+//        op2.setPo_price(2000);
+//        op2.setPo_stock(2);
+//        List<OptionVO> list = new ArrayList<OptionVO>();
+//        list.add(op1);
+//        list.add(op2);
+//        log.debug("=========list=========");
+//        log.debug(list.toString());
+//        log.debug("===================");
+//        //log.debug(optionVO.getOptionVOList().toString());
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("list", list);
+//        map.put("p_id", 45);
+//        this.productService.insertTest(list);
+//        return "admin/productList";
+//    }
+
+    @PostMapping("/admin/productList/add")
+    public String productAdd (@ModelAttribute ProductVO productVO, @ModelAttribute OptionVO optionVO, Model model,
                               @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile, @RequestParam("category_no") Integer category_no){
+
         String returnValue = "start";
         try {
-            //this.productService.insertProduct(productVO);
-            this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO), category_no);
+            this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO), category_no, optionVO.getOptionVOList());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Error saving photo ", e);
