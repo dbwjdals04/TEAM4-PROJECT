@@ -4,7 +4,7 @@
 
 <mapper namespace="com.bit.academy.mapper.ProductMapper">
 <!--    카테고리별 조회(현대적인, 따듯한, 구제)-->
-    <select id = "productSearchAll" parameterType="List" resultType="com.bit.academy.model.ProductVO">
+    <select id = "productSearchAll" resultType="com.bit.academy.model.ProductVO">
     SELECT *
     FROM product AS p
     JOIN category_product AS cp
@@ -16,6 +16,8 @@
         #{type}
     </foreach>
     </select>
+
+
 <!--    카테고리분류 이후 가구 소품 조명 분리-->
     <select id = "productSearch"  parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
 
@@ -52,6 +54,32 @@
             )
         ]]>
     </insert>
+
+    <insert id="insertOption"
+            parameterType="com.bit.academy.model.ProductVO"
+            useGeneratedKeys="true">
+        <![CDATA[
+            INSERT INTO product_option (p_id, po_value, po_price, po_stock)
+            VALUES(
+            (SELECT IFNULL(max(p_id),1)FROM product p), #{po_value}, #{po_price}, #{po_stock}
+            )
+        ]]>
+    </insert>
+<!-- test -->
+<!--    <insert id="insertOption"-->
+<!--            parameterType="java.util.List"-->
+<!--            useGeneratedKeys="true">-->
+<!--        <![CDATA[-->
+<!--            INSERT INTO product_option (p_id, po_value, po_price, po_stock)-->
+<!--            VALUES-->
+<!--            <foreach item ="a" index="index" collection="list" separator=" , ">-->
+<!--            (-->
+<!--            45, #{list[index].po_value}, #{list[index].po_price}, #{list[index].po_stock}-->
+<!--            )-->
+<!--            </foreach>-->
+<!--        ]]>-->
+<!--    </insert>-->
+
 <!--상품상세페이지-->
 
     <select id ="productDetail" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
@@ -61,6 +89,18 @@
         WHERE p.p_id = ${p_id};
     </select>
 
+    <!--상품 조회-->
+    <select id="selectProduct" parameterType="Integer" resultType="Map">
+        SELECT *
+        FROM product p JOIN
+        category_product c on p.p_id = c.p_id
+        WHERE p.p_id = ${p_id};
+    </select>
 
+    <select id="selectOption" parameterType="Integer" resultType="com.bit.academy.model.OptionVO">
+        SELECT *
+        FROM product_option
+        WHERE p_id = ${p_id};
+    </select>
 </mapper>
 
