@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.css" rel="stylesheet">
     <title>ADMIN PAGE</title>
 
 </head>
@@ -15,6 +20,9 @@
     <input type="checkbox" th:value="4">앤틱-가구
     <input type="checkbox" th:value="5">앤틱-조명
     <input type="checkbox" th:value="6">앤틱-소품
+    <input type="checkbox" th:value="7">따뜻한-가구
+    <input type="checkbox" th:value="8">따뜻한-조명
+    <input type="checkbox" th:value="9">따뜻한-소품
 </checkbox>
 <div id ="product-div">
 
@@ -35,52 +43,74 @@
 </div>
 <input type="button" id="openModal" value="상품 등록" onclick="addProduct();" >
 
-<div id = "addProductModal" style="display: none">
-    <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/productList/add">
-        제품명<input type="text" id="p_name" name="p_name"><br>
-        카테고리 <select name = "category_no">
-        <option value="1">모던-가구</option>
-        <option value="2">모던-조명</option>
-        <option value="3">모던-소품</option>
-        <option value="4">앤틱-가구</option>
-        <option value="5">앤틱-조명</option>
-        <option value="6">앤틱-소품</option>
-        <option value="7">따뜻한-가구</option>
-        <option value="8">따뜻한-조명</option>
-        <option value="9">따뜻한-소품</option>
+<div id = "addProductModal" class="modal">
 
-    </select><br>
-        가격<input type="text" id="p_price" name="p_price"><br>
-        제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
-        기본 설명<input type="text" id="p_spec" name="p_spec"><br>
-        썸네일 <input type="file" id="thumbnail" name = "thumbnail"><br>
-        상세이미지 <input type="file" id="detailImg" name = "detailImg"><br>
-        <div id="div-option">
-            옵션
-            <input type="button"  onclick="addOption();" value="옵션 추가">
-            <div class="col-lg-12" id="ex1_Result1" ></div>
+    <div class="modal-content">
+        <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/productList/add">
+            <div class = "row">
+                <div class="select_thumbnail col-md-3" ><img src="" style="max-width: 100%;"/>
+                </div >
+                <div class = "col-md-8">
 
-        </div>
-        <div class="select_thumbnail"><img src="" /></div>
-        <div class="select_detailImg"><img src=""></div>
-        <input type="submit" value="upload"/>
+                    제품명<input type="text" id="p_name" name="p_name"><br>
+                    카테고리
+                    <select id = "category_no" name = "category_no">
+                    <option value="1">모던-가구</option>
+                    <option value="2">모던-조명</option>
+                    <option value="3">모던-소품</option>
+                    <option value="4">앤틱-가구</option>
+                    <option value="5">앤틱-조명</option>
+                    <option value="6">앤틱-소품</option>
+                    <option value="7">따뜻한-가구</option>
+                    <option value="8">따뜻한-조명</option>
+                    <option value="9">따뜻한-소품</option>
+                </select>
+                    <br>
+                    가격<input type="text" id="p_price" name="p_price"><br>
+                    제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
+                    기본 설명<input type="text" id="p_spec" name="p_spec"><br>
+                    썸네일 <input type="file" id="thumbnail" name = "thumbnail"><br>
+                    상세이미지 <input type="file" id="detailImg" name = "detailImg"><br>
+                    <div id="option">
+                        옵션
+                        <input type="button"  onclick="addOption();" value="옵션 추가">
+                        <div id="option-content" ></div>
 
-    </form>
+                    </div>
+
+                </div>
+                <span class="close col-md-1" onclick="document.getElementById('addProductModal').style.display='none'">&times;</span>
+            </div>
+            <div class="select_detailImg" style="height: 200px; overflow: scroll;"><img src=""></div>
+
+
+            <input type="submit" value="upload"/>
+
+        </form>
+    </div>
+
 </div>
 
 
 </body>
 <script>
-
+    var modal = document.getElementById("addProductModal");
     var i=0;
     var addOption = function(){
 
-        $("#div-option").append('<input type="text" name="OptionVOList['+i+'].po_value" value="옵션명" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_price" value="옵션별 추가 가격" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_stock" value="옵션별 재고" onclick=this.value=""><br>');
+        $("#option-content").append('<div class="row"><input type="text" name="OptionVOList['+i+'].po_value" value="옵션명" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_price" value="옵션별 추가 가격" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_stock" value="옵션별 재고" onclick=this.value=""></div>');
         i++;
     };
 
     var addProduct = function () {
-        var modal = document.getElementById("addProductModal");
+        console.log("empty!");
+        $("#p_name").val(" ");
+        $("#p_brand").empty();
+        $("#p_spec").empty();
+        $("#p_price").empty();
+        $(".select_thumbnail img").empty();
+        $(".select_detailImg img").empty();
+        $("#option-content").empty();
         modal.style.display = "block";
     };
 
@@ -101,6 +131,7 @@
                 $(".select_detailImg img").attr("src", data.target.result).width(500);
             }
             reader.readAsDataURL(this.files[0]);
+            //$("#ex1_Result1").html(this.files[0]);
         }
     });
     $("#category").change(function () {
@@ -108,47 +139,69 @@
         $("input:checkbox:checked").each(function (index) {
             arr.push($(this).val());
         });
-        $.ajax({
-            url : '/admin/productList/'+arr,
-            type : 'post',
-            data :  {category_no : arr},
-            dataType : 'json',
+        if(arr.length == 0){
+            $("#test-tbody").empty();
+        }else{
+            $.ajax({
+                url : '/admin/productList/'+arr,
+                type : 'post',
+                data :  {category_no : arr},
+                dataType : 'json',
 
-            success : function(data){
-                $("#test-tbody").empty();
-                console.log(data);
-                $.each(data, function(i){
-                    $("#test-tbody").append('<tr>'+'<td>' + data[i].p_id + '</td>'+'<td>' + data[i].p_name + '</td>'+'<td>' + data[i].p_price + '</td>'+'</tr>');
-                });
-                $("#example-table-1 tr").click(function(){
+                success : function(data){
+                    $("#test-tbody").empty();
+                    console.log(data);
+                    $.each(data, function(i){
+                        $("#test-tbody").append('<tr>'+'<td>' + data[i].p_id + '</td>'+'<td>' + data[i].p_name + '</td>'+'<td>' + data[i].p_price + '</td>'+'</tr>');
+                    });
+                    $("#example-table-1 tr").click(function(){
 
-                    var p_id = $(this).children().eq(0).text();
+                        var p_id = $(this).children().eq(0).text();
 
-                    $.ajax({
-                        url : '/admin/product/'+p_id,
-                        type : 'post',
-                        data : {},
-                        dataType : 'json',
-                        success : function (data) {
-                            var modal = document.getElementById("addProductModal");
-                            modal.style.display = "block";
-                            $("#p_name").val(data.p_id);
-                            console.log(data);
-                        },
-                        error : function(error){
-                            alert("실패!");
-                            console.log(data);
-                        }
-                    })
+                        $.ajax({
+                            url : '/admin/product/'+p_id,
+                            type : 'post',
+                            data : {},
+                            dataType : 'json',
+                            success : function (data) {
+                                $("#p_name").empty();
+                                $("#p_brand").empty();
+                                $("#p_spec").empty();
+                                $("#p_price").empty();
+                                $(".select_thumbnail img").empty();
+                                $(".select_detailImg img").empty();
+                                $("#option-content").empty();
+                                modal.style.display = "block";
 
-                    $("#ex1_Result1").html(p_id);
-                });
-            },
-            error : function(error){
-                alert("실패!");
-                console.log(data);
-            }
-        })
+                                $("#p_name").val(data.p_name);
+                                $("#p_brand").val(data.p_brand);
+                                $("#p_spec").val(data.p_spec);
+                                $("#p_price").val(data.p_price);
+                                $("#category_no").val(data.category_no);
+                                $(".select_thumbnail img").attr("src", data.thumb_route.substring(data.thumb_route.search("/uploads"))+data.thumb_name);
+                                $(".select_detailImg img").attr("src", data.detailimg_route.substring(data.detailimg_route.search("/uploads"))+data.detailimg_name);
+                                data.option.forEach(function (value, index) {
+                                    $("#option-content").append('<div class="row"><input type="text" name="OptionVOList['+index+'].po_value" value='+value.po_value+'> <input type="text" name="OptionVOList['+index+'].po_price" value='+value.po_price+'> <input type="text" name="OptionVOList['+index+'].po_stock" value='+value.po_stock+'></div>');
+                                });
+                            },
+                            error : function(error){
+                                alert("실패!");
+                                console.log(data);
+                            }
+                        })
+
+                        //$("#ex1_Result1").html(p_id);
+                    });
+                },
+                error : function(error){
+                    alert("실패!");
+                    console.log(data);
+                }
+            })
+        }
+
+
+
     });
 </script>
 </html>
