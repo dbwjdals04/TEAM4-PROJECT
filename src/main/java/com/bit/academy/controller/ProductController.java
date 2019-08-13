@@ -94,10 +94,14 @@ public class ProductController {
         }
         return "admin/productList";
     }
-    @GetMapping("/product/productDetail")
-    public String productDetail(Integer p_id, Model model){
-        model.addAttribute("product", this.productService.productDetail(p_id));
-        return "/product/productDetail";
+
+    @GetMapping("/product/Detail/{p_id}")
+    public String productDetail(Model model, @PathVariable Integer p_id){
+
+        ProductVO product = this.productService.productDetail(p_id);
+        model.addAttribute("product", product);
+        log.debug(String.valueOf(product));
+        return "product/productDetail";
     }
 
 }
