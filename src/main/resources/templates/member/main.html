@@ -13,20 +13,19 @@
 <body>
 
 <!--/* 로그인 성공한 경우 */-->
-<th:block if="${session.member != null}">
+<th:block if="${result == 1}">
     <script type="text/javascript" th:inline="javascript">
-        var member = /*[[${session.member}]]*/;
-        console.log(member);
-        alert( member.m_name+'회원님 인테리아에 오신 것을 환영합니다.');
-        location.href='/main/index';
+        var member = /*[[${result}]]*/;
+        console.log(result);
+        alert( "회원님의 장바구니에 담겼습니다.");
     </script>
 </th:block>
 
 <!--/* 로그인 실패한 경우 */-->
 
-<th:block if="${session.member==null]}">
+<th:block if="${result==0]}">
     <script type="text/javascript" th:inline="javascript">
-        alert('아이디나 비밀번호가 맞지 않습니다.');
+        alert('로그인 후 이용해주세요.');
         location.href='/member/login';
     </script>
 </th:block>

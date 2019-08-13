@@ -23,4 +23,17 @@ public class PaymentServiceImpl implements PaymentService{
        // if(request.getSession().getAttribute("member.m_no")==)
         return this.paymentMapper.cartview(m_no);}
 
+    @Override
+    public Integer goCart(CartVO cartVO, HttpServletRequest request) {
+        int result;
+        if(request.getSession().getAttribute("member")!=null){
+            cartVO.setM_no((Integer) request.getSession().getAttribute("m_no"));
+            this.paymentMapper.goCart(cartVO);
+            result = 1;
+        }
+        else{
+            result = 0;
+        }
+        return result;
+    }
 }

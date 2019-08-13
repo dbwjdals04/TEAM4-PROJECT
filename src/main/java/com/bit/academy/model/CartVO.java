@@ -15,4 +15,70 @@ public class CartVO {
     private String thumb_300;
     private String p_name;
     private int p_price;
+
+
+    public int getCart_no() {
+        return cart_no;
+    }
+
+    public void setCart_no(int cart_no) {
+        this.cart_no = cart_no;
+    }
+
+    public int getM_no() {
+        return m_no;
+    }
+
+    public void setM_no(int m_no) {
+        this.m_no = m_no;
+    }
+
+    public int getP_id() {
+        return p_id;
+    }
+
+    public void setP_id(int p_id) {
+        this.p_id = p_id;
+    }
+
+    public int getCart_amount() {
+        return cart_amount;
+    }
+
+    public void setCart_amount(int cart_amount) {
+        this.cart_amount = cart_amount;
+    }
+
+    public int getPo_id() {
+        return po_id;
+    }
+
+    public void setPo_id(int po_id) {
+        this.po_id = po_id;
+    }
+
+    public String getThumb_300() {
+        return thumb_300;
+    }
+
+    public void setThumb_300(String thumb_300) {
+        this.thumb_300 = thumb_300;
+    }
+
+    public String getP_name() {
+        return p_name;
+    }
+
+    public void setP_name(String p_name) {
+        this.p_name = p_name;
+    }
+
+    public int getP_price() {
+        return p_price;
+    }
+
+    public void setP_price(int p_price) {
+        this.p_price = p_price;
+    }
 }
+

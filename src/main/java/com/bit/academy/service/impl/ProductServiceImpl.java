@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
     //상품상세페이지조회
     @Override
-    public ProductVO productDetail(Integer p_id) {
+    public ProductVO productDetail(Integer p_id){
         return this.productMapper.productDetail(p_id);
 
     }

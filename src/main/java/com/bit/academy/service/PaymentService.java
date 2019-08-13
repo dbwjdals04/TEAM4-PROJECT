@@ -13,4 +13,11 @@ public interface PaymentService {
      * @return
      */
     CartVO cartview(int m_no, HttpServletRequest request);
+
+    /**
+     * 카트담기
+     * @param cartVO
+     */
+    Integer goCart(CartVO cartVO, HttpServletRequest request);
+
 }
