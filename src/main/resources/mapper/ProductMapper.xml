@@ -84,9 +84,20 @@
 
     <select id ="productDetail" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
         SELECT *
-        FROM product p JOIN
-        product_option po on p.p_id = po.p_id
-        WHERE p.p_id = ${p_id};
+        FROM product
+        WHERE p_id = ${p_id};
+    </select>
+
+    <select id = "productOption" parameterType="Integer" resultType="com.bit.academy.model.OptionVO">
+        SELECT *
+        FROM product_option
+        WHERE p_id = ${p_id};
+    </select>
+
+    <select id ="productAmount" parameterType="Integer" resultType="com.bit.academy.model.CartVO">
+        SELECT cart_amount
+        FROM  cart
+        WHERE p_id =${p_id}
     </select>
 
     <!--상품 조회-->
@@ -102,5 +113,9 @@
         FROM product_option
         WHERE p_id = ${p_id};
     </select>
+
+
+
+
 </mapper>
 

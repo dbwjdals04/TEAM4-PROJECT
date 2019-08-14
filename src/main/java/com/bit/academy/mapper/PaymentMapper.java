@@ -24,5 +24,5 @@ public interface PaymentMapper {
    Integer amountsum(int m_no);
 
     //장바구니담기
-    void goCart(CartVO cartVO);
+    void goCart(List list);
 }

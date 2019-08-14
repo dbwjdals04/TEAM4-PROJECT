@@ -115,8 +115,9 @@ public class MemberController {
 
 
         this.memberService.regist(memberVO);
-        //memberVO = this.memberService.selectMember(memberVO.getM_no());
-        //model.addAttribute("member", memberVO);
+//        memberVO = this.memberService.selectMember(memberVO.getM_no());
+//        model.addAttribute("member", memberVO);
+
 
         return "member/login";
     }

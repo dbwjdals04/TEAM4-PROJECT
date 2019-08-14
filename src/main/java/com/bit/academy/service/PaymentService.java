@@ -24,8 +24,8 @@ public interface PaymentService {
 
     /**
      * 카트담기
-     * @param cartVO
+     * @param list
      */
-    Integer goCart(CartVO cartVO, HttpServletRequest request);
+    void goCart(List list);
 
 }

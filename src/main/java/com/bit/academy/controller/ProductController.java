@@ -119,10 +119,13 @@ public class ProductController {
     @GetMapping("/product/Detail/{p_id}")
     public String productDetail(Model model, @PathVariable Integer p_id){
 
-        ProductVO product = this.productService.productDetail(p_id);
-        model.addAttribute("product", product);
-        log.debug(String.valueOf(product));
+        Map<String, Object> map = new HashMap<>();
+        map = this.productService.productDetail(p_id);
+        log.debug(String.valueOf(map));
+        model.addAttribute("map",map);
+
         return "product/productDetail";
+
     }
 
 }

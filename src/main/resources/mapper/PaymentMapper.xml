@@ -13,6 +13,7 @@
         WHERE m_no = #{m_no}
     </select>
 
+
     <select id="amountsum" parameterType="Integer" resultType="Integer">
         select sum(cart_amount)
         from cart
@@ -20,10 +21,14 @@
     </select>
 
 
-    <insert id = "goCart" parameterType="com.bit.academy.model.CartVO">
+
+    <insert id = "goCart" parameterType="List">
         <![CDATA[
-        INSERT INTO cart (m_no, p_id, cart_amount,po_id)
-        VALUES (#{m_no},#{p_id},#{cart_amount},#{po_id})
+        INSERT INTO cart (po_id, cart_amount, p_id, m_no)
+        VALUES
+        <foreach collection="list" item="item" separator=" , ">
+            (${item.po_id},${item.cart_amount},${item.p_id},${item.m_no} )
+        </foreach>
         ]]>
     </insert>
 
