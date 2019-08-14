@@ -22,6 +22,12 @@ public interface PaymentMapper {
      * @return
      */
    Integer amountsum(int m_no);
+    /**
+     * 총금액
+     * @param m_no
+     * @return
+     */
+   Integer totalpay(int m_no);
 
     //장바구니담기
     void goCart(List list);

@@ -10,11 +10,13 @@
 
 
 </head>
-<body>
+<body style="width: fit-content">
 <h1>장바구니</h1>
+
 <!--<div><span th:text="${cartsum}"></span></div>-->
 <form name="cartForm" id="cartForm" method="get" style="width:600px;">
-    <div th:each="cart:${cart}">
+    <div style="padding: 5px; border-top: 1px solid #d1d1d5; text-align: right"><span>총 개수 : </span><span th:text="${map.amount}"></span></div>
+    <div th:each="cart:${map.cart}">
         <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">
             <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>
             <div style="float: right"><img src="/static/img/엑스.png"></div>
@@ -25,13 +27,15 @@
         <div style="padding-bottom: 20px">
             <div style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}">상품 가격</span></div>
             <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <span th:text="${cart.po_price}">옵션 가격</span></div>
+            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <span th:with="total=${cart.cart_amount*(cart.p_price+cart.po_price)}" th:text="${total}">총 가격</span></div>
         </div>
     </div>
 
     </div>
+    </div>
 </form>
 
-    <div><span>총 가격:</span> <span th:text="${cart[0].p_price+cart[1].p_price+cart[2].p_price}">상품 가격</span></div>
+    <div><span>결제 금액 : </span> <span th:text="${map.total}">상품 가격</span></div>
 
 <script type="text/javascript" th:inline="javascript">
 

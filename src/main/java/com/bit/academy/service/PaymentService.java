@@ -8,19 +8,20 @@ import java.util.Map;
 
 public interface PaymentService {
 
-    /**
+    /*/**
      * 카트조회
      * @param m_no
      * @return
      */
-    List<CartVO> cartview(int m_no);
+   // List<CartVO> cartview(int m_no);
     //CartVO cartview(int m_no, HttpServletRequest request);
-    /**
+   /* /**
      * 카트수
      * @param m_no
      * @return
      */
-   Integer amountsum(int m_no);
+  // Integer amountsum(int m_no);
+    Map<String, Object> cartview(int m_no);
 
     /**
      * 카트담기

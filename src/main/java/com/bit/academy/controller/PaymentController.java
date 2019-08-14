@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -24,7 +26,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @PostMapping("/payment/cart/{m_no}")
+   /* @PostMapping("/payment/cart/{m_no}")
     public String cartview(Model model, @PathVariable int m_no){
         model.addAttribute("cart", this.paymentService.cartview(m_no));
         //model.addAttribute("cartsum", this.paymentService.amountsum(m_no));
@@ -34,6 +36,14 @@ public class PaymentController {
     public String amountsum(Model model, @PathVariable int m_no){
         model.addAttribute("cartsum", this.paymentService.amountsum(m_no));
         return "payment/amountsum";
+    }*/
+    @PostMapping("/payment/cart/{m_no}")
+    public String cartview(Model model, @PathVariable int m_no){
+       Map<String, Object> map = new HashMap<>();
+       map= this.paymentService.cartview(m_no);
+       model.addAttribute("map",map);
+
+       return "payment/cart";
     }
     //카트조회(로그인 후 자기 장바구니)
     /*@PostMapping("/payment/cart/{m_no}")
