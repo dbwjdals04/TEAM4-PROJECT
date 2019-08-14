@@ -1,0 +1,201 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/agency.min.css" rel="stylesheet">
+    <link href="/static/css/board.css" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
+    </style>
+
+</head>
+<body>
+<div th:include="include/nav::nav"></div>
+<div style="height: 80px"></div>
+<h1 class="coco">Q&A 게시판</h1>
+
+
+<table>
+    <thead>
+    <tr>
+        <td colspan="99" style="text-align:right;">
+            전체 게시물 갯수 : <span th:text="${boardPaging.totalCount}">00</span>개
+
+        </td>
+    </tr>
+    <tr>
+
+        <td class="pno">글번호</td>
+        <td class="id">아이디</td>
+        <td class="pivateck"></td>
+        <td class="titlehead">제목</td>
+        <td class="right">등록일</td>
+    </tr>
+    </thead>
+
+
+    <tbody>
+
+
+
+    <tr th:each="board:${boardList}">
+        <td class="left" th:text="${board.qna_no}" >글번호</td>
+        <td class="zzz" th:text="${board.m_id}" >아이디</td>
+        <td class="lockimg" th:if="${board.privateck}=='1'" ><img src="/static/img/lock.png"/></td>
+        <td class="lockimg" th:unless="${board.privateck}=='1'" ></td>
+        <form name="view" id="view"><td class="title" id = "kkkk" onclick="passcheck(this)"th:attr="data-qna_no = ${board.qna_no},  data-privateck = ${board.privateck}">
+            <span th:text="${board.qna_title}"></span></td></form>
+        <td class="right" th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="height: 41px; padding: 2px"><input class="button button-modify" type="button" value="등록" onclick="submit();"/></div>
+
+
+
+
+
+<div style="text-align: center; width:100%;">
+    <table>
+        <tr>
+            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
+            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> <!--이전페이지-->
+
+            <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">
+                <!--현재페이지인 경우--><a class="pagebtn blue"  th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>
+                <!--현재페이가 아닌 경우--><a class="pagebtn blue"  th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>
+            </td>
+
+            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> <!--다음페이지-->
+            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
+        </tr>
+    </table>
+</div>
+
+<form name="boardPaging" id="boardPaging" method="get" action="/board/list">
+    <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>
+    <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>
+</form>
+
+<div style="width: 100%" th:include="include/footer::footer"></div>
+<script type="text/javascript" th:inline="javascript">
+
+    var currentPage = /*[[${boardPaging.currentPage}]]*/;
+
+    var goPage = function(p){
+        var page = $(p).data('page');
+
+        console.log(page);
+
+        if(page>0){
+            $('#currentPage').val(page);
+            $('#boardPaging').submit();
+        }
+
+    };
+
+    var submit = function () {
+        var memberk = /*[[${session.member}]]*/
+        if(memberk==null){
+            alert("로그인해주세요");
+        }
+        else{
+            location.href="/board/insert"
+        }
+    }
+
+
+
+
+    var passcheck = function(obj){
+        var qna_no = $(obj).data("qna_no");
+        var privateck = $(obj).data("privateck");
+
+
+        console.log(qna_no);
+        console.log(privateck);
+
+        if(privateck==1){
+
+            var passwd = prompt("비밀번호를 입력하세요");
+
+            console.log(passwd);
+
+            var param = {qna_no:qna_no,qna_passwd:passwd};
+
+
+            // ajax
+            $.ajax({
+                type : 'get',
+                url : '/board/passck',
+                data : param,
+                error : function(error) {
+                    console.error("Error!");
+                },
+                success : function(data) {
+                    console.log("success!");
+                    console.log(data);
+                    console.log(data.count);
+
+
+                    if(data.count==0){
+                        alert("비밀번호 틀림")
+                        // 비밀번호 틀림
+                    }
+                    else{
+                        $('#view')
+                            .attr('method', 'post')
+                            .attr('action', '/board/view/'+qna_no)
+                            .submit();
+                        //location.href ='/board/view/'+$(obj).data("qna_no");
+                        // 상세화면으로 이동
+                    }
+
+                },
+                complete : function() {
+                    console.log("complete!");
+                }
+            });
+
+            console.log('aaa');
+
+        }
+        else{
+            $('#view')
+                .attr('method', 'post')
+                .attr('action', '/board/view/'+qna_no)
+                .submit();
+        }}
+
+</script>
+<!-- Bootstrap core JavaScript -->
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Contact form JavaScript -->
+<script src="/static/js/jqBootstrapValidation.js"></script>
+<script src="/static/js/contact_me.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="/static/js/agency.min.js"></script>
+</body>
+</html>
