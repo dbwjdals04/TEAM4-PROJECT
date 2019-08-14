@@ -14,7 +14,14 @@ public interface PaymentMapper {
      * @param m_no
      * @return
      */
-    CartVO cartview(int m_no);
+    List<CartVO> cartview(int m_no);
+    //CartVO cartview(int m_no);
+   /**
+     * 카트수
+     * @param m_no
+     * @return
+     */
+   Integer amountsum(int m_no);
 
     //장바구니담기
     void goCart(List list);

@@ -16,6 +16,10 @@ public class CartVO {
     private String p_name;
     private int p_price;
 
+    private String po_value;
+    private int po_price;
+    private int po_stock;
+
 
     public int getCart_no() {
         return cart_no;

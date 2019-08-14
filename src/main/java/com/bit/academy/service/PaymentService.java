@@ -13,7 +13,14 @@ public interface PaymentService {
      * @param m_no
      * @return
      */
-    CartVO cartview(int m_no, HttpServletRequest request);
+    List<CartVO> cartview(int m_no);
+    //CartVO cartview(int m_no, HttpServletRequest request);
+    /**
+     * 카트수
+     * @param m_no
+     * @return
+     */
+   Integer amountsum(int m_no);
 
     /**
      * 카트담기

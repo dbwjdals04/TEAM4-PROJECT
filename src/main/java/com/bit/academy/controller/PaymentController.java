@@ -24,14 +24,25 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    //카트조회(로그인 후 자기 장바구니)
     @PostMapping("/payment/cart/{m_no}")
+    public String cartview(Model model, @PathVariable int m_no){
+        model.addAttribute("cart", this.paymentService.cartview(m_no));
+        //model.addAttribute("cartsum", this.paymentService.amountsum(m_no));
+        return "payment/cart";
+    }
+    @GetMapping("/payment/amountsum/{m_no}")
+    public String amountsum(Model model, @PathVariable int m_no){
+        model.addAttribute("cartsum", this.paymentService.amountsum(m_no));
+        return "payment/amountsum";
+    }
+    //카트조회(로그인 후 자기 장바구니)
+    /*@PostMapping("/payment/cart/{m_no}")
     public String cartview(Model model, @PathVariable int m_no, HttpServletRequest request){
 
 
         model.addAttribute("cart", this.paymentService.cartview(m_no,request));
         return "payment/cart";
-    }
+    }*/
     //
     @PostMapping("/payment/cart")
     public String index(){

@@ -17,12 +17,22 @@ public class PaymentServiceImpl implements PaymentService{
     private PaymentMapper paymentMapper;
 
     @Override
+    public List<CartVO> cartview(int m_no){
+        List<CartVO> result = this.paymentMapper.cartview(m_no);
+        return result;
+    }
+    @Override
+    public Integer amountsum(int m_no){
+        int result=this.paymentMapper.amountsum(m_no);
+        return result;
+    }
+    /*@Override
     public CartVO cartview(int m_no, HttpServletRequest request) {
         log.debug("############ 세션 요청 정보 #############");
         log.debug(String.valueOf(request.getSession().getAttribute("member.m_no")));
 
        // if(request.getSession().getAttribute("member.m_no")==)
-        return this.paymentMapper.cartview(m_no);}
+        return this.paymentMapper.cartview(m_no);}*/
 
     //장바구니에 담기
     @Override

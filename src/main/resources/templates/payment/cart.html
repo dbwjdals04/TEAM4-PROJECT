@@ -1,24 +1,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/agency.min.css" rel="stylesheet">
+    <link href="/static/css/board.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
 
+
 </head>
 <body>
-<h1>카트입니다</h1>
-/*[[${session.member}]]*/
-<form name="viewForm" id="viewForm" method="get" style="width:600px;">
-    <img src="/uploads/thumbnail/300thumb_42a860e7-aa65-4642-b5a7-9948ae375639_책상.jpg"/>
-    <div><span>회원번호</span> <span th:text="${cart.m_no}">회원번호</span></div>
-    <div><span>카트번호</span> <span th:text="${cart.cart_no}">카트번호</span></div>
-    <div><span>수량</span> <span th:text="${cart.cart_amount}">수량</span></div>
-    <div><span>상품 이름</span> <span th:text="${cart.p_name}">상품이름</span></div>
-    <div><span>상품 가격</span> <span th:text="${cart.p_price}">상품 가격</span></div>
+<h1>장바구니</h1>
+<!--<div><span th:text="${cartsum}"></span></div>-->
+<form name="cartForm" id="cartForm" method="get" style="width:600px;">
+    <div th:each="cart:${cart}">
+        <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">
+            <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>
+            <div style="float: right"><img src="/static/img/엑스.png"></div>
+            <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
+            <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>
+            <div><span>수량</span> <span th:text="${cart.cart_amount}">수량</span></div>
+        </div>
+        <div style="padding-bottom: 20px">
+            <div style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}">상품 가격</span></div>
+            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <span th:text="${cart.po_price}">옵션 가격</span></div>
+        </div>
+    </div>
 
+    </div>
 </form>
 
+    <div><span>총 가격:</span> <span th:text="${cart[0].p_price+cart[1].p_price+cart[2].p_price}">상품 가격</span></div>
 
+<script type="text/javascript" th:inline="javascript">
 
+</script>
 </body>
 </html>
