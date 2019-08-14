@@ -9,7 +9,6 @@ public class MemberVO {
     private String m_id;
     private String m_password;
     private String m_phone;
-    private String m_address;
     private String m_regdate;
     private String m_birth;
 }

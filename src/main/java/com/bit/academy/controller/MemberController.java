@@ -113,8 +113,10 @@ public class MemberController {
         log.debug("--------게시글 등록 결과---------");
         log.debug(memberVO.toString());
 
-        memberVO = this.memberService.selectMember(memberVO.getM_no());
-        model.addAttribute("member", memberVO);
+
+        this.memberService.regist(memberVO);
+        //memberVO = this.memberService.selectMember(memberVO.getM_no());
+        //model.addAttribute("member", memberVO);
 
         return "member/login";
     }
