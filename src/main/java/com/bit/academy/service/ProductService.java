@@ -3,6 +3,7 @@ package com.bit.academy.service;
 import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +29,11 @@ public interface ProductService {
     /**
      * 상품상세페이지조회
      */
-
- 
-
+    Map<String, Object> productDetail(Integer p_id);
     /**
      * 상품조회
      */
     Map<String, Object> selectProduct(Integer p_id);
 
-   ProductVO productDetail(Integer p_id);
 
 }

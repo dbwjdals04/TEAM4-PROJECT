@@ -53,8 +53,13 @@ public class ProductServiceImpl implements ProductService {
 
     //상품상세페이지조회
     @Override
-    public ProductVO productDetail(Integer p_id){
-        return this.productMapper.productDetail(p_id);
+    public Map<String, Object> productDetail(Integer p_id){
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("product", this.productMapper.productDetail(p_id));
+        map.put("option", this.productMapper.productOption(p_id));
+        map.put("amount", this.productMapper.productAmount(p_id));
+        return map;
 
     }
 

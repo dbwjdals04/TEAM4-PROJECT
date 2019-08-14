@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -23,17 +24,10 @@ public class PaymentServiceImpl implements PaymentService{
        // if(request.getSession().getAttribute("member.m_no")==)
         return this.paymentMapper.cartview(m_no);}
 
+    //장바구니에 담기
     @Override
-    public Integer goCart(CartVO cartVO, HttpServletRequest request) {
-        int result;
-        if(request.getSession().getAttribute("member")!=null){
-            cartVO.setM_no((Integer) request.getSession().getAttribute("m_no"));
-            this.paymentMapper.goCart(cartVO);
-            result = 1;
-        }
-        else{
-            result = 0;
-        }
-        return result;
+    public void goCart(List list) {
+        this.paymentMapper.goCart(list);
     }
+
 }
