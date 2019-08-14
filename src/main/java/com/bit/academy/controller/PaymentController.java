@@ -9,15 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.List;
 
 
 @Slf4j
@@ -43,10 +40,12 @@ public class PaymentController {
 
     //카트에등록
     @PostMapping("/payment/goCart/")
-    public String goCart(Model model, @ModelAttribute CartVO cartVO, HttpServletRequest request){
+    public Integer goCart(@RequestParam("cart[]") List cart){
 
-        model.addAttribute("result",this.paymentService.goCart(cartVO,request));
-        return "payment/cart";
+        log.debug("장바구니요청!!!!!!!!!!!!!!");
+        this.paymentService.goCart(cart);
+        return 1;
+
     }
 
     //결제

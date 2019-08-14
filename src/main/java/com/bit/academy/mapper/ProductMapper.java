@@ -1,5 +1,6 @@
 package com.bit.academy.mapper;
 
+import com.bit.academy.model.CartVO;
 import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -38,7 +39,9 @@ public interface ProductMapper {
      * @Param p_id
      * @return
      */
-
+    ProductVO productDetail(Integer p_id);
+    List<OptionVO> productOption(Integer p_id);
+    CartVO productAmount(Integer p_id);
 
     /**
      * 상품 조회
@@ -47,6 +50,5 @@ public interface ProductMapper {
      */
     Map<String, Object> selectProduct(Integer p_id);
     List<OptionVO> selectOption(Integer p_id);
-   ProductVO productDetail(Integer p_id);
 
 }

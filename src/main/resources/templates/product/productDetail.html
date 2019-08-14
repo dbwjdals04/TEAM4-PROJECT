@@ -22,55 +22,104 @@
 <table>
     <tr>
         <td rowspan="5">
-            <div><img th:src="@{/uploads/thumbnail/}+${product.thumb_300 }" /></div>
+            <div><img th:src="@{/uploads/thumbnail/}+${map.product.thumb_300 }" /></div>
         </td>
         <td>
-            <div><span>상품 브랜드 :</span> <span th:text="${product.p_brand}"></span></div>
+            <div><span>상품 브랜드 :</span> <span th:text="${map.product.p_brand}"></span></div>
 
         </td>
     </tr>
     <tr>
         <td>
-            <div><span>상품 이름 :</span> <span th:text="${product.p_name}"></span></div>
+            <div><span>상품 이름 :</span> <span th:text="${map.product.p_name}"></span></div>
 
         </td>
     </tr>
     <tr>
         <td>
-            <div><span>상품 가격 :</span> <span th:text="${product.p_price}"></span>원</div>
+            <div><span>상품 가격 :</span> <span th:text="${map.product.p_price}"></span>원</div>
         </td>
     </tr>
     <tr>
         <td>
-            hello
+            <div class="row">
+                <div class="col col-10">
+                    <label class="select">
+                        <select class="select" name="option" id="po_id">
+                            <option th:each="option : ${map.option}" th:value="${option.po_id}" th:text="${option.po_value} + '  : + ' + ${option.po_price}
+                                    +'   재고량=   '+${option.po_stock}">
+                            </option>
+                        </select>
+                        <select class="form-control select-checkbox" id="cart_amount" multiple="multiple">
+                            <th:block th:each="option : ${map.option}">
+                                <option th:each="i : ${#numbers.sequence(1,option.po_stock)}" th:value="${i}" th:text="${i}" th:selected="${i==1}">
+                            </th:block>
+                        </select>
+                    </label>
+                </div>
+            </div>
         </td>
     </tr>
     <tr>
         <td>
-            <input type="button" id = "cart" value ="장바구니 담기" onclick ="goCart(this)"th:attr="data-p_id=${product.p_id}">
+            <input type="button" id = "cart" value ="장바구니 담기" onclick = "goCart(this);" th:attr="data-p_id=${map.product.p_id}">
             <input type="button" id = "buy" value = "구매하기" onclick = "buy();">
+
         </td>
     </tr>
 </table>
-    <div style="size: 0.3px"><span>상품상세 :</span> <span th:text="${product.p_spec}"></span>
-        <img th:src = "@{/uploads/detailimg/}+${product.detailimg_name}"/>
+    <div style="size: 0.3px"><span>상품상세 :</span> <span th:text="${map.product.p_spec}"></span>
+        <img th:src = "@{/uploads/detailimg/}+${map.product.detailimg_name}"/>
     </div>
 
-<script type="text/javascript">
-    var cart = function(obj){
+<script type="text/javascript" th:inline="javascript">
 
-    var p_id = $(obj).data("p_id");
-        $('#cart')
-            .attr('action', '/payment/goCart/'+p_id)
-            .attr('method','post')
-            .submit();
+    var cam = /*[[${session.member}]]*/;
+    console.log(cam);
+
+    var goCart = function(obj){
+        if(cam!=null){
+            var po_id = parseInt($.trim(($("#po_id option:selected").val())));
+            var cart_amount = parseInt($.trim(($("#cart_amount option:selected").val())));
+            var p_id = $(obj).data("p_id");
+            var m_no = cam.m_no;
+            console.log(m_no);
+            console.log(po_id);
+            console.log(cart_amount);
+            console.log(p_id);
+            var list = [];
+            list.push(po_id);
+            list.push(cart_amount);
+            list.push(p_id);
+            list.push(m_no);
+            console.log(list);
+            var ojb = { "cart" : list};
+
+            $.ajax({
+                url : '/payment/goCart/',
+                type : 'post',
+                data : ojb,
+                dataType : 'json',
+                success : function(data){
+                    console.log(data);
+                    alert("회원님의 장바구니에 담겼습니다!");
+                },
+                error : function(error){
+                    console.log(error);
+                    alert("장바구니담기 실패!");
+                }
+            })
+
+    }
+
+        else{
+            alert("로그인 후 이용해주세요!");
+            location.href = "/member/login";
+        }
+
     };
-    var buy = function(){
-        $('buy')
-            .attr('action','product/buy')
-            .attr('method','get')
-            .submit();
-    };
+
+
 </script>
 </body>
 </html>
