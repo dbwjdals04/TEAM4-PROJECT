@@ -102,6 +102,13 @@ public class PaymentController {
         return "payment/payment";
     }
 
+    @PostMapping("/payment/cart/delete/{cart_no}")
+    public String deleteCart(@PathVariable int cart_no){
+
+        this.paymentService.deleteCart(cart_no);
+        return "payment/cart";
+    }
+
 
 
 }

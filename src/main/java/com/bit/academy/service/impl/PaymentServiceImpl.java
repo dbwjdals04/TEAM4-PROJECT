@@ -52,4 +52,8 @@ public class PaymentServiceImpl implements PaymentService{
         this.paymentMapper.goCart(list);
     }
 
+    //장바구니 삭제
+    @Override
+    public  void deleteCart(int cart_no){ this.paymentMapper.deleteCart(cart_no);}
+
 }

@@ -29,4 +29,6 @@ public interface PaymentService {
      */
     void goCart(List list);
 
+    void deleteCart(int cart_no);
+
 }

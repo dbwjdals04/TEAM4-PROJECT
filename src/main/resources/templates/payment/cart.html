@@ -2,6 +2,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/agency.min.css" rel="stylesheet">
     <link href="/static/css/board.css" rel="stylesheet">
@@ -19,7 +20,7 @@
     <div th:each="cart:${map.cart}">
         <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">
             <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>
-            <div style="float: right"><img src="/static/img/엑스.png"></div>
+            <div style="float: right"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>
             <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
             <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>
             <div><span>수량</span> <span th:text="${cart.cart_amount}">수량</span></div>
@@ -36,9 +37,33 @@
 </form>
 
     <div><span>결제 금액 : </span> <span th:text="${map.total}">상품 가격</span></div>
+<input type="button" value="주문 하기"/>
 
 <script type="text/javascript" th:inline="javascript">
+var cartdelete = function(obj){
+    var cart_no = $(obj).data("cart_no");
+    if(confirm("정말로 삭제하시겠습니까?")) {
 
+        $.ajax({
+            type: 'post',
+            url: '/payment/cart/delete/' + cart_no,
+            data: 'json',
+            error: function (error) {
+                console.error("Error!");
+            },
+            success: function (data) {
+                console.log("success!");
+                console.log(member.m_no);
+                location.href = '/payment/cart/' + member.m_no;
+
+            },
+            complete: function () {
+                console.log("complete!");
+                window.location.reload(true);
+            }
+        });
+    }
+}
 </script>
 </body>
 </html>

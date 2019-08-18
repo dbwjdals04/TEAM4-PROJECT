@@ -31,4 +31,7 @@ public interface PaymentMapper {
 
     //장바구니담기
     void goCart(List list);
+
+    //장바구니 삭제
+    void deleteCart(int cart_no);
 }
