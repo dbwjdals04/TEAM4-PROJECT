@@ -2,11 +2,14 @@ package com.bit.academy.service.impl;
 
 import com.bit.academy.mapper.PaymentMapper;
 import com.bit.academy.model.CartVO;
+import com.bit.academy.model.MemberVO;
+import com.bit.academy.model.OptionVO;
+import com.bit.academy.model.ProductVO;
 import com.bit.academy.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,5 +58,22 @@ public class PaymentServiceImpl implements PaymentService{
     //장바구니 삭제
     @Override
     public  void deleteCart(int cart_no){ this.paymentMapper.deleteCart(cart_no);}
+
+
+    //구매하기
+    @Override
+    public ProductVO buyProduct(int p_id) {
+
+        return this.paymentMapper.buyProduct(p_id);
+    }
+    @Override
+    public MemberVO buyMember(int m_no) {
+        return this.paymentMapper.buyMember(m_no);
+    }
+    @Override
+    public OptionVO buyOption(int po_id) {
+
+        return this.paymentMapper.buyOption(po_id);
+    }
 
 }

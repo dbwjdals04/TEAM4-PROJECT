@@ -3,14 +3,12 @@ package com.bit.academy.service.impl;
 import com.bit.academy.mapper.BoardMapper;
 import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.BoardVO;
-import com.bit.academy.model.MemberVO;
 import com.bit.academy.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service

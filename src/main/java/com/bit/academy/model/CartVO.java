@@ -3,6 +3,8 @@ package com.bit.academy.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
 public class CartVO {
@@ -19,6 +21,9 @@ public class CartVO {
     private String po_value;
     private int po_price;
     private int po_stock;
+    private List<OptionVO> OptionVOList;
+
+
 
 
     public int getCart_no() {

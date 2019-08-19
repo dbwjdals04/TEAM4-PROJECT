@@ -1,0 +1,182 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <style>
+        table {
+            width: 100%;
+            border: 1px solid #444444;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #444444;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Payment</h1>
+
+<form name="paymentForm" id="paymentForm">
+    <h2>구매자정보</h2>
+    <div><span>회원이름</span> <input type="text" name="m_name" id="m_name" th:value="${map.member.m_name}"/></div>
+    <div><span>이메일</span> <input type="text" name="m_id" id="m_id"
+                                th:value="${map.member.m_id}" /></div>
+    <div><span>휴대폰번호</span> <input type="text" name="m_phone" id="m_phone"
+                                th:value="${map.member.m_phone}" /></div>
+
+    <h2>받는사람</h2>
+    <div><span>회원이름</span> <input type="text" name="m_name"  th:value="${map.member.m_name}"/></div>
+    <div><span>이메일</span> <input type="text" name="m_id"
+                                 th:value="${map.member.m_id}" /></div>
+    <div><span>휴대폰번호</span> <input type="text" name="m_phone"
+                                   th:value="${map.member.m_phone}" /></div>
+
+    <input type="text" id="sample4_postcode" placeholder="우편번호">
+    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+    <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+    <span id="guide" style="color:#999;display:none"></span>
+    <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+    <input type="text" id="sample4_extraAddress" placeholder="참고항목">
+
+
+    <h2>결제정보</h2>
+    <div><span>상품이름</span> <input type="text" name="p_name"  th:value="${map.product.p_name}"/></div>
+    <div><span>상품가격</span> <input type="text" name="p_price"  th:value="${map.product.p_price}"/></div>
+    <div><span>선택수량</span> <input type="text" name="p_price"  th:value="${map.cart_amount}"/></div>
+    <div><span>옵션이름</span> <input type="text" name="po_name"  th:value="${map.option.po_value}"/></div>
+    <div><span>옵션가격</span> <input type="text" name="po_price"  th:value="${map.option.po_price}"/></div>
+    <br>
+    <div >총 결제금액 :<th:block id = "amount" th:text="(${map.product.p_price}*${map.cart_amount})+${map.option.po_price}"></th:block></div>
+
+
+    <table>
+        <tbody>
+        <tr>
+            <th>
+                결제수단
+            </td>
+            <td>
+                <select name="pay_method" id="pay_method">
+                    <option value="card">신용카드</option>
+                    <option value="vbank">가상계좌</option>
+                    <option value="phone">휴대폰소액결제</option>
+                    <option value="cultureland">문화상품권</option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <input type="button" value="Payment" onclick="payment();"/>
+</form>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                }
+                 else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
+
+
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    var payment = function(){
+        var IMP = window.IMP; // 생략해도 괜찮습니다.
+        IMP.init("imp10150755"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+        var pay_method = $('#pay_method:selected').val();
+        var merchant_uid = /*[[${merchant_uid}]]*/;
+        // var amount = $('#amount').val();
+        var amount = $('#amount').text();
+        console.log("################" +amount);
+        var goods_name = $('#goods_name').val();
+        var m_name = $('#m_name').val();
+        var m_id = $('#m_id').val();
+        var m_phone = $('#m_phone').val();
+
+        // IMP.request_pay(param, callback) 호출
+        IMP.request_pay({ // param
+            pg: "html5_inicis",
+            pay_method: pay_method,
+            merchant_uid: merchant_uid,
+            name: goods_name,
+            amount: amount,
+            buyer_email: m_id,
+            buyer_name: m_name,
+            buyer_tel: m_phone,
+            buyer_addr: "서울시 종로구 비봉길 1111",
+            buyer_postcode: "00000"
+        }, function (rsp) { // callback
+
+            if (rsp.success) {
+                // 결제 성공 시 로직
+                console.log(rsp);
+                Object.keys(rsp).forEach(function (key) {
+                    $('#paymentForm').append('<input type="text" name="'+key+'" value="'+rsp[key]+'"/><br/>');
+                });
+                $('#paymentForm')
+                    .attr('method', 'post')
+                    .attr('action', '/payment')
+                    .submit();
+            } else {
+                // 결제 실패 시 로직,
+                console.error(rsp);
+            }
+        });
+    };
+</script>
+
+</body>
+</html>

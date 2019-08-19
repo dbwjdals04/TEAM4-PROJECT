@@ -63,7 +63,7 @@
     <tr>
         <td>
             <input type="button" id = "cart" value ="장바구니 담기" onclick = "goCart(this);" th:attr="data-p_id=${map.product.p_id}">
-            <input type="button" id = "buy" value = "구매하기" onclick = "buy();">
+            <input type="button" id = "buy" value = "바로구매" onclick = "buy(this);" th:attr="data-p_id=${map.product.p_id}">
 
         </td>
     </tr>
@@ -76,6 +76,54 @@
 
     var cam = /*[[${session.member}]]*/;
     console.log(cam);
+
+    var buy = function(obj){
+        if(cam!=null) {
+            var p_id = $(obj).data("p_id");
+            var m_no = cam.m_no;
+            var po_id = parseInt($.trim(($("#po_id option:selected").val())));
+            var cart_amount = parseInt($.trim(($("#cart_amount option:selected").val())));
+            console.log(p_id, m_no, po_id, cart_amount);
+
+            location.href = "/payment/buy/"+p_id+'/'+m_no+'/'+po_id+'/'+cart_amount
+
+        }
+
+        //     $.ajax({
+        //         url : '/payment/buy/',
+        //         type : 'post',
+        //         data : ojb,
+        //         dataType : 'json',
+        //         success : function(data){
+        //             console.log(data);
+        //             var map = new Map(JSON.parse(data));
+        //             $.ajax({
+        //                 url : '/payment/buy/',
+        //                 type : 'get',
+        //                 data : map,
+        //                 dataType : 'Map',
+        //                 success : function(){
+        //                     console.log("결제페이지로 이동합니다.")
+        //                 },
+        //                 error : function(error){
+        //                     console.log("결제페이지로 이동 실패")
+        //                 }
+        //             })
+        //         },
+        //         error : function(error){
+        //             console.log(error);
+        //             alert("오류!");
+        //         }
+        //     })
+        //
+        //
+        //
+        // }
+        else{
+            alert("로그인 후 이용해주세요.");
+            location.href ="/member/login";
+        }
+    }
 
     var goCart = function(obj){
         if(cam!=null){

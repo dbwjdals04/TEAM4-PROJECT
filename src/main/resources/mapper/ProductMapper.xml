@@ -128,7 +128,7 @@
     <select id="selectOption" parameterType="Integer" resultType="com.bit.academy.model.OptionVO">
         SELECT *
         FROM product_option
-        WHERE p_id = ${p_id};
+        WHERE po_id = ${po_id};
     </select>
 
 

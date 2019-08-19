@@ -1,8 +1,10 @@
 package com.bit.academy.service;
 
 import com.bit.academy.model.CartVO;
+import com.bit.academy.model.MemberVO;
+import com.bit.academy.model.OptionVO;
+import com.bit.academy.model.ProductVO;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -30,5 +32,12 @@ public interface PaymentService {
     void goCart(List list);
 
     void deleteCart(int cart_no);
+
+    /**
+     * 구매하기
+     */
+    ProductVO buyProduct(int p_id);
+    MemberVO buyMember(int m_no);
+    OptionVO buyOption(int po_id);
 
 }

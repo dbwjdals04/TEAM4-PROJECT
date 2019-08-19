@@ -1,6 +1,9 @@
 package com.bit.academy.mapper;
 
 import com.bit.academy.model.CartVO;
+import com.bit.academy.model.MemberVO;
+import com.bit.academy.model.OptionVO;
+import com.bit.academy.model.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -34,4 +37,10 @@ public interface PaymentMapper {
 
     //장바구니 삭제
     void deleteCart(int cart_no);
+
+    //구매하기
+    ProductVO buyProduct(int p_id);
+    MemberVO buyMember(int m_no);
+    OptionVO buyOption(int po_id);
+
 }

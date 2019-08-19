@@ -5,14 +5,18 @@ import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 import com.bit.academy.service.ProductService;
+import com.bit.academy.service.UploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.bit.academy.service.UploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -33,8 +37,8 @@ public class ProductController {
     @ResponseBody
     @GetMapping("/product/searchProductAll")
     public List<ProductVO> searchProductAll(ProductVO productVO,
-                                      @RequestParam("c_no[]") List c_no,
-                                      Model model){
+                                            @RequestParam("c_no[]") List c_no,
+                                            Model model){
         log.debug(String.valueOf(c_no));
         List<ProductVO> product = this.productService.productSearchAll(c_no);
 
@@ -139,6 +143,7 @@ public class ProductController {
 
         Map<String, Object> map = new HashMap<>();
         map = this.productService.productDetail(p_id);
+
         log.debug(String.valueOf(map));
         model.addAttribute("map",map);
 
