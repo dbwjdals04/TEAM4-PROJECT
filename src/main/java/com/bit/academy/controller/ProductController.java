@@ -1,6 +1,7 @@
 
 package com.bit.academy.controller;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 import com.bit.academy.service.ProductService;
@@ -58,10 +59,14 @@ public class ProductController {
     //카테고리별 상품 리스트 출력
     @ResponseBody
     @PostMapping("/admin/productList/{category_no}")
-    public List<ProductVO> productList(Model model, @PathVariable String category_no){
+    public Map<String,Object> productList(Model model, @PathVariable String category_no,  @ModelAttribute BoardPaging boardPaging){
+        log.debug("############## 리스트 확인 ##########");
+        log.debug(boardPaging.toString());
         List c_noList = Arrays.asList(category_no.split(","));
-        List<ProductVO> List = this.productService.productSearchAll(c_noList);
-        return List;
+        model.addAllAttributes(this.productService.selectProductList(c_noList,boardPaging));
+
+//        List<ProductVO> List = this.productService.productSearchAll(c_noList);
+        return this.productService.selectProductList(c_noList,boardPaging);
     };
 
     //상품 상세정보 출력
@@ -104,6 +109,19 @@ public class ProductController {
     public String productAdd (@ModelAttribute ProductVO productVO, @ModelAttribute OptionVO optionVO, Model model,
                               @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile, @RequestParam("category_no") Integer category_no){
 
+        List<OptionVO> list = optionVO.getOptionVOList();
+
+        //***********************코드 정리***********************
+        if(list==null){
+            list = new ArrayList<>();
+            OptionVO o = new OptionVO();
+            o.setPo_price(0);
+            o.setPo_value("기본 옵션");
+            o.setPo_stock(0);
+            list.add(o);
+            optionVO.setOptionVOList(list);
+        }
+
         String returnValue = "start";
         try {
             this.productService.insertProduct(this.uploadService.saveImage(thumbnail, imageFile,productVO), category_no, optionVO.getOptionVOList());
@@ -126,6 +144,14 @@ public class ProductController {
 
         return "product/productDetail";
 
+    }
+
+    @PostMapping("/admin/product/modify")
+    public String productModify(@ModelAttribute ProductVO productVO, @ModelAttribute OptionVO optionVO, @RequestParam("category_no") Integer category_no,
+                                @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile) throws Exception {
+       // log.debug(optionVO.getOptionVOList().toString());
+        this.productService.updateProduct(this.uploadService.saveImage(thumbnail,imageFile,productVO), category_no, optionVO.getOptionVOList());
+        return "admin/productList";
     }
 
 }

@@ -1,5 +1,6 @@
 package com.bit.academy.service;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 
@@ -13,6 +14,9 @@ public interface ProductService {
      * 상품검색(카테고리)
      */
     List<ProductVO> productSearchAll(List list);
+
+    Map<String, Object> selectProductList(List c_list, BoardPaging boardPaging);
+
 
     /**
      * 상품검색(세부)
@@ -35,5 +39,9 @@ public interface ProductService {
      */
     Map<String, Object> selectProduct(Integer p_id);
 
+    /**
+     * 상품수정
+     */
+    Map<String, Object> updateProduct(ProductVO productVO, int category_no, List<OptionVO> list);
 
 }

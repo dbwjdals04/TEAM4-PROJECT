@@ -16,39 +16,46 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class UploadServiceImpl implements UploadService {
+
     @Override
     public ProductVO saveImage(MultipartFile thumbnail, MultipartFile detailImg, ProductVO productVO) throws Exception {
         UUID uid = UUID.randomUUID();
-        String newThumbnailName = "thumb_"+uid + "_" + thumbnail.getOriginalFilename();
-        String newDetailImgName = "detailImg_" + uid + "_" + detailImg.getOriginalFilename();
-
+        String newThumbnailName = null;
+        String newDetailImgName = null;
         String thumbFolder=System.getProperty("user.dir")+"/src/main/resources/uploads/thumbnail/";
         String detailImgFolder=System.getProperty("user.dir")+"/src/main/resources/uploads/detailImg/";
 
-        byte[] thumbBytes= thumbnail.getBytes();
-        byte[] detailImgBytes = detailImg.getBytes();
+        if(thumbnail.isEmpty() && detailImg.isEmpty()){
+            return productVO;
+        }else{
+            if(!thumbnail.isEmpty()) {
+                newThumbnailName = "thumb_"+uid + "_" + thumbnail.getOriginalFilename();
+                byte[] thumbBytes= thumbnail.getBytes();
+                Path thumbPath = Paths.get(thumbFolder + newThumbnailName);
+                Files.createDirectories(Paths.get(thumbFolder));
+                Files.write(thumbPath, thumbBytes);
+                productVO.setThumb_name(newThumbnailName);
+                productVO.setThumb_route(thumbFolder);
+                productVO.setThumb_100(imgResize(thumbFolder, newThumbnailName, 100));
+                productVO.setThumb_300(imgResize(thumbFolder, newThumbnailName, 300));
+                productVO.setThumb_600(imgResize(thumbFolder, newThumbnailName, 600));
+            }
+            if(!detailImg.isEmpty()){
+                newDetailImgName = "detailImg_" + uid + "_" + detailImg.getOriginalFilename();
+                byte[] detailImgBytes = detailImg.getBytes();
+                Path detailImgPath = Paths.get(detailImgFolder + newDetailImgName);
+                Files.createDirectories(Paths.get(detailImgFolder));
+                Files.write(detailImgPath, detailImgBytes);
+                productVO.setDetailimg_name(newDetailImgName);
+                productVO.setDetailimg_route(detailImgFolder);
+            }
 
-        Path thumbPath = Paths.get(thumbFolder + newThumbnailName);
-        Path detailImgPath = Paths.get(detailImgFolder + newDetailImgName);
-
-        Files.createDirectories(Paths.get(thumbFolder));
-        Files.write(thumbPath, thumbBytes);
-        Files.createDirectories(Paths.get(detailImgFolder));
-        Files.write(detailImgPath, detailImgBytes);
+            log.debug(productVO.toString());
+            return productVO;
+        }
 
 
-
-        productVO.setThumb_name(newThumbnailName);
-        productVO.setThumb_route(thumbFolder);
-        productVO.setDetailimg_name(newDetailImgName);
-        productVO.setDetailimg_route(detailImgFolder);
-        productVO.setThumb_100(imgResize(thumbFolder, newThumbnailName, 100));
-        productVO.setThumb_300(imgResize(thumbFolder, newThumbnailName, 300));
-        productVO.setThumb_600(imgResize(thumbFolder, newThumbnailName, 600));
-
-        return productVO;
     }
-
 
     @Override
     public String imgResize(String thumbFolder, String newThumbnailName,int size) throws IOException {
@@ -62,6 +69,7 @@ public class UploadServiceImpl implements UploadService {
 
         return name;
     }
+
 
 
 }
