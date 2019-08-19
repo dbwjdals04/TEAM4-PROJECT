@@ -131,7 +131,7 @@
 </table>
 
         <script type="text/javascript"  th:inline="javascript">
-
+            
             // 객체반환 (큰 카테고리에서 전체보기)
             // 전체문서가 실행될 때 실행되고, 그 내부에 다시 함수를 두어 클릭하면 cid값 가져오기. closet함수!기억
            $(document).ready(function(){
@@ -187,7 +187,7 @@
                             $("#siyoung").empty();
                             alert("성공");
                             console.log(data);
-                            $("#ajaxData").html("");
+                                $("#ajaxData").html("");
                             $.each(data, function(i){
                                 var html = "";
                                 html += "<div>";

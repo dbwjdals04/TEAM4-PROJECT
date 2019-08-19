@@ -39,7 +39,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+            <a class="nav-link js-scroll-trigger" href="/product/main">PRODUCTS</a>
 
 
           </li>
@@ -48,6 +48,7 @@
           </li>
             <script th:inline="javascript">
               var memberk = /*[[${session.member}]]*/
+
 
                       console.log("세션정보");
                      function gocart() {
@@ -58,6 +59,13 @@
 
                       }
 
+                      var mypage = function(){
+                       $('#mypage')
+                               .attr('method','post')
+                               .attr('action','/member/mypage/'+memberk.m_no)
+                               .submit();
+                      }
+
               if(memberk!=null && memberk.m_no!=1){
                 document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
                         "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
@@ -65,9 +73,9 @@
                 document.write("<li class=\"nav-item\" id='logOut'>\n" +
                         "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
                         "            </li>");
-                document.write("<li class=\"nav-item\">\n" +
-                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\">MY PAGE</a>\n" +
-                        "            </li>");
+                document.write("<form style=\"margin: 0px\" name=\"mypage\" id=\"mypage\"><li class=\"nav-item\">\n" +
+                        "              <a class=\"nav-link js-scroll-trigger\" href =\"#\" onclick =\"mypage()\">MY PAGE</a>\n" +
+                        "            </li></form>");
 
               }
               else if(memberk!=null && memberk.m_no==1){

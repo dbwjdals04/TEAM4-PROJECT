@@ -2,11 +2,11 @@ package com.bit.academy.controller;
 
 import com.bit.academy.model.MemberVO;
 import com.bit.academy.service.MemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -192,5 +192,14 @@ public class MemberController {
     public String logOut(HttpServletRequest request){
         this.memberService.logOut(request);
         return "main/index";
+    }
+
+    //자기정보조회
+    @PostMapping("/member/mypage/{m_no}")
+    public String mypage(Model model, @PathVariable int m_no){
+
+        model.addAttribute("member", this.memberService.selectMember(m_no));
+
+        return "member/mypage";
     }
 }

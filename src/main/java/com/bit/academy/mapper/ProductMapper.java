@@ -41,7 +41,7 @@ public interface ProductMapper {
      */
     ProductVO productDetail(Integer p_id);
     List<OptionVO> productOption(Integer p_id);
-    CartVO productAmount(Integer p_id);
+    List<CartVO> productAmount(Integer p_id);
 
     /**
      * 상품 조회

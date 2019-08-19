@@ -1,50 +1,27 @@
 
 package com.bit.academy.util;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import com.siot.IamportRestClient.Iamport;
 import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.request.AgainPaymentData;
 import com.siot.IamportRestClient.request.AuthData;
 import com.siot.IamportRestClient.request.CancelData;
-import com.siot.IamportRestClient.request.OnetimePaymentData;
-import com.siot.IamportRestClient.request.ScheduleData;
 import com.siot.IamportRestClient.request.ScheduleEntry;
-import com.siot.IamportRestClient.request.UnscheduleData;
-import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisInvoiceData;
-import com.siot.IamportRestClient.request.naver.NaverCancelData;
-import com.siot.IamportRestClient.request.naver.NaverPlaceData;
-import com.siot.IamportRestClient.request.naver.NaverShipData;
-import com.siot.IamportRestClient.response.AccessToken;
-import com.siot.IamportRestClient.response.Certification;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.PagedDataList;
-import com.siot.IamportRestClient.response.Payment;
-import com.siot.IamportRestClient.response.PaymentBalance;
-import com.siot.IamportRestClient.response.PaymentBalanceEntry;
-import com.siot.IamportRestClient.response.Schedule;
+import com.siot.IamportRestClient.response.*;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
-import com.siot.IamportRestClient.response.naver.NaverProductOrder;
-import com.siot.IamportRestClient.response.naver.NaverReview;
 import com.siot.IamportRestClient.serializer.BalanceEntrySerializer;
 import com.siot.IamportRestClient.serializer.EscrowInvoiceEntrySerializer;
 import com.siot.IamportRestClient.serializer.ScheduleEntrySerializer;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class IamportUtil {
 
