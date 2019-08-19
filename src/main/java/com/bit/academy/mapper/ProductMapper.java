@@ -1,5 +1,6 @@
 package com.bit.academy.mapper;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.CartVO;
 import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
@@ -19,6 +20,19 @@ public interface ProductMapper {
      * @param c_no
      */
     List<ProductVO> productSearchAll(List c_no);
+
+
+    /**
+     * 상품 갯수 조회
+     * @return
+     */
+    int selectProductListCount(BoardPaging boardPaging);
+
+    /**
+     * 상품 목록 조회 - admin
+     * @return
+     */
+    List<ProductVO> selectProductList(Map<String, Object> map);
 
     /**
      * 상품검색기능(세부)
@@ -51,4 +65,12 @@ public interface ProductMapper {
     Map<String, Object> selectProduct(Integer p_id);
     List<OptionVO> selectOption(Integer p_id);
 
+    /**
+     * 상품 수정
+     * @Param p_id
+     * @return
+     */
+    void updateProduct(Map map);
+    void deleteOption(int p_id);
+    void insertOption2(OptionVO optionVO);
 }

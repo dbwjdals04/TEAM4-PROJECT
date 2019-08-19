@@ -43,6 +43,29 @@
 </div>
 
 
+<!--<div style="text-align: center; width:100%;">-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> &lt;!&ndash; 첫페이지 &ndash;&gt;-->
+<!--            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> &lt;!&ndash;이전페이지&ndash;&gt;-->
+
+<!--            <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">-->
+<!--                &lt;!&ndash;현재페이지인 경우&ndash;&gt;<a class="pagebtn blue"  th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>-->
+<!--                &lt;!&ndash;현재페이가 아닌 경우&ndash;&gt;<a class="pagebtn blue"  th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>-->
+<!--            </td>-->
+
+<!--            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> &lt;!&ndash;다음페이지&ndash;&gt;-->
+<!--            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> &lt;!&ndash; 마지막페이지 &ndash;&gt;-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->
+
+<!--<form name="boardPaging" id="boardPaging" method="get" action="/admin/productList">-->
+<!--    <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>-->
+<!--    <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>-->
+<!--</form>-->
+
+
 
 <input type="button" id="openModal" value="상품 등록" onclick="addProduct();" >
 
@@ -177,8 +200,9 @@
                 success : function(data){
                     $("#test-tbody").empty();
                     console.log(data);
-                    $.each(data, function(i){
-                        $("#test-tbody").append('<tr>'+'<td>' + data[i].p_id + '</td>'+'<td>' + data[i].p_name + '</td>'+'<td>' + data[i].p_price + '</td>'+'</tr>');
+                    var productList = data.productList;
+                    $.each(productList, function(i){
+                        $("#test-tbody").append('<tr>'+'<td>' + productList[i].p_id + '</td>'+'<td>' + productList[i].p_name + '</td>'+'<td>' + productList[i].p_price + '</td>'+'</tr>');
                     });
                     $("#example-table-1 tr").click(function(){
 

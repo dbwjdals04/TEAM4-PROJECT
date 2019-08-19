@@ -12,11 +12,28 @@
     JOIN category c
     ON cp.category_no = c.category_no
     WHERE c.category_no IN
-    <foreach collection="list" item="type" open="(" close=")" separator=",">
+    <foreach collection="map" item="type" open="(" close=")" separator=",">
         #{type}
     </foreach>
     </select>
 
+
+    <select id="selectProductList"
+            parameterType="Map"
+            resultType="com.bit.academy.model.ProductVO">
+        SELECT *
+        FROM product AS p
+        JOIN category_product AS cp
+        ON p.p_id = cp.p_id
+        JOIN category c
+        ON cp.category_no = c.category_no
+        WHERE c.category_no IN
+        <foreach collection="c_no" item="type" open="(" close=")" separator=",">
+            #{type}
+        </foreach>
+        ORDER BY p.p_id DESC
+        LIMIT #{boardPaging.limitBegin}, #{boardPaging.articleCount}
+    </select>
 
 <!--    카테고리분류 이후 가구 소품 조명 분리-->
     <select id = "productSearch"  parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
@@ -115,7 +132,47 @@
     </select>
 
 
+    <!--상품수정-->
+    <update id="updateProduct" parameterType="Map">
+        UPDATE product as p, category_product cp
 
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productVO.thumb_name != null">
+                p.thumb_name = #{productVO.thumb_name}, p.thumb_100=#{productVO.thumb_100}, p.thumb_300=#{productVO.thumb_300}, p.thumb_600=#{productVO.thumb_600},
+            </if>
+            <if test="productVO.detailimg_name != null">
+                p.detailimg_name=#{productVO.detailimg_name},
+            </if>
+            p.p_name = #{productVO.p_name}, p.p_price=#{productVO.p_price}, p.p_brand=#{productVO.p_brand}, p.p_spec=#{productVO.p_spec}, cp.category_no = #{category_no}
+        </trim>
 
+        WHERE p.p_id = #{productVO.p_id} and cp.p_id = #{productVO.p_id}
+
+    </update>
+
+    <delete id="deleteOption" parameterType="Integer">
+        DELETE FROM product_option WHERE p_id = #{p_id};
+    </delete>
+
+    <insert id="insertOption2"
+            parameterType="com.bit.academy.model.OptionVO"
+            useGeneratedKeys="true">
+        <![CDATA[
+            INSERT INTO product_option (p_id, po_value, po_price, po_stock)
+            VALUES(
+            #{p_id}, #{po_value}, #{po_price}, #{po_stock}
+            )
+        ]]>
+    </insert>
+
+    <select id="selectProductListCount"
+            parameterType="com.bit.academy.model.BoardPaging"
+            resultType="int">
+        select count(1) from product
+        WHERE 1=1
+<!--        <if test="searchKeyword != null and searchKeyword != ''">-->
+<!--            AND q.qna_context like concat('%', ${searchKeyword}, '%')-->
+<!--        </if>-->
+    </select>
 </mapper>
 
