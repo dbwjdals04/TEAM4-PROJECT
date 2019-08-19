@@ -49,22 +49,20 @@
             <script th:inline="javascript">
               var memberk = /*[[${session.member}]]*/
 
-
                       console.log("세션정보");
                      function gocart() {
                         $('#cart')
                                 .attr('method', 'post')
                                 .attr('action', '/payment/cart/'+memberk.m_no)
                                 .submit();
-
+                      }
+                     function gomypage() {
+                        $('#myPage')
+                                .attr('method','post')
+                                .attr('action','/member/mypage/'+memberk.m_no)
+                                .submit();
                       }
 
-                      var mypage = function(){
-                       $('#mypage')
-                               .attr('method','post')
-                               .attr('action','/member/mypage/'+memberk.m_no)
-                               .submit();
-                      }
 
               if(memberk!=null && memberk.m_no!=1){
                 document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
@@ -72,12 +70,12 @@
                         "          </li></form>")
                 document.write("<li class=\"nav-item\" id='logOut'>\n" +
                         "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
-                        "            </li>");
-                document.write("<form style=\"margin: 0px\" name=\"mypage\" id=\"mypage\"><li class=\"nav-item\">\n" +
-                        "              <a class=\"nav-link js-scroll-trigger\" href =\"#\" onclick =\"mypage()\">MY PAGE</a>\n" +
-                        "            </li></form>");
-
+                        "            </li>")
+                document.write("<form style=\"margin: 0px\" name=\"mypage\" id=\"myPage\"><li class=\"nav-item\">\n" +
+                        "              <a class=\"nav-link js-scroll-trigger\"  href =\"#\" onclick=\"gomypage()\">MY PAGE</a>\n" +
+                        "            </li></form>")
               }
+
               else if(memberk!=null && memberk.m_no==1){
                 document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
                         "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
@@ -106,6 +104,7 @@
                 alert("로그인 하세요");
                 location.href='/member/login'
               }
+
             </script>
 
 
