@@ -40,6 +40,7 @@ public class ProductController {
         List<ProductVO> product = this.productService.productSearchAll(c_no);
 
         return product;
+
     }
     //상품검색(세부)
     @ResponseBody
