@@ -5,40 +5,37 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>답변 달기</h1>
+<h1>답변 달기</h1>
 
 
-    <form name="insertForm" id="insertForm" method="post" action="/board/reply"
-    style="width:600px;">
-        <div><input type="hidden" name="qna_no" id="qna_no" th:value="${board.qna_no}"/></div>
-        <div><input type="hidden" name="qna_no" id="qna_groupOrd" th:value="${board.qna_groupOrd}"/></div>
-        <div><span>회원번호</span> <input type="text" name="m_no" id="m_no" value="1" /></div>
-        <div><span>이름</span> <input type="text" name="m_name" id="m_name"
-                                    th:value="${ session.member!=null ? session.member.m_name : '' }" /></div>
-        <div><span>비밀번호</span> <input type="password" name="qna_passwd"
-                                      id="qna_passwd" value="abcd1234" /></div>
-        <div><span>제목</span> <input type="text" name="qna_title" id="qna_title"
-                                    value="" /></div>
-        <div>
-            <span>상세</span>
-            <textarea name="qna_context" id="qna_context" style="width: 100%; height: 100px;">
+<form name="insertForm" id="insertForm" method="post" action="/board/reply"
+      style="width:600px;">
+    <div><input type="hidden" name="qna_no" id="qna_no" th:value="${board.qna_no}"/></div>
+    <div><input type="hidden" name="qna_no" id="qna_groupOrd" th:value="${board.qna_groupOrd}"/></div>
+    <div><span>회원번호</span> <input type="text" name="m_no" id="m_no" th:value="${session.member.m_no}"/></div>
+    <div><span>이름</span> <input type="text" name="m_name" id="m_name"
+                                th:value="${session.member.m_name}" /></div>
+    <div id="psbox" style="display:none;"><span>비밀번호</span> <input type="password" name="qna_passwd"
+                                                                   id="qna_passwd"/></div>
+    <div><span>제목</span> <input type="text" name="qna_title" id="qna_title"
+                                value="" /></div>
+    <div>비공개<input type="checkbox" name="privateck" id="privateck" value="1"/></div>
+    <div>
+        <span>상세</span>
+        <textarea name="qna_context" id="qna_context" style="width: 100%; height: 100px;">
 상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
-상세 내용 입니다.
+
             </textarea>
-        </div>
-    </form>
+    </div>
+</form>
 
-    <input type="button" value="등록" onclick="insert();"/>
+<input type="button" value="등록" onclick="insert();"/>
 
-    <script type="text/javascript">
-        var insert = function(){
-            $('#insertForm').submit();
-        };
-    </script>
+<script type="text/javascript">
+    var insert = function(){
+        $('#insertForm').submit();
+    };
+</script>
 
 </body>
 </html>

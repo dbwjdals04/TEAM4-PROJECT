@@ -66,4 +66,6 @@ public interface MemberService {
 
 
     void logOut(HttpServletRequest request);
+
+    void modify(MemberVO memberVO);
 }

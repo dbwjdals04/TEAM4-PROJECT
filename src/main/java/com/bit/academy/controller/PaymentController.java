@@ -5,18 +5,13 @@ import com.bit.academy.util.IamportUtil;
 import com.siot.IamportRestClient.request.CancelData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sun.font.AttributeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Slf4j
@@ -143,6 +138,36 @@ public class PaymentController {
         }
         return result;
     }
+    //장바구니에서 결제하기
+    @GetMapping("/payment/cartBuy/")
+    public String cartBuyGet(){
+        return "payment/payment3";
+    }
+
+    @PostMapping("/payment/cartBuy/")
+    public String cartBuy(HttpServletRequest request
+                        ,Model model){
+        log.debug("############결제요청#############");
+
+        String[] cart_no_arr_str = request.getParameterValues("cart_no_arr");
+        Integer[] cart_no_arr = new Integer[cart_no_arr_str.length];
+        List<Object> list = new ArrayList<>();
+        for(int i=0;i<cart_no_arr_str.length;i++){
+            cart_no_arr[i] = Integer.parseInt(cart_no_arr_str[i]);
+            log.debug("cart_no : " + cart_no_arr[i]);
+            list.add(this.paymentService.cartBuy(cart_no_arr[i]));
+            log.debug(String.valueOf(list));
+        }
+
+        log.debug(String.valueOf(list));
+        model.addAttribute("list", list);
+        return "payment/payment3";
+    }
+//    @RequestParam("total") int total
+//            log.debug(String.valueOf(total));
+
+
+
 //
 //    @ResponseBody
 //    @PostMapping("/payment/buy/")

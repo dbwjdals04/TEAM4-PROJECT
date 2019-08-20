@@ -44,20 +44,32 @@
     <script type="text/javascript" th:inline="javascript">
         
         var qna_no = /*[[ ${board.qna_no} ]]*/;
+        var m_no = /*[[ ${board.m_no} ]]*/;
+        var session_m_no = /*[[${session.member.m_no}]]*/;
+        console.log(m_no);
+        console.log(session_m_no);
 
         var replyBoard = function () {
+            if(session_m_no==3){
             $('#viewForm')
                 .attr('action','/board/reply/' + qna_no)
                 .attr('method','get')
-                .submit();
+                .submit();}
+            else{
+                alert("권한이 없습니다.");
+            }
 
         }
 
         var modifyBoard = function(){
+            if(m_no==session_m_no){
             $('#viewForm')
                 .attr('action','/board/update/' + qna_no)
                 .attr('method','get')
-                .submit();
+                .submit();}
+            else{
+                alert("작성자와 일치하지 않습니다.");
+            }
         };
         
         
@@ -73,50 +85,51 @@
             location.href='/board/list';
         };
 
-        var passcheck = function(obj){
+        var passcheck = function(obj) {
             var qna_no = $(obj).data("qna_no");
-            console.log(privateck);
+
+            if (m_no == session_m_no) {
+                var passwd = prompt("비밀번호를 입력하세요");
+
+                console.log(passwd);
+
+                var param = {qna_no: qna_no, qna_passwd: passwd};
+
+                // ajax
+                $.ajax({
+                    type: 'get',
+                    url: '/board/passck',
+                    data: param,
+                    error: function (error) {
+                        console.error("Error!");
+                    },
+                    success: function (data) {
+                        console.log("success!");
+                        console.log(data);
+                        console.log(data.count);
 
 
+                        if (data.count == 0) {
+                            alert("비밀번호 틀림")
+                            // 비밀번호 틀림
+                        } else {
+                            deleteBoard();
+                        }
 
-
-            var passwd = prompt("비밀번호를 입력하세요");
-
-            console.log(passwd);
-
-            var param = {qna_no:qna_no,qna_passwd:passwd};
-
-            // ajax
-            $.ajax({
-                type : 'get',
-                url : '/board/passck',
-                data : param,
-                error : function(error) {
-                    console.error("Error!");
-                },
-                success : function(data) {
-                    console.log("success!");
-                    console.log(data);
-                    console.log(data.count);
-
-
-                    if(data.count==0){
-                        alert("비밀번호 틀림")
-                        // 비밀번호 틀림
+                    },
+                    complete: function () {
+                        console.log("complete!");
                     }
-                    else{
-                        deleteBoard();
-                    }
+                });
 
-                },
-                complete : function() {
-                    console.log("complete!");
-                }
-            });
+                console.log('aaa');
 
-            console.log('aaa');
-
+            }
+            else{
+                alert("작성자와 일치하지 않습니다.");
+            }
         }
+
 
         
     </script>

@@ -130,6 +130,7 @@
     </tr>
 </table>
 
+
         <script type="text/javascript"  th:inline="javascript">
 
             var showdata = function(data){
@@ -158,51 +159,59 @@
                     console.log($(this));
                     var cid =$(this).closest("div").attr("id");
 
-                    console.log(cid);
-                    var arr = [];
 
-                    if(cid == 'modern'){
-                        arr.push(1);
-                        arr.push(2);
-                        arr.push(3);
-                        console.log(cid);
-                    }
-                    else if(cid =='antique'){
-                        arr.push(4);
-                        arr.push(5);
-                        arr.push(6);
-                        console.log(cid);
-                    }
-                    else if(cid =='warm'){
-                        arr.push(7);
-                        arr.push(8);
-                        arr.push(9);
-                        console.log(cid);
-                    }
-                    else{
-                        arr.push(1);
-                        arr.push(2);
-                        arr.push(3);
-                        arr.push(4);
-                        arr.push(5);
-                        arr.push(6);
-                        arr.push(7);
-                        arr.push(8);
-                        arr.push(9);
-                    }
+    // 객체반환 (큰 카테고리에서 전체보기)
+    // 전체문서가 실행될 때 실행되고, 그 내부에 다시 함수를 두어 클릭하면 cid값 가져오기. closet함수!기억
+    $(document).ready(function(){
+        $(document).on("click", ".category", function(){
+            console.log($(this));
+            var cid =$(this).closest("div").attr("id");
 
-                    var ojb = { "c_no" : arr};
+            console.log(cid);
+            var arr = [];
 
-                    console.log("aJax 연결 전");
-                    console.log(ojb);
+            if(cid == 'modern'){
+                arr.push(1);
+                arr.push(2);
+                arr.push(3);
+                console.log(cid);
+            }
+            else if(cid =='antique'){
+                arr.push(4);
+                arr.push(5);
+                arr.push(6);
+                console.log(cid);
+            }
+            else if(cid =='warm'){
+                arr.push(7);
+                arr.push(8);
+                arr.push(9);
+                console.log(cid);
+            }
+            else{
+                arr.push(1);
+                arr.push(2);
+                arr.push(3);
+                arr.push(4);
+                arr.push(5);
+                arr.push(6);
+                arr.push(7);
+                arr.push(8);
+                arr.push(9);
+            }
 
-                    $.ajax({
-                        url : '/product/searchProductAll',
-                        type : 'get',
-                        data :  ojb,
-                        dataType : 'json',
+            var ojb = { "c_no" : arr};
 
-                        success : function(data){
+            console.log("aJax 연결 전");
+            console.log(ojb);
+
+
+            $.ajax({
+                url : '/product/searchProductAll',
+                type : 'get',
+                data :  ojb,
+                dataType : 'json',
+                success : function(data){
                             $("#siyoung").empty();
                             alert("성공");
                             console.log(data);
@@ -214,23 +223,24 @@
                         error : function(error){
                             alert("실패!");
                             console.log(error);
+              
 
-                        }
-                    })
-                })
+                }
+            })
+        })
 
-               $(document).on("click", ".categoryDetail", function(){
-                   console.log($(this));
-                   var cid =$(this).closest("div").attr("id");
-                   console.log(cid);
-                   $.ajax({
-                       url : '/product/searchProduct',
-                       type : 'get',
-                       data :  {c_no : cid},
-                       dataType : 'json',
+        $(document).on("click", ".categoryDetail", function(){
+            console.log($(this));
+            var cid =$(this).closest("div").attr("id");
+            console.log(cid);
+            $.ajax({
+                url : '/product/searchProduct',
+                type : 'get',
+                data :  {c_no : cid},
+                dataType : 'json',
 
-                       success : function(data){
-                           $("#ajaxData").empty();
+                success : function(data){
+                   $("#ajaxData").empty();
                            alert("성공!");
                            console.log(data);
                            $("#imgArea").html("");
@@ -250,15 +260,20 @@
                                // console.log("/uploads/thumbnail/"+data[i].thumb_100);
                                // $("#siyoung").append('<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
                            // });
-                       },
-                       error : function(error){
-                           alert("실패!");
-                           console.log(error);
-                       }
-                   })
 
-               })
+                        // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
+                        // console.log("/uploads/thumbnail/"+data[i].thumb_100);
+                        // $("#siyoung").append('<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
+                    });
+                },
+                error : function(error){
+                    alert("실패!");
+                    console.log(error);
+                }
             })
+
+        })
+    })
 
 
 

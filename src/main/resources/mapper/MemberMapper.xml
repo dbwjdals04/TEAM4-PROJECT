@@ -88,4 +88,12 @@
                 )
         ]]>
     </insert>
+
+    <update id="modifyMember" parameterType="com.bit.academy.model.MemberVO">
+        UPDATE member
+        SET
+            m_password=password(#{m_password}), m_phone=#{m_phone}
+        WHERE m_no = #{m_no}
+
+    </update>
 </mapper>

@@ -1,29 +1,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" dir = "ltr">
 <head>
-
-    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
 <form name = "myPage" id = "myPage"
-      class ="myPage" style = "width:600px;">
+      class ="myPage" method="post" style = "width:600px" >
 
     <h1>내정보조회</h1>
 
-    <div class ="txtb"><input type = "text" name = "m_name" id ="m_name"/>
-        <span data-placeholder="Username"></span></div>
+    <div class ="mp"><input type = "text" name = "m_name" id ="m_name" readonly="readonly" th:value="${member.m_name}"/>
+        <span>Username</span></div>
     <div id="checkName"></div>
-    <div class="check_font" id="id_check"></div>
 
 
 
-    <div class ="txtb"><input type="text" name ="m_id" id="m_id" />
-        <span data-placeholder="ID"></span></div>
-    <div id="checkId"></div>
-    <input type = "button" value = "중복체크" onclick="idChk()">
+    <div class ="mp"><input type="text" name ="m_id" id="m_id" readonly="readonly" th:value="${member.m_id}" />
+        <span>ID</span></div>
 
 
     <div class ="txtb"><input type="password" name ="m_password" id="m_password"/>
@@ -35,18 +31,16 @@
         <span data-placeholder="Password check"></span></div>
     <div id="checkPwd"></div>
 
-    <div class ="txtb"><input type="text" name ="m_phone" id="m_phone"/>
-        <span data-placeholder="Phone number"></span></div>
+    <div class ="mp"><input type="text" name ="m_phone" id="m_phone" th:value="${member.m_phone}"/>
+        <span>Phone number</span></div>
     <div id="checkPhone"></div>
 
-
-    <input type = "button" class= "logbtn" value = "취소" onclick="insert();"/>
-    <input type = "button" class= "logbtn" value = "수정" onclick="insert();"/>
+    <input type = "button" class= "logbtn" value = "회원 정보 수정" onclick="insert();"/>
 
 </form>
 
 
-<script type = "text/javascript">
+<script type = "text/javascript" th:inline="javascript">
     //html 설정
 
     $(".txtb input").on("focus",function(){
@@ -61,7 +55,8 @@
     //빈칸입력방지 및 폼 제출
 
     var insert = function(){
-
+        var m_no=/*[[${session.member.m_no}]]*/
+            console.log(m_no);
 
         if($.trim($('#m_name').val())==''){
             document.getElementById("checkName").innerHTML = "이름을 입력해주세요.";
@@ -96,11 +91,12 @@
         }
 
         else{
-            alert("회원가입에 성공하셨습니다. 인테리아에 오신걸 환영합니다");
+            alert("회원 정보를 수정하셨습니다.");
         }
 
-        $('#insertForm')
-            .attr('action','/member/regist')
+
+        $('#myPage')
+            .attr('action','/member/mypage/modify/'+m_no)
             .submit();
     };
 
