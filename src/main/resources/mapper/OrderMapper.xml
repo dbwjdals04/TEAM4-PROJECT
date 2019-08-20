@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bit.academy.mapper.OrderMapper">
+    <select id ="selectAllOrderData" resultType="Map">
+        select o_date, po.po_id, m_no, o_amount, po_price, o_cancel
+        from orderinfo as oi join order_data as od
+        on oi.o_no = od.o_no
+        join product_option as po
+        on od.po_id = po.po_id;
+    </select>
+</mapper>

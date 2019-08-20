@@ -30,8 +30,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Map<String,Object> selectProductList(List c_list, BoardPaging boardPaging) {
+    public Map<String,Object> selectProductList(List list, int currentPage) {
         Map<String,Object> map = new HashMap<>();
+        BoardPaging boardPaging = new BoardPaging();
+        boardPaging.setCurrentPage(currentPage);
 
         /**
          * 처음 진입한 경우 currentPage 등 초기화 해줍니다.
@@ -41,10 +43,10 @@ public class ProductServiceImpl implements ProductService {
             boardPaging.setArticleCount(10); // 페이지당 게시물 갯수
         }
 
-        boardPaging.setTotalCount(this.productMapper.selectProductListCount(boardPaging));
+        boardPaging.setTotalCount(this.productMapper.selectProductListCount(list));
 
         map.put("boardPaging", boardPaging);
-        map.put("c_no", c_list);
+        map.put("c_no", list);
         log.debug(map.toString());
         map.put("productList", this.productMapper.selectProductList(map));
 
@@ -94,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Map<String, Object> selectProduct(Integer p_id) {
         Map<String, Object> map = this.productMapper.selectProduct(p_id);
-        map.put("option", this.productMapper.selectOption(p_id));
+        map.put("option", this.productMapper.productOption(p_id));
         return map;
     }
 

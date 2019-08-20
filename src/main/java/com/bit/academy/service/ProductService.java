@@ -14,7 +14,7 @@ public interface ProductService {
      */
     List<ProductVO> productSearchAll(List list);
 
-    Map<String, Object> selectProductList(List c_list, BoardPaging boardPaging);
+    Map<String, Object> selectProductList(List c_list, int currentPage);
 
 
     /**
