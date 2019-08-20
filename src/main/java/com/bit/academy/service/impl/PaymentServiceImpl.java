@@ -1,10 +1,7 @@
 package com.bit.academy.service.impl;
 
 import com.bit.academy.mapper.PaymentMapper;
-import com.bit.academy.model.CartVO;
-import com.bit.academy.model.MemberVO;
-import com.bit.academy.model.OptionVO;
-import com.bit.academy.model.ProductVO;
+import com.bit.academy.model.*;
 import com.bit.academy.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +77,12 @@ public class PaymentServiceImpl implements PaymentService{
     @Override
     public CartVO cartBuy(int cart_no) {
         return this.paymentMapper.cartBuy(cart_no);
+    }
+    //구매후 오더데이터 생성
+    @Override
+    public OrderVO orderData(OrderVO orderVO) {
+
+
+        return this.paymentMapper.orderData(orderVO);
     }
 }

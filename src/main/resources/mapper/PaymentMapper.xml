@@ -66,4 +66,10 @@
         JOIN product_option po on c.po_id = po.po_id
         WHERE c.cart_no =${cart_no};
     </select>
+<!--    구매 후 오더데이터 생성-->
+    <select id = "orderData" parameterType="com.bit.academy.model.OrderVO" resultType="com.bit.academy.model.OrderVO">
+        INSERT INTO orderinfo
+        (m_no, o_price, o_postcode, o_address, o_date, payment,o_number,o_orderNumber,o_amount)
+        VALUES (#{m_no},#{o_price},#{o_postcode}, #{o_address},now(),#{payment},#{o_number},#{merchant_uid},#{o_amount})
+    </select>
 </mapper>
