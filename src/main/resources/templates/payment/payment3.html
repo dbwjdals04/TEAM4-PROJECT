@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/agency.min.css" rel="stylesheet">
+    <link href="/static/css/board.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body style="width: fit-content">
+<h1>장바구니</h1>
+
+<!--<div><span th:text="${cartsum}"></span></div>-->
+<form name="cartForm" id="cartForm">
+    <div th:each ="cart:${map[#numbers.sequence(0, 2)]}">
+
+<!--        <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">-->
+<!--            <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>-->
+<!--            <div style="float: right"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>-->
+            <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
+<!--            <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>-->
+<!--            <div>-->
+<!--                <input type="checkbox" name="cart_no" th:value="${cart.cart_no}" checked/>-->
+<!--                <span>수량</span>-->
+<!--                <select name="cart_amount">-->
+<!--                    <option th:value="${cart.cart_amount}" th:text="${cart.cart_amount}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div style="padding-bottom: 20px">-->
+<!--            <div style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}">상품 가격</span></div>-->
+<!--            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <span th:text="${cart.po_price}">옵션 가격</span></div>-->
+<!--            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <span th:with="total=${cart.cart_amount*(cart.p_price+cart.po_price)}" th:text="${total}">총 가격</span></div>-->
+<!--        </div>-->
+    </div>
+</form>
+
+<!--<div><span>결제 금액 : </span> <span th:text="${map.total}">상품 가격</span></div>-->
+
+<input type="button" value="Payment" onclick="payment();"/>
+
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    var payment = function(){
+        var IMP = window.IMP; // 생략해도 괜찮습니다.
+        IMP.init("imp10150755"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+        var pay_method = $('#pay_method:selected').val();
+        var merchant_uid = /*[[${merchant_uid}]]*/;
+        // var amount = $('#amount').val();
+        var amount = $('#amount').text();
+        console.log("################" +amount);
+        var goods_name = $('#goods_name').val();
+        var m_name = $('#m_name').val();
+        var m_id = $('#m_id').val();
+        var m_phone = $('#m_phone').val();
+
+        // IMP.request_pay(param, callback) 호출
+        IMP.request_pay({ // param
+            pg: "html5_inicis",
+            pay_method: pay_method,
+            merchant_uid: merchant_uid,
+            name: goods_name,
+            amount: amount,
+            buyer_email: m_id,
+            buyer_name: m_name,
+            buyer_tel: m_phone,
+            buyer_addr: "서울시 종로구 비봉길 1111",
+            buyer_postcode: "00000"
+        }, function (rsp) { // callback
+
+            if (rsp.success) {
+                // 결제 성공 시 로직
+                console.log(rsp);
+                Object.keys(rsp).forEach(function (key) {
+                    $('#paymentForm').append('<input type="text" name="'+key+'" value="'+rsp[key]+'"/><br/>');
+                });
+                $('#paymentForm')
+                    .attr('method', 'post')
+                    .attr('action', '/payment')
+                    .submit();
+            } else {
+                // 결제 실패 시 로직,
+                console.error(rsp);
+            }
+        });
+    };
+</script>
+
+
+</body>
+</html>

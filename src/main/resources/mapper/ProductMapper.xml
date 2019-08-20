@@ -12,7 +12,7 @@
     JOIN category c
     ON cp.category_no = c.category_no
     WHERE c.category_no IN
-    <foreach collection="map" item="type" open="(" close=")" separator=",">
+    <foreach collection="list" item="type" open="(" close=")" separator=",">
         #{type}
     </foreach>
     </select>

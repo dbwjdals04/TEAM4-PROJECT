@@ -43,4 +43,6 @@ public interface PaymentMapper {
     MemberVO buyMember(int m_no);
     OptionVO buyOption(int po_id);
 
+    //장바구니 구매하기
+    CartVO cartBuy(int cart_no);
 }

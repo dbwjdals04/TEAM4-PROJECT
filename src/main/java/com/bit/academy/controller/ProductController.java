@@ -13,10 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -43,6 +40,7 @@ public class ProductController {
         List<ProductVO> product = this.productService.productSearchAll(c_no);
 
         return product;
+
     }
     //상품검색(세부)
     @ResponseBody

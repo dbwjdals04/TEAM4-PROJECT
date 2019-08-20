@@ -23,7 +23,13 @@
             <div style="float: right"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>
             <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
             <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>
-            <div><span>수량</span> <span th:text="${cart.cart_amount}">수량</span></div>
+            <div>
+                <input type="checkbox" name="cart_no" th:value="${cart.cart_no}" checked/>
+                <span>수량</span>
+                <select name="cart_amount">
+                    <option th:value="${cart.cart_amount}" th:text="${cart.cart_amount}"></option>
+                </select>
+                </div>
         </div>
         <div style="padding-bottom: 20px">
             <div style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}">상품 가격</span></div>
@@ -31,21 +37,17 @@
             <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <span th:with="total=${cart.cart_amount*(cart.p_price+cart.po_price)}" th:text="${total}">총 가격</span></div>
         </div>
     </div>
-
-    </div>
-    </div>
 </form>
 
     <div><span>결제 금액 : </span> <span th:text="${map.total}">상품 가격</span></div>
-<input type="button" value="주문 하기"/>
+<input type="button" id = "cartBuy" value="주문 하기" onclick ="cartBuy()"/>
 
 <script type="text/javascript" th:inline="javascript">
+
 var cartdelete = function(obj){
     var cart_no = $(obj).data("cart_no");
 
     if(confirm("정말로 삭제하시겠습니까?")) {
-
-
         $.ajax({
             type: 'post',
             url: '/payment/cart/delete/' + cart_no,
@@ -66,6 +68,45 @@ var cartdelete = function(obj){
         });
     }
 }
+
+var cartBuy = function(){
+
+    $.each($('input[name="cart_no"]:checked'), function(index,obj){
+        console.log($(obj).val());
+
+        $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
+    });
+
+    $('#cartForm')
+        .attr('action','/payment/cartBuy/')
+        .attr('method','post')
+        .submit();
+
+    // var cart = /*[[${map.cart}]]*/;
+    // var total =/*[[${map.total}]]*/;
+    // console.log(cart);
+    // var map = {cart:cart, total:total};
+    // $.ajax({
+    //     url : '/payment/cartBuy/',
+    //     type : 'get',
+    //     contentType: "application/json",
+    //     data : JSON.stringify(map),
+    //
+    //     error : function(error){
+    //         console.log("something wrong");
+    //
+    //     },
+    //     success : function(){
+    //         alert("결제페이지로 이동합니다.");
+    //
+    //     }
+    // })
+
+};
+
+// console.log(cart);
+// console.log(total);
+
 </script>
 </body>
 </html>
