@@ -11,10 +11,22 @@
         WHERE m_no = #{m_no}
     </select>
 
-    <select id="selectMemberList" resultType="com.bit.academy.model.MemberVO">
+    <select id="selectMemberList" parameterType="com.bit.academy.model.BoardPaging" resultType="com.bit.academy.model.MemberVO">
         SELECT
             m_no, m_name, m_id, m_password, m_phone, m_address, m_regdate
         FROM member
+        ORDER BY m_no ASC
+        LIMIT #{limitBegin}, #{articleCount}
+    </select>
+
+    <select id="selectMemberListCount"
+            parameterType="com.bit.academy.model.BoardPaging"
+            resultType="int">
+        select count(1) from member
+        WHERE 1=1
+        <if test="searchKeyword != null and searchKeyword != ''">
+            AND ${searchOption} like CONCAT('%', #{searchKeyword}, '%')
+        </if>
     </select>
 
     <select id="searchMemberList" resultType="com.bit.academy.model.MemberVO">
@@ -22,6 +34,8 @@
             m_no, m_name, m_id, m_password, m_phone, m_address, m_regdate
         FROM member
         WHERE ${searchOption} like CONCAT('%', #{searchKeyword}, '%')
+        ORDER BY m_no ASC
+        LIMIT #{boardPaging.limitBegin}, #{boardPaging.articleCount}
     </select>
 
     <update id="updateMember" parameterType="com.bit.academy.model.MemberVO">

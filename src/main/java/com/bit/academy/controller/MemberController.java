@@ -1,5 +1,6 @@
 package com.bit.academy.controller;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.MemberVO;
 import com.bit.academy.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,14 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("/admin/member/{searchOption}/{searchKeyword}")
-    public String searchMember(Model model, @PathVariable String searchOption, @PathVariable String searchKeyword){
-        model.addAttribute("memberList", this.memberService.searchMemberList(searchOption, searchKeyword));
-        List<MemberVO> memberList = new ArrayList<>();
-
-        for(MemberVO memberVO:memberList){
-
-        }
+    public String searchMember(Model model, @PathVariable String searchOption, @PathVariable String searchKeyword, @ModelAttribute BoardPaging boardPaging){
+        model.addAllAttributes(this.memberService.searchMemberList(searchOption, searchKeyword, boardPaging));
+//        model.addAttribute("memberList", this.memberService.searchMemberList(searchOption, searchKeyword, boardPaging));
+//        List<MemberVO> memberList = new ArrayList<>();
+//
+//        for(MemberVO memberVO:memberList){
+//
+//        }
         return "admin/memberList";
     }
 
@@ -39,13 +41,14 @@ public class MemberController {
 
 
     @GetMapping("/admin/memberList")
-    public String memberList(Model model){
-        model.addAttribute("memberList", this.memberService.selectMemberList());
-        List<MemberVO> memberList = new ArrayList<>();
-
-        for(MemberVO memberVO:memberList){
-
-        }
+    public String memberList(Model model, @ModelAttribute BoardPaging boardPaging){
+        model.addAllAttributes(this.memberService.selectMemberList(boardPaging));
+//        model.addAttribute("memberList", this.memberService.selectMemberList(boardPaging));
+//        List<MemberVO> memberList = new ArrayList<>();
+//
+//        for(MemberVO memberVO:memberList){
+//
+//        }
 
         return "admin/memberList";
     }
