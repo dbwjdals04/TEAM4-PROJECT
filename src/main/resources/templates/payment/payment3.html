@@ -16,12 +16,13 @@
 
 <!--<div><span th:text="${cartsum}"></span></div>-->
 <form name="cartForm" id="cartForm">
-    <div th:each ="cart:${map[#numbers.sequence(0, 2)]}">
+    <div th:each ="cart: ${list}">
 
 <!--        <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">-->
 <!--            <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>-->
 <!--            <div style="float: right"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>-->
             <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
+            <div style="padding-top: 20px"><span th:text="${cart.p_price}">정짱</span></div>
 <!--            <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>-->
 <!--            <div>-->
 <!--                <input type="checkbox" name="cart_no" th:value="${cart.cart_no}" checked/>-->
