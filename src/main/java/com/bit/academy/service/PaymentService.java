@@ -39,5 +39,8 @@ public interface PaymentService {
     ProductVO buyProduct(int p_id);
     MemberVO buyMember(int m_no);
     OptionVO buyOption(int po_id);
-
+    /**
+     * 장바구니에서 구매하기
+     */
+    CartVO cartBuy(int cart_no);
 }

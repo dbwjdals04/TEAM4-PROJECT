@@ -76,4 +76,9 @@ public class PaymentServiceImpl implements PaymentService{
         return this.paymentMapper.buyOption(po_id);
     }
 
+    //장바구니에서 구매하기
+    @Override
+    public CartVO cartBuy(int cart_no) {
+        return this.paymentMapper.cartBuy(cart_no);
+    }
 }
