@@ -56,7 +56,17 @@ body{
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-
+}
+.myPage{
+    width: 400px;
+    background: #f1f1f1;
+    height: 680px;
+    padding: 10px 40px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
 }
 
 
@@ -68,6 +78,35 @@ body{
     text-align: center;
     margin-top : 10px;
     margin-bottom: 40px;
+}
+
+
+.mp{
+    border-bottom: 2px solid #adadad;
+    position: relative;
+    margin: 30px 0;
+}
+
+.mp input{
+    font-size: 15px;
+    color: #333;
+    border: none;
+    width: 100%;
+    outline: none;
+    background: none;
+    padding: 0 5px;
+    height: 40px;
+    margin-top: 10px;
+}
+.mp span{
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 0%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    z-index: -1;
+    transition: .5s;
 }
 
 
@@ -86,9 +125,20 @@ body{
     background: none;
     padding: 0 5px;
     height: 40px;
+    margin-top: 10px;
 }
 
 .txtb span::before{
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    z-index: -1;
+    transition: .5s;
+}
+.mpspan{
     content: attr(data-placeholder);
     position: absolute;
     top: 50%;

@@ -54,5 +54,7 @@ public interface MemberMapper {
      */
     MemberVO pwFind(MemberVO memberVO);
 
+    void modifyMember(MemberVO memberVO);
+
 
 }

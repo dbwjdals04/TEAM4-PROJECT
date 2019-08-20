@@ -25,10 +25,10 @@
             keyProperty="qna_no">
         <![CDATA[
             INSERT INTO qna (
-                m_no, qna_originno, qna_title, qna_context, qna_passwd, qna_regdate, qna_groupOrd
+                m_no, qna_originno, qna_title, qna_context, qna_passwd, qna_regdate, qna_groupOrd,privateck
             )
             VALUES (
-                #{m_no},(select q.qna_originno FROM qna q where qna_no=#{qna_no}),concat(" └RE :", #{qna_title}), #{qna_context}, password(#{qna_passwd}), now(), #{qna_groupOrd}+1
+                #{m_no},(select q.qna_originno FROM qna q where qna_no=#{qna_no}),concat(" └RE :", #{qna_title}), #{qna_context}, password(#{qna_passwd}), now(), #{qna_groupOrd}+1,#{privateck}
             )
         ]]>
     </insert>

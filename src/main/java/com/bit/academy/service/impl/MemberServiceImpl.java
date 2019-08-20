@@ -127,4 +127,11 @@ public class MemberServiceImpl implements MemberService {
     public void logOut(HttpServletRequest request) {
         request.getSession().removeAttribute("member");
     }
+
+    @Override
+    public void modify(MemberVO memberVO) {
+        this.memberMapper.modifyMember(memberVO);
+    }
+
+
 }

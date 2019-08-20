@@ -202,4 +202,9 @@ public class MemberController {
 
         return "member/mypage";
     }
+    @PostMapping("/member/mypage/modify/{m_no}")
+    public String modify(Model model, @ModelAttribute MemberVO memberVO){
+        this.memberService.modify(memberVO);
+        return "main/index";
+    }
 }

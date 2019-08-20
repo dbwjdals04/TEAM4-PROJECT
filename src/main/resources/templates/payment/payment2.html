@@ -43,13 +43,14 @@
 
 
     <h2>결제정보</h2>
-    <div><span>상품이름</span> <input type="text" name="p_name"  th:value="${map.product.p_name}"/></div>
-    <div><span>상품가격</span> <input type="text" name="p_price"  th:value="${map.product.p_price}"/></div>
-    <div><span>선택수량</span> <input type="text" name="p_price"  th:value="${map.cart_amount}"/></div>
-    <div><span>옵션이름</span> <input type="text" name="po_name"  th:value="${map.option.po_value}"/></div>
-    <div><span>옵션가격</span> <input type="text" name="po_price"  th:value="${map.option.po_price}"/></div>
+    <div><span>상품이름</span> <input type="text" id="p_name" name="p_name"  th:value="${map.product.p_name}"/></div>
+    <div><span>상품가격</span> <input type="text" id="p_price" name="p_price"  th:value="${map.product.p_price}"/></div>
+    <div><span>선택수량</span> <input type="text" id="p_amount" name="p_amount"  th:value="${map.cart_amount}"/></div>
+    <div><span>옵션이름</span> <input type="text" id="po_name" name="po_name"  th:value="${map.option.po_value}"/></div>
+    <div><span>옵션가격</span> <input type="text" id="po_price" name="po_price"  th:value="${map.option.po_price}"/></div>
+    <input type="hidden" id="amount" name="amount"  th:value="(${map.product.p_price}*${map.cart_amount})+${map.option.po_price}"/></div>
     <br>
-    <div >총 결제금액 :<th:block id = "amount" th:text="(${map.product.p_price}*${map.cart_amount})+${map.option.po_price}"></th:block></div>
+    <div >총 결제금액 :<sapn th:text="${total}" th:with="total=(${map.product.p_price}*${map.cart_amount})+${map.option.po_price}"></sapn></div>
 
 
     <table>
@@ -139,12 +140,13 @@
         var pay_method = $('#pay_method:selected').val();
         var merchant_uid = /*[[${merchant_uid}]]*/;
         // var amount = $('#amount').val();
-        var amount = $('#amount').text();
-        console.log("################" +amount);
-        var goods_name = $('#goods_name').val();
+        var amount = $('#amount').val();
+        console.log(amount);
+        var goods_name = $('#p_name').val();
         var m_name = $('#m_name').val();
         var m_id = $('#m_id').val();
         var m_phone = $('#m_phone').val();
+        console.log(goods_name);
 
         // IMP.request_pay(param, callback) 호출
         IMP.request_pay({ // param
