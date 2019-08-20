@@ -53,22 +53,24 @@ public class ProductController {
         return product;
     }
 
-    @GetMapping("/admin/productList")
-    public String productlist(Model model){
+    @PostMapping("/admin/productList")
+    public String productlistPost(){
         return "admin/productList";
     }
+
 
     //카테고리별 상품 리스트 출력
     @ResponseBody
     @PostMapping("/admin/productList/{category_no}")
-    public Map<String,Object> productList(Model model, @PathVariable String category_no,  @ModelAttribute BoardPaging boardPaging){
-        log.debug("############## 리스트 확인 ##########");
-        log.debug(boardPaging.toString());
+    public Map<String,Object> productList(Model model, @PathVariable(value="category_no") String category_no,  @RequestParam(value="currentPage") int currentPage){
+        log.debug("******************************************");
+        log.debug(String.valueOf(currentPage));
+
         List c_noList = Arrays.asList(category_no.split(","));
-        model.addAllAttributes(this.productService.selectProductList(c_noList,boardPaging));
+//        model.addAllAttributes(this.productService.selectProductList(c_noList,currentPage));
 
 //        List<ProductVO> List = this.productService.productSearchAll(c_noList);
-        return this.productService.selectProductList(c_noList,boardPaging);
+        return this.productService.selectProductList(c_noList,currentPage);
     };
 
     //상품 상세정보 출력
@@ -79,33 +81,6 @@ public class ProductController {
         return map;
     }
 
-
-    //상품등록
-
-//test
-//    @PostMapping("/admin/productList/add")
-//    public String TestproductAdd (@ModelAttribute OptionVO optionVO, Model model) {
-//        OptionVO op1 = new OptionVO();
-//        op1.setPo_value("option1");
-//        op1.setPo_price(1000);
-//        op1.setPo_stock(1);
-//        OptionVO op2 = new OptionVO();
-//        op2.setPo_value("option2");
-//        op2.setPo_price(2000);
-//        op2.setPo_stock(2);
-//        List<OptionVO> list = new ArrayList<OptionVO>();
-//        list.add(op1);
-//        list.add(op2);
-//        log.debug("=========list=========");
-//        log.debug(list.toString());
-//        log.debug("===================");
-//        //log.debug(optionVO.getOptionVOList().toString());
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("list", list);
-//        map.put("p_id", 45);
-//        this.productService.insertTest(list);
-//        return "admin/productList";
-//    }
 
     @PostMapping("/admin/productList/add")
     public String productAdd (@ModelAttribute ProductVO productVO, @ModelAttribute OptionVO optionVO, Model model,

@@ -1,5 +1,6 @@
 package com.bit.academy.mapper;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -21,10 +22,16 @@ public interface MemberMapper {
      * 회원 리스트
      * @return
      */
-    List<MemberVO> selectMemberList();
+    List<MemberVO> selectMemberList(BoardPaging boardPaging);
+
+    /**
+     * 회원 리스트 갯수 조회
+     * @return
+     */
+    int selectMemberListCount(BoardPaging boardPaging, String searchOption, String searchKeyword);
 
 
-    List<MemberVO> searchMemberList(String searchOption, String searchKeyword);
+    List<MemberVO> searchMemberList(String searchOption, String searchKeyword, BoardPaging boardPaging);
 
     void updateMember(MemberVO memberVO);
 
