@@ -82,22 +82,7 @@
             )
         ]]>
     </insert>
-<!-- test -->
-<!--    <insert id="insertOption"-->
-<!--            parameterType="java.util.List"-->
-<!--            useGeneratedKeys="true">-->
-<!--        <![CDATA[-->
-<!--            INSERT INTO product_option (p_id, po_value, po_price, po_stock)-->
-<!--            VALUES-->
-<!--            <foreach item ="a" index="index" collection="list" separator=" , ">-->
-<!--            (-->
-<!--            45, #{list[index].po_value}, #{list[index].po_price}, #{list[index].po_stock}-->
-<!--            )-->
-<!--            </foreach>-->
-<!--        ]]>-->
-<!--    </insert>-->
 
-<!--상품상세페이지-->
 
     <select id ="productDetail" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
         SELECT *
@@ -166,13 +151,12 @@
     </insert>
 
     <select id="selectProductListCount"
-            parameterType="com.bit.academy.model.BoardPaging"
             resultType="int">
-        select count(1) from product
-        WHERE 1=1
-<!--        <if test="searchKeyword != null and searchKeyword != ''">-->
-<!--            AND q.qna_context like concat('%', ${searchKeyword}, '%')-->
-<!--        </if>-->
+        select count(1) from category_product
+        WHERE category_no IN
+        <foreach collection="list" item="type" open="(" close=")" separator=",">
+            #{type}
+        </foreach>
     </select>
 </mapper>
 

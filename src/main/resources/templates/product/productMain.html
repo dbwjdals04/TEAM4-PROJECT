@@ -130,7 +130,35 @@
     </tr>
 </table>
 
-<script type="text/javascript"  th:inline="javascript">
+
+        <script type="text/javascript"  th:inline="javascript">
+
+            var showdata = function(data){
+                $("#ajaxData").html("");
+                $.each(data, function(i){
+                    if(i%3 == 0){
+                        $("#ajaxData").append('<div id = "productRow'+i+'" class = "row"></div>');
+                    }
+
+                    var html = "";
+                    html += "<div class = col-md-4>";
+                    html += '<a href = "/product/Detail/'+data[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+data[i].thumb_300+'" style="width: 100%;"></a>';
+                    var product = '<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'
+                    html += '<div>'+product
+                    html += '\</div>'+'</div>';
+
+                    $("#productRow"+(i-(i%3))).append(html);
+
+                });
+            };
+            
+            // 객체반환 (큰 카테고리에서 전체보기)
+            // 전체문서가 실행될 때 실행되고, 그 내부에 다시 함수를 두어 클릭하면 cid값 가져오기. closet함수!기억
+           $(document).ready(function(){
+                $(document).on("click", ".category", function(){
+                    console.log($(this));
+                    var cid =$(this).closest("div").attr("id");
+
 
     // 객체반환 (큰 카테고리에서 전체보기)
     // 전체문서가 실행될 때 실행되고, 그 내부에 다시 함수를 두어 클릭하면 cid값 가져오기. closet함수!기억
@@ -177,35 +205,25 @@
             console.log("aJax 연결 전");
             console.log(ojb);
 
+
             $.ajax({
                 url : '/product/searchProductAll',
                 type : 'get',
                 data :  ojb,
                 dataType : 'json',
-
                 success : function(data){
-                    $("#siyoung").empty();
-                    alert("성공");
-                    console.log(data);
-                    $("#ajaxData").html("");
-                    $.each(data, function(i){
-                        var html = "";
-                        html += "<div>";
-                        var src = "/uploads/thumbnail/"+data[i].thumb_300;
-                        var p_id = data[i].p_id
-                        html += '<a href = "/product/Detail/'+p_id+'"><img src = "'+src+'"></a>';
-                        var product = '<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'
-                        html += '<div>'+product
-                        html += '\</div>'+'</div>';
-                        $("#ajaxData").append(html);
-                        // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
-                        // console.log("/uploads/thumbnail/"+data[i].thumb_100);
-                        // $("#siyoung").append('</td><tr>'+'<td>'+"상품번호 :" + data[i].p_id + '<br>'+'<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
-                    });
-                },
-                error : function(error){
-                    alert("실패!");
-                    console.log(error);
+                            $("#siyoung").empty();
+                            alert("성공");
+                            console.log(data);
+                             showdata(data);
+                            // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
+                            // console.log("/uploads/thumbnail/"+data[i].thumb_100);
+                            // $("#siyoung").append('</td><tr>'+'<td>'+"상품번호 :" + data[i].p_id + '<br>'+'<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
+                        },
+                        error : function(error){
+                            alert("실패!");
+                            console.log(error);
+              
 
                 }
             })
@@ -222,20 +240,26 @@
                 dataType : 'json',
 
                 success : function(data){
-                    $("#ajaxData").empty();
-                    alert("성공!");
-                    console.log(data);
-                    $("#imgArea").html("");
-                    $.each(data, function(i){
-                        var html = "";
-                        html += "<div>";
-                        var src = "/uploads/thumbnail/"+data[i].thumb_300;
-                        var p_id = data[i].p_id
-                        html += '<a href = "/product/Detail/'+p_id+'"><img src = "'+src+'"></a>';
-                        var product = '<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>'
-                        html += '<div>'+product
-                        html += '</div>'+'</div>';
-                        $("#ajaxData").append(html);
+                   $("#ajaxData").empty();
+                           alert("성공!");
+                           console.log(data);
+                           $("#imgArea").html("");
+                           showdata(data);
+                           // $.each(data, function(i){
+                           //  var html = "";
+                           //  html += "<div>";
+                           //  var src = "/uploads/thumbnail/"+data[i].thumb_300;
+                           //  var p_id = data[i].p_id
+                           //     html += '<a href = "/product/Detail/'+p_id+'"><img src = "'+src+'"></a>';
+                           //     var product = '<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>'
+                           //  html += '<div>'+product
+                           //  html += '</div>'+'</div>';
+                           //  $("#ajaxData").append(html);
+
+                               // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
+                               // console.log("/uploads/thumbnail/"+data[i].thumb_100);
+                               // $("#siyoung").append('<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
+                           // });
 
                         // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
                         // console.log("/uploads/thumbnail/"+data[i].thumb_100);

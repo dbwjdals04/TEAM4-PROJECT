@@ -1,9 +1,11 @@
 package com.bit.academy.service;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.MemberVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
 
@@ -18,9 +20,9 @@ public interface MemberService {
      * 회원 리스트
      * @return
      */
-    List<MemberVO> selectMemberList();
+    Map<String,Object> selectMemberList(BoardPaging boardPaging);
 
-    List<MemberVO> searchMemberList(String searchOption, String searchKeyword);
+    Map<String,Object> searchMemberList(String searchOption, String searchKeyword, BoardPaging boardPaging);
 
     MemberVO memberInfo(MemberVO memberVO, String chk_pw);
 

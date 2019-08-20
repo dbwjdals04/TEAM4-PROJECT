@@ -1,6 +1,7 @@
 package com.bit.academy.service.impl;
 
 import com.bit.academy.mapper.MemberMapper;
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.MemberVO;
 import com.bit.academy.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -25,13 +28,52 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<MemberVO> selectMemberList() {
-        return this.memberMapper.selectMemberList();
+    public Map<String, Object> selectMemberList(BoardPaging boardPaging) {
+
+        Map<String,Object> map = new HashMap<>();
+
+        /**
+         * 처음 진입한 경우 currentPage 등 초기화 해줍니다.
+         */
+        if(boardPaging.getCurrentPage()==0){
+            boardPaging.setCurrentPage(1); // 1page 부터 조회
+            boardPaging.setArticleCount(10); // 페이지당 게시물 갯수
+        }
+
+        boardPaging.setTotalCount(this.memberMapper.selectMemberListCount(boardPaging, null, null));
+
+        map.put("boardPaging", boardPaging);
+        map.put("memberList", this.memberMapper.selectMemberList(boardPaging));
+
+        return map;
     }
 
     @Override
-    public List<MemberVO> searchMemberList(String searchOption, String searchKeyword) {
-        return this.memberMapper.searchMemberList(searchOption, searchKeyword);
+    public Map<String,Object> searchMemberList(String searchOption, String searchKeyword, BoardPaging boardPaging) {
+
+        log.debug("실행!");
+//
+        Map<String,Object> map = new HashMap<>();
+//
+//        /**
+//         * 처음 진입한 경우 currentPage 등 초기화 해줍니다.
+//         */
+        if(boardPaging.getCurrentPage()==0){
+            boardPaging.setCurrentPage(1); // 1page 부터 조회
+            boardPaging.setArticleCount(10); // 페이지당 게시물 갯수
+        }
+
+        int i = this.memberMapper.selectMemberListCount(boardPaging, searchOption, searchKeyword);
+
+        boardPaging.setTotalCount(i);
+        log.debug(String.valueOf(boardPaging.getTotalCount()));
+//        boardPaging.setTotalCount(5);
+//        log.debug(boardPaging.toString());
+//
+        map.put("boardPaging", boardPaging);
+        map.put("memberList", this.memberMapper.searchMemberList(searchOption, searchKeyword, boardPaging));
+        return map;
+//        return this.memberMapper.searchMemberList(searchOption, searchKeyword, boardPaging);
     }
 
     @Override

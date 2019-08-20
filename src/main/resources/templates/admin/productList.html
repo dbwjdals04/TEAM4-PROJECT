@@ -43,27 +43,15 @@
 </div>
 
 
-<!--<div style="text-align: center; width:100%;">-->
-<!--    <table>-->
-<!--        <tr>-->
-<!--            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> &lt;!&ndash; 첫페이지 &ndash;&gt;-->
-<!--            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> &lt;!&ndash;이전페이지&ndash;&gt;-->
+<div style="text-align: center; width:100%;">
+    <table>
+        <tr id = "page-tr">
+    </tr>
+    </table>
+</div>
 
-<!--            <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">-->
-<!--                &lt;!&ndash;현재페이지인 경우&ndash;&gt;<a class="pagebtn blue"  th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>-->
-<!--                &lt;!&ndash;현재페이가 아닌 경우&ndash;&gt;<a class="pagebtn blue"  th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>-->
-<!--            </td>-->
-
-<!--            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> &lt;!&ndash;다음페이지&ndash;&gt;-->
-<!--            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> &lt;!&ndash; 마지막페이지 &ndash;&gt;-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</div>-->
-
-<!--<form name="boardPaging" id="boardPaging" method="get" action="/admin/productList">-->
-<!--    <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>-->
-<!--    <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>-->
-<!--</form>-->
+    <input type="hidden" name="currentPage" id="currentPage"/>
+    <input type="hidden" name="articleCount" id="articleCount "/>
 
 
 
@@ -126,13 +114,26 @@
 
 </body>
 <script>
+    var arr = [];
     var modal = document.getElementById("addProductModal");
     var i=0;
     var o=0;
+
     var addOption = function(){
         console.log(i);
         $("#option-content").append('<div class="row"><input type="text" name="OptionVOList['+i+'].po_value" value="옵션명" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_price" value="옵션별 추가 가격" onclick=this.value=""> <input type="text" name="OptionVOList['+i+'].po_stock" value="옵션별 재고" onclick=this.value=""></div>');
         i++;
+    };
+
+    var goPage = function(p){
+        $("#page-tr").empty();
+        console.log(p);
+
+        if(p>0){
+            $('#currentPage').val(p);
+            loadList(arr);
+        }
+
     };
 
     var modifyOption = function (data) {
@@ -180,85 +181,97 @@
                 $(".select_detailImg img").attr("src", data.target.result).width(500);
             }
             reader.readAsDataURL(this.files[0]);
-            //$("#ex1_Result1").html(this.files[0]);
         }
     });
+
+    var loadList = function(arr){
+
+        $.ajax({
+            url : '/admin/productList/'+arr,
+            type : 'post',
+            data :  {category_no : arr,
+                currentPage : ($('#currentPage').val().length == 0) ? 1 : $('#currentPage').val() },
+            dataType : 'json',
+
+            success : function(data){
+                $("#test-tbody").empty();
+                console.log(data);
+                var productList = data.productList;
+                $.each(productList, function(i){
+                    $("#test-tbody").append('<tr>'+'<td>' + productList[i].p_id + '</td>'+'<td>' + productList[i].p_name + '</td>'+'<td>' + productList[i].p_price + '</td>'+'</tr>');
+                });
+                var boardPaging = data.boardPaging;
+                $("#currentPage").val(boardPaging.currentPage);
+                $("#articleCount").val(boardPaging.articleCount);
+                $("#page-tr").append('<td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage('+boardPaging.beginPage+');">&lt;&lt;</a></td>');
+                $("#page-tr").append('<td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage('+boardPaging.prevPage+');">&lt;</a></td>');
+
+                $.each(boardPaging.pageRange, function (i) {
+                    if(boardPaging.pageRange[i] == boardPaging.currentPage){
+                        $("#page-tr").append('<a class="pagebtn blue" style="font-weight: bold; font-size: 20px;" href="#">'+ boardPaging.pageRange[i]+'</a>');
+                    }else{
+                        $("#page-tr").append('<a class="pagebtn blue" href="#" onclick="goPage('+boardPaging.pageRange[i]+');">'+boardPaging.pageRange[i]+'</a>');
+                    }
+                })
+                $("#page-tr").append('<td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage('+boardPaging.nextPage+');">&gt;</a></td>');
+                $("#page-tr").append('<td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage('+boardPaging.lastPage+');">&gt;&gt;</a></td>');
+
+                $("#example-table-1 tr").click(function(){
+
+                    var p_id = $(this).children().eq(0).text();
+
+                    $.ajax({
+                        url : '/admin/product/'+p_id,
+                        type : 'post',
+                        data : {},
+                        dataType : 'json',
+                        success : function (data) {
+                            addProduct();
+                            $("#insertProduct").attr("action", "/admin/product/modify");
+                            $("#insertProduct").append('<input id="p_id" name="p_id" value="'+p_id+'"/>');
+
+                            $(".select_thumbnail").append('<img src="" style="max-width: 100%;"/>');
+                            $(".select_detailImg").append('<img src="">');
+                            document.getElementById("option-button").onclick = function () { modifyOption(data); }
+
+                            $("#p_name").val(data.p_name);
+                            $("#p_brand").val(data.p_brand);
+                            $("#p_spec").val(data.p_spec);
+                            $("#p_price").val(data.p_price);
+                            $("#category_no").val(data.category_no);
+                            $(".select_thumbnail img").attr("src", "http://localhost/uploads/thumbnail/"+data.thumb_name);
+                            $(".select_detailImg img").attr("src", "http://localhost/uploads/detailImg/"+data.detailimg_name);
+                            data.option.forEach(function (value, index) {
+                                $("#option-content").append('<div class="row"><input type="text" name="OptionVOList['+index+'].po_value" value='+value.po_value+'> <input type="text" name="OptionVOList['+index+'].po_price" value='+value.po_price+'> <input type="text" name="OptionVOList['+index+'].po_stock" value='+value.po_stock+'></div>');
+                            });
+
+                        },
+                        error : function(error){
+                            alert("실패!");
+                            console.log(data);
+                        }
+                    })
+                });
+            },
+            error : function(error){
+                alert("실패!");
+                console.log(data);
+            }
+        })
+    };
+
     $("#category").change(function () {
-        var arr = [];
+        arr = [];
+
+        $("#page-tr").empty();
         $("input:checkbox:checked").each(function (index) {
             arr.push($(this).val());
         });
         if(arr.length == 0){
             $("#test-tbody").empty();
         }else{
-            $.ajax({
-                url : '/admin/productList/'+arr,
-                type : 'post',
-                data :  {category_no : arr},
-                dataType : 'json',
-
-                success : function(data){
-                    $("#test-tbody").empty();
-                    console.log(data);
-                    var productList = data.productList;
-                    $.each(productList, function(i){
-                        $("#test-tbody").append('<tr>'+'<td>' + productList[i].p_id + '</td>'+'<td>' + productList[i].p_name + '</td>'+'<td>' + productList[i].p_price + '</td>'+'</tr>');
-                    });
-                    $("#example-table-1 tr").click(function(){
-
-                        var p_id = $(this).children().eq(0).text();
-
-                        $.ajax({
-                            url : '/admin/product/'+p_id,
-                            type : 'post',
-                            data : {},
-                            dataType : 'json',
-                            success : function (data) {
-                                addProduct();
-                                $("#insertProduct").attr("action", "/admin/product/modify");
-                                $("#insertProduct").append('<input id="p_id" name="p_id" value="'+p_id+'"/>');
-
-                                // $("#p_id").val(p_id);
-                                // $("#p_id").show();
-                                $(".select_thumbnail").append('<img src="" style="max-width: 100%;"/>');
-                                $(".select_detailImg").append('<img src="">');
-                                document.getElementById("option-button").onclick = function () { modifyOption(data); }
-
-                                $("#p_name").val(data.p_name);
-                                $("#p_brand").val(data.p_brand);
-                                $("#p_spec").val(data.p_spec);
-                                $("#p_price").val(data.p_price);
-                                $("#category_no").val(data.category_no);
-                                $(".select_thumbnail img").attr("src", "http://localhost/uploads/thumbnail/"+data.thumb_name);
-                                $(".select_detailImg img").attr("src", "http://localhost/uploads/detailImg/"+data.detailimg_name);
-                                data.option.forEach(function (value, index) {
-                                    $("#option-content").append('<div class="row"><input type="text" name="OptionVOList['+index+'].po_value" value='+value.po_value+'> <input type="text" name="OptionVOList['+index+'].po_price" value='+value.po_price+'> <input type="text" name="OptionVOList['+index+'].po_stock" value='+value.po_stock+'></div>');
-                                });
-
-
-                                // var option = function(){
-                                //     var index = data.option.length;
-                                //     console.log(index);
-                                //     $("#option-content").append('<div class="row"><input type="text" name="OptionVOList['+index+'].po_value" > <input type="text" name="OptionVOList['+index+'].po_price"> <input type="text" name="OptionVOList['+index+'].po_stock"></div>');
-                                // }
-                                // $("#addOption").attr("onclick", option());
-                            },
-                            error : function(error){
-                                alert("실패!");
-                                console.log(data);
-                            }
-                        })
-
-                        //$("#ex1_Result1").html(p_id);
-                    });
-                },
-                error : function(error){
-                    alert("실패!");
-                    console.log(data);
-                }
-            })
+            loadList(arr);
         }
-
 
 
     });

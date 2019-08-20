@@ -35,11 +35,12 @@
 
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="/admin/productList" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <li style="height: 56px" class="nav-item">
+            <form id="test"><a herf="#" onclick="test()" class="nav-link collapsed"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>상품관리</span>
             </a>
+            </form>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Components:</h6>
@@ -232,6 +233,12 @@
 </div>
 
 <script type="text/javascript" th:inline="javascript">
+
+    var test = function () {
+        $('#test').attr('method','post')
+            .attr('action', '/admin/productList')
+            .submit();
+    }
 
     var selectMember = function(obj){
         var modal = document.getElementById("memberModal");

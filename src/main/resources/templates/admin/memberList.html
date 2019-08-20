@@ -2,20 +2,9 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="includeHTML.js"></script>
-    <script src="/includeHTML.js"></script>
+<!--    <script src="includeHTML.js"></script>-->
+<!--    <script src="/includeHTML.js"></script>-->
     <script src="/admin/includeHTML.js"></script>
-    <script type="text/javascript">
-        $(document).ready( function() {
-
-            $("#navs").load("../admin/nav.html");  // 원하는 파일 경로를 삽입하면 된다
-            $("#navss").load("/src/main/resources/templates/admin/nav.html");  // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
-
-        });
-    </script>
-    <script>
-        includeHTML();
-    </script>
 
 
 
@@ -129,7 +118,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
     <div id="content">
 
-        <div class="row">
+        <div class="row" id="test-div">
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -214,6 +203,29 @@
 
                 </tbody>
             </table>
+
+            <div style="text-align: center; width:100%;">
+                <table>
+                    <tr>
+                        <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
+                        <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> <!--이전페이지-->
+
+                        <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">
+                            <!--현재페이지인 경우--><a class="pagebtn blue"  th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>
+                            <!--현재페이가 아닌 경우--><a class="pagebtn blue"  th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>
+                        </td>
+
+                        <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> <!--다음페이지-->
+                        <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
+                    </tr>
+                </table>
+            </div>
+
+            <form name="boardPaging" id="boardPaging" method="get" action="/admin/memberList">
+                <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>
+                <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>
+            </form>
+
             <div id = "memberModal" style="display: none" class = "w3-modal">
                 <div class="w3-modal-content w3-animate-opacity w3-card-4">
                     <header class="w3-container w3-teal">
@@ -256,6 +268,26 @@
 </div>
 
 <script type="text/javascript" th:inline="javascript">
+    var m_no = /*[[${session.member.m_no}]]*/
+
+        console.log(m_no);
+
+        if(m_no == 3){
+            console.log("admin login!");
+        }
+    var currentPage = /*[[${boardPaging.currentPage}]]*/;
+
+    var goPage = function(p){
+        var page = $(p).data('page');
+
+        console.log(page);
+
+        if(page>0){
+            $('#currentPage').val(page);
+            $('#boardPaging').submit();
+        }
+
+    };
 
     var selectMember = function(obj){
         var modal = document.getElementById("memberModal");

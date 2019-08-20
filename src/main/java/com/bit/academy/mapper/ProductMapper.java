@@ -26,7 +26,7 @@ public interface ProductMapper {
      * 상품 갯수 조회
      * @return
      */
-    int selectProductListCount(BoardPaging boardPaging);
+    int selectProductListCount(List c_noList);
 
     /**
      * 상품 목록 조회 - admin
