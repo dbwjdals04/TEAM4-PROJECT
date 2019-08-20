@@ -59,7 +59,7 @@
 
 <!--    장바구니에서 구매하기-->
     <select id = "cartBuy" parameterType="int" resultType="com.bit.academy.model.CartVO">
-        SELECT m.m_name, m_id, m_phone, c.cart_amount, p.p_name, p.p_price, po.po_value, po.po_price
+        SELECT m.m_name, m_id, m_phone, c.cart_amount, p.p_name, p.p_price, po.po_value, po.po_price, p.thumb_100
         FROM cart c JOIN member m
         ON c.m_no = m.m_no
         JOIN product p on c.p_id = p.p_id

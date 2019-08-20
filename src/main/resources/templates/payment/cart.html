@@ -17,7 +17,7 @@
 <!--<div><span th:text="${cartsum}"></span></div>-->
 <form name="cartForm" id="cartForm" method="get" style="width:600px;">
     <div style="padding: 5px; border-top: 1px solid #d1d1d5; text-align: right"><span>총 개수 : </span><span th:text="${map.amount}"></span></div>
-    <div th:each="cart:${map}">
+    <div th:each="cart:${map.cart}">
         <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">
             <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>
             <div style="float: right"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>

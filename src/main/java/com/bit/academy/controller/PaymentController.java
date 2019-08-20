@@ -129,6 +129,9 @@ public class PaymentController {
             map.put("option",this.paymentService.buyOption(po_id));
             map.put("cart_amount",cart_amount);
 
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmssSSS");//dd/MM/yyyy
+            model.addAttribute("merchant_uid", sdfDate.format(new Date()).toString());
+
             model.addAttribute("map", map);
             result = "payment/payment2";
         }
