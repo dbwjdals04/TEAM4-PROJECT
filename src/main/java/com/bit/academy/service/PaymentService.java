@@ -1,9 +1,6 @@
 package com.bit.academy.service;
 
-import com.bit.academy.model.CartVO;
-import com.bit.academy.model.MemberVO;
-import com.bit.academy.model.OptionVO;
-import com.bit.academy.model.ProductVO;
+import com.bit.academy.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -43,4 +40,8 @@ public interface PaymentService {
      * 장바구니에서 구매하기
      */
     CartVO cartBuy(int cart_no);
+    /**
+     * 구매후 오더데이터 생성
+     */
+    OrderVO orderData(OrderVO orderVO);
 }

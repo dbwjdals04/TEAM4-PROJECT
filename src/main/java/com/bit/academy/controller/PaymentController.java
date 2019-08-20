@@ -1,5 +1,7 @@
 package com.bit.academy.controller;
 
+import com.bit.academy.model.OrderVO;
+import com.bit.academy.service.OrderSerivce;
 import com.bit.academy.service.PaymentService;
 import com.bit.academy.util.IamportUtil;
 import com.siot.IamportRestClient.request.CancelData;
@@ -86,9 +88,11 @@ public class PaymentController {
     }
 
     @PostMapping("/payment")
-    public String paymentExecute(Model model, HttpServletRequest request){
+    public String paymentExecute(@ModelAttribute OrderVO orderVO, Model model, HttpServletRequest request){
 
-
+        //오더데이터생성 및 다음페이지 전달
+        log.debug(String.valueOf(this.paymentService.orderData(orderVO)));
+        model.addAttribute("order",this.paymentService.orderData(orderVO));
         /**
          * 테스트 결제를 바로 취소 합니다.
          */
@@ -102,7 +106,7 @@ public class PaymentController {
             ex.printStackTrace();
         }
 
-        return "payment/payment";
+        return "payment/orderAfter";
     }
 
     @PostMapping("/payment/cart/delete/{cart_no}")
@@ -128,6 +132,9 @@ public class PaymentController {
             map.put("member",this.paymentService.buyMember(m_no));
             map.put("option",this.paymentService.buyOption(po_id));
             map.put("cart_amount",cart_amount);
+
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmssSSS");//dd/MM/yyyy
+            model.addAttribute("merchant_uid", sdfDate.format(new Date()).toString());
 
             model.addAttribute("map", map);
             result = "payment/payment2";
@@ -160,6 +167,10 @@ public class PaymentController {
         }
 
         log.debug(String.valueOf(list));
+
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmssSSS");//dd/MM/yyyy
+        model.addAttribute("merchant_uid", sdfDate.format(new Date()).toString());
+
         model.addAttribute("list", list);
         return "payment/payment3";
     }
