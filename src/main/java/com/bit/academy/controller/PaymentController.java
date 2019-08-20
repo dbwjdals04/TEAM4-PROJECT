@@ -151,16 +151,16 @@ public class PaymentController {
 
         String[] cart_no_arr_str = request.getParameterValues("cart_no_arr");
         Integer[] cart_no_arr = new Integer[cart_no_arr_str.length];
-        Map<Integer, Object> map = new HashMap<>();
-
+        List<Object> list = new ArrayList<>();
         for(int i=0;i<cart_no_arr_str.length;i++){
             cart_no_arr[i] = Integer.parseInt(cart_no_arr_str[i]);
             log.debug("cart_no : " + cart_no_arr[i]);
-            map.put(i, this.paymentService.cartBuy(cart_no_arr[i]));
+            list.add(this.paymentService.cartBuy(cart_no_arr[i]));
+            log.debug(String.valueOf(list));
         }
-        log.debug(String.valueOf(map));
 
-        model.addAttribute("map", map);
+        log.debug(String.valueOf(list));
+        model.addAttribute("list", list);
         return "payment/payment3";
     }
 //    @RequestParam("total") int total
