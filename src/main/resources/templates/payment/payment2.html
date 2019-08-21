@@ -30,8 +30,9 @@
     <div style="height: 121px; padding-top: 20px; border-top: 1px solid #d1d1d5">
         <div style="float: left"><img th:src="'/uploads/thumbnail/'+${map.product.thumb_100}"/></div>
         <div><span>상품이름</span> <input style="border: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${map.product.p_name}"/></div>
-        <div><span>선택수량</span> <input style="border: none;" type="text" id="p_amount" name="p_amount" readonly="readonly" th:value="${map.cart_amount}"/></div>
         <div><span>옵션이름</span> <input style="border: none;" type="text" id="po_name" name="po_name" readonly="readonly" th:value="${map.option.po_value}"/></div>
+        <div><span>선택수량</span> <input style="border: none;" type="text" id="p_amount" name="p_amount" readonly="readonly" th:value="${map.cart_amount}"/></div>
+
     </div>
     <h2>구매자정보</h2>
     <div><span>회원이름</span> <input type="text" name="m_name" id="m_name" th:value="${map.member.m_name}"/></div>

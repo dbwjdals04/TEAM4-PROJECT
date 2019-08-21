@@ -18,6 +18,7 @@ public class CartVO {
     private int cart_amount;
     private int po_id;
 
+    private String thumb_100;
     private String thumb_300;
     private String p_name;
     private int p_price;
@@ -26,6 +27,7 @@ public class CartVO {
     private int po_price;
     private int po_stock;
     private List<OptionVO> OptionVOList;
+    private int sumpay;
 
 
 
@@ -92,6 +94,14 @@ public class CartVO {
 
     public void setP_price(int p_price) {
         this.p_price = p_price;
+    }
+
+    public int getSumpay() {
+        return sumpay;
+    }
+
+    public void setSumpay(int sumpay) {
+        this.sumpay = sumpay;
     }
 }
 

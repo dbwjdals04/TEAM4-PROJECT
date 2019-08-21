@@ -66,6 +66,22 @@
         JOIN product_option po on c.po_id = po.po_id
         WHERE c.cart_no =${cart_no};
     </select>
+
+
+    <!--    장바구니에서 구매하기 총금액-->
+    <select id="sumpay" parameterType="list" resultType="Integer">
+        SELECT
+           sum(cart_amount*(p.p_price+po.po_price))
+        FROM cart c JOIN member m
+        ON c.m_no = m.m_no
+        JOIN product p on c.p_id = p.p_id
+        JOIN product_option po on c.po_id = po.po_id
+        WHERE c.cart_no in
+        <foreach collection="list" item="type" open="(" close=")" separator=",">
+        #{type}
+    </foreach>
+    </select>
+
 <!--    구매 후 오더데이터 생성-->
     <select id = "orderData" parameterType="com.bit.academy.model.OrderVO" resultType="com.bit.academy.model.OrderVO">
         INSERT INTO orderinfo

@@ -9,35 +9,54 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+    <style>
+        input:focus {outline:none;}
+    </style>
+
 
 </head>
 <body style="width: fit-content">
-<h1>장바구니</h1>
+<h1>주문페이지</h1>
+<div style="width: 600px; padding-top: 20px">
 
 <!--<div><span th:text="${cartsum}"></span></div>-->
 <form name="cartForm" id="cartForm">
+    <h5>상품 정보</h5>
     <div th:each ="cart: ${list}">
-
-<!--        <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">-->
-<!--            <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>-->
-<!--            <div style="float: right"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>-->
-            <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
-            <div style="padding-top: 20px"><span th:text="${cart.p_price}">정짱</span></div>
-<!--            <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>-->
-<!--            <div>-->
-<!--                <input type="checkbox" name="cart_no" th:value="${cart.cart_no}" checked/>-->
-<!--                <span>수량</span>-->
-<!--                <select name="cart_amount">-->
-<!--                    <option th:value="${cart.cart_amount}" th:text="${cart.cart_amount}"></option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div style="padding-bottom: 20px">-->
-<!--            <div style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}">상품 가격</span></div>-->
-<!--            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <span th:text="${cart.po_price}">옵션 가격</span></div>-->
-<!--            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <span th:with="total=${cart.cart_amount*(cart.p_price+cart.po_price)}" th:text="${total}">총 가격</span></div>-->
-<!--        </div>-->
+        <div style="height: 141px; padding-top: 20px; border-top: 1px solid #d1d1d5"/>
+            <div style="float: left"><img th:src="'/uploads/thumbnail/'+${cart.thumb_100}"/></div>
+            <div><span>상품이름</span> <input style="border: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${cart.p_name}"/></div>
+            <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" name="p_amount" readonly="readonly" th:value="${cart.cart_amount}+개"/></div>
+            <div><span>옵션이름</span> <input style="border: none;" type="text" id="po_name" name="po_name" readonly="readonly" th:value="${cart.po_value}"/></div>
+            <div><span>상품 가격</span> <input style="border: none;" type="text" id="p_price" name="p_price" readonly="readonly" th:value="${cart.p_price}"/></div>
+            <div><span>옵션 가격</span> <input style="border: none;" type="text" id="po_price" name="po_price" readonly="readonly" th:value="${cart.po_price}"/></div>
     </div>
+
+    <div style="background-color: #cfcfd6; margin-top: 10px; margin-bottom: 20px">
+        <div style="width: 360px; margin: auto">
+            <div><span>총 상품 금액</span><span style="float: right" th:text="${sumpay}"></span></div>
+            <div><span>배송비</span><span style="float: right" th:text="2500"></span></div>
+            <div><span>결제 금액</span><span style="float: right" th:text="${sumpay}+2500"></span></div>
+        </div>
+    </div>
+    <h5>구매자 정보</h5>
+    <div style="height: 141px; padding-top: 20px; border-top: 1px solid #d1d1d5">
+        <div><span>회원이름</span> <input style="border: none;" type="text" name="m_name" id="m_name" readonly="readonly" th:value="${list[0].m_name}"/></div>
+        <div><span>이메일</span> <input style="border: none;" type="text" name="m_id" id="m_id" readonly="readonly" th:value="${list[0].m_id}"/></div>
+        <div><span>휴대전화</span> <input style="border: none;" type="text" name="m_phone" id="m_phone" readonly="readonly" th:value="${list[0].m_phone}"/></div>
+    </div>
+    <h5>배송지 정보</h5>
+    <div style="height: 141px; padding-top: 20px; border-top: 1px solid #d1d1d5">
+        <div><span>회원이름</span> <input style="border: none;" type="text" name="m_name" id="m_name" readonly="readonly" th:value="${list[0].m_name}"/></div>
+        <div><span>회원이름</span> <input style="border: none;" type="text" name="m_id" id="m_id" readonly="readonly" th:value="${list[0].m_id}"/></div>
+        <div><span>회원이름</span> <input style="border: none;" type="text" name="m_phone" id="m_phone" readonly="readonly" th:value="${list[0].m_phone}"/></div>
+    </div>
+    <input type="text" id="sample4_postcode" placeholder="우편번호">
+    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+    <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+    <span id="guide" style="color:#999;display:none"></span>
+    <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+    <input type="text" id="sample4_extraAddress" placeholder="참고항목">
 </form>
 
 <!--<div><span>결제 금액 : </span> <span th:text="${map.total}">상품 가격</span></div>-->
@@ -47,6 +66,60 @@
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script>
+        //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+        function sample4_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var roadAddr = data.roadAddress; // 도로명 주소 변수
+                    var extraRoadAddr = ''; // 참고 항목 변수
+
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraRoadAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraRoadAddr !== ''){
+                        extraRoadAddr = ' (' + extraRoadAddr + ')';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('sample4_postcode').value = data.zonecode;
+                    document.getElementById("sample4_roadAddress").value = roadAddr;
+
+                    // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                    if(roadAddr !== ''){
+                        document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                    } else {
+                        document.getElementById("sample4_extraAddress").value = '';
+                    }
+
+                    var guideTextBox = document.getElementById("guide");
+                    // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                    if(data.autoRoadAddress) {
+                        var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                        guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                        guideTextBox.style.display = 'block';
+
+                    }
+                    else {
+                        guideTextBox.innerHTML = '';
+                        guideTextBox.style.display = 'none';
+                    }
+                }
+            }).open();
+        }
+    </script>
 <script type="text/javascript" th:inline="javascript">
     var payment = function(){
         var IMP = window.IMP; // 생략해도 괜찮습니다.

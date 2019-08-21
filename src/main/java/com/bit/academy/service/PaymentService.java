@@ -40,6 +40,8 @@ public interface PaymentService {
      * 장바구니에서 구매하기
      */
     CartVO cartBuy(int cart_no);
+
+    int sumpay(List list);
     /**
      * 구매후 오더데이터 생성
      */
