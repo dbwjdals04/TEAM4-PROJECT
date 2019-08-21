@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:fragment="store">
+<!--카테고리 모던(전체보기, 가구 소품 조명)-->
+<table style="margin: auto" class="store">
+    <tr>
+        <td class="store">
+
+
+            <table>
+                <tr>
+                    <td rowspan="4">
+                        <div class="All" id='All' name ="hi">
+                            <a class ="category" ><img src='/uploads/thumbnail/100thumb_c684eb9b-3db8-4c0f-a543-d1f897d9dc48_Screen Shot 2019-08-12 at 5.10.18 PM.png' ></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="3">
+                        <div class="modern" id='modern' name ="hi">
+                            <a class ="category" ><img src='/uploads/thumbnail/100thumb_625dbd74-92d7-4cf2-903b-c66776b69ed5_Screen Shot 2019-08-12 at 5.10.05 PM.png' ></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id = "1" name = "modern-furniture">
+                            <a class ="categoryDetail">가구</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id = "2" name = "modern-furniture">
+                            <a class ="categoryDetail">소품</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        <div id = "3" name = "modern-furniture">
+                            <a class ="categoryDetail">조명</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+
+            <table>
+                <tr>
+                    <td rowspan="3">
+                        <div class ="antique" id='antique' name ="hi">
+                            <a class ="category"><img src='/uploads/thumbnail/100thumb_a1e90413-2112-4594-8b45-53cbe0e22e6f_Screen Shot 2019-08-12 at 5.10.30 PM.png' ></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id = "4" name = "antique-furniture">
+                            <a class ="categoryDetail">가구</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id = "5" name = "antique-furniture">
+                            <a class ="categoryDetail">소품</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id = "6" name = "antique-furniture">
+                            <a class ="categoryDetail">조명</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+
+            <table>
+                <tr>
+                    <td rowspan="3">
+                        <div class = "warm" id='warm' name = "hi">
+                            <a class ="category"><img src='/uploads/thumbnail/100thumb_f0bfa880-5c55-4157-b9df-fd8f4fb2a7a4_Screen Shot 2019-08-12 at 5.10.09 PM.png' ></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div id = "7" name = "warm-furniture">
+                            <a class ="categoryDetail">가구</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id = "8" name = "warm-furniture">
+                            <a class ="categoryDetail">소품</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id = "9" name = "warm-furniture">
+                            <a class ="categoryDetail">조명</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<!--카테고리 antique(전체보기, 가구 소품 조명)-->
+
+<!--카테고리 따듯한(전체보기, 가구 소품 조명)-->
+<table>
+    <tr>
+        <td>
+            <table>
+                <div id ="ajaxData" ></div>
+            </table>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript"  th:inline="javascript">
+
+    var showdata = function(data){
+        $("#ajaxData").html("");
+        $.each(data, function(i){
+            if(i%3 == 0){
+                $("#ajaxData").append('<div id = "productRow'+i+'" class = "row"></div>');
+            }
+
+            var html = "";
+            html += "<div class = col-md-4>";
+            html += '<a href = "/product/Detail/'+data[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+data[i].thumb_300+'"></a>';
+            var product = '<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'
+            html += '<div>'+product
+            html += '\</div>'+'</div>';
+
+            $("#productRow"+(i-(i%3))).append(html);
+
+        });
+    };
+
+    // 객체반환 (큰 카테고리에서 전체보기)
+    // 전체문서가 실행될 때 실행되고, 그 내부에 다시 함수를 두어 클릭하면 cid값 가져오기. closet함수!기억
+    $(document).ready(function(){
+        $(document).on("click", ".category", function(){
+            console.log($(this));
+            var cid =$(this).closest("div").attr("id");
+
+            console.log(cid);
+            var arr = [];
+
+            if(cid == 'modern'){
+                arr.push(1);
+                arr.push(2);
+                arr.push(3);
+                console.log(cid);
+            }
+            else if(cid =='antique'){
+                arr.push(4);
+                arr.push(5);
+                arr.push(6);
+                console.log(cid);
+            }
+            else if(cid =='warm'){
+                arr.push(7);
+                arr.push(8);
+                arr.push(9);
+                console.log(cid);
+            }
+            else{
+                arr.push(1);
+                arr.push(2);
+                arr.push(3);
+                arr.push(4);
+                arr.push(5);
+                arr.push(6);
+                arr.push(7);
+                arr.push(8);
+                arr.push(9);
+            }
+
+            var ojb = { "c_no" : arr};
+
+            console.log("aJax 연결 전");
+            console.log(ojb);
+
+            $.ajax({
+                url : '/product/searchProductAll',
+                type : 'get',
+                data :  ojb,
+                dataType : 'json',
+
+                success : function(data){
+                    $("#siyoung").empty();
+                    console.log(data);
+                    showdata(data);
+                    // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
+                    // console.log("/uploads/thumbnail/"+data[i].thumb_100);
+                    // $("#siyoung").append('</td><tr>'+'<td>'+"상품번호 :" + data[i].p_id + '<br>'+'<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
+                },
+                error : function(error){
+                    alert("실패!");
+                    console.log(error);
+
+                }
+            })
+        })
+
+        $(document).on("click", ".categoryDetail", function(){
+            console.log($(this));
+            var cid =$(this).closest("div").attr("id");
+            console.log(cid);
+            $.ajax({
+                url : '/product/searchProduct',
+                type : 'get',
+                data :  {c_no : cid},
+                dataType : 'json',
+
+                success : function(data){
+                    $("#ajaxData").empty();
+                    console.log(data);
+                    $("#imgArea").html("");
+                    showdata(data);
+                    // $.each(data, function(i){
+                    //  var html = "";
+                    //  html += "<div>";
+                    //  var src = "/uploads/thumbnail/"+data[i].thumb_300;
+                    //  var p_id = data[i].p_id
+                    //     html += '<a href = "/product/Detail/'+p_id+'"><img src = "'+src+'"></a>';
+                    //     var product = '<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>'
+                    //  html += '<div>'+product
+                    //  html += '</div>'+'</div>';
+                    //  $("#ajaxData").append(html);
+
+                    // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
+                    // console.log("/uploads/thumbnail/"+data[i].thumb_100);
+                    // $("#siyoung").append('<tr>'+'<td>'+"상품번호 :" + data[i].p_id + '</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'+'</tr>');
+                    // });
+                },
+                error : function(error){
+                    alert("실패!");
+                    console.log(error);
+                }
+            })
+
+        })
+    })
+
+
+
+
+</script>
+</body>
+</html>
