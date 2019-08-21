@@ -19,4 +19,10 @@ public class OrderController {
     public String order(){
         return "/mypage/order";
     }
+
+    @PostMapping("/admin/orderList")
+    public String adminOrderList(){
+        return "admin/OrderList";
+    }
+
 }
