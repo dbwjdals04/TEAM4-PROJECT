@@ -28,6 +28,7 @@ public class CartVO {
     private int po_stock;
     private List<OptionVO> OptionVOList;
     private int sumpay;
+    private List<CartVO> cartVOList;
 
 
 

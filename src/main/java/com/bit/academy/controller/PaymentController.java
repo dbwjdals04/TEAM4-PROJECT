@@ -1,8 +1,6 @@
 package com.bit.academy.controller;
 
-import com.bit.academy.model.CartVO;
-import com.bit.academy.model.OrderVO;
-import com.bit.academy.service.OrderSerivce;
+import com.bit.academy.model.*;
 import com.bit.academy.service.PaymentService;
 import com.bit.academy.util.IamportUtil;
 import com.siot.IamportRestClient.request.CancelData;
@@ -176,8 +174,10 @@ public class PaymentController {
         model.addAttribute("merchant_uid", sdfDate.format(new Date()).toString());
         model.addAttribute("list", list);
 
-        return "payment/payment3";
+        return "payment/payment3_1";
     }
+
+
 //    @RequestParam("total") int total
 //            log.debug(String.valueOf(total));
 
