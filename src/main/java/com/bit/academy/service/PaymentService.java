@@ -36,6 +36,12 @@ public interface PaymentService {
     ProductVO buyProduct(int p_id);
     MemberVO buyMember(int m_no);
     OptionVO buyOption(int po_id);
+
+    /**
+     * 카트에서 변경된 수량 실시간 데이터베이스 반영
+     */
+    void cartAmount(int cart_no, int cart_amount);
+
     /**
      * 장바구니에서 구매하기
      */

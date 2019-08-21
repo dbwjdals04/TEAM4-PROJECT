@@ -115,7 +115,26 @@ public class PaymentController {
         return "payment/cart";
     }
 
-//    결제하기
+    //장바구니 선택 갯수에 따라 실시간으로 달라지는 데이터베이스
+    @ResponseBody
+    @PostMapping("/payment/cartAmount")
+    public int cartAmount(@RequestParam("cart_number[]")List cart_number,
+                              @RequestParam("cart_amount[]")List cart_amount){
+
+        Integer[] cart_number_arr = new Integer[cart_number.size()];
+        Integer[] cart_amount_arr = new Integer[cart_amount.size()];
+        for(int i=0; i<cart_number.size(); i++){
+            cart_number_arr[i] = Integer.parseInt((String) cart_number.get(i));
+            cart_amount_arr[i] = Integer.parseInt((String) cart_amount.get(i));
+            this.paymentService.cartAmount(cart_number_arr[i],cart_amount_arr[i]);
+            log.debug("업데이트 완료"+(i+1)+"회");
+         }
+
+        return 1;
+    }
+
+
+    //결제하기
     @GetMapping("/payment/buy/{p_id}/{m_no}/{po_id}/{cart_amount}")
     public String buyGet(Model model, HttpServletRequest request, @PathVariable int p_id, @PathVariable int m_no,
                          @PathVariable int po_id, @PathVariable int cart_amount ){
