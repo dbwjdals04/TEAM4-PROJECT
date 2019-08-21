@@ -1,5 +1,6 @@
 package com.bit.academy.controller;
 
+import com.bit.academy.model.CartVO;
 import com.bit.academy.model.OrderVO;
 import com.bit.academy.service.OrderSerivce;
 import com.bit.academy.service.PaymentService;
@@ -166,12 +167,15 @@ public class PaymentController {
             log.debug(String.valueOf(list));
         }
 
+
         log.debug(String.valueOf(list));
-
+        log.debug("#########################");
+        log.debug(String.valueOf(this.paymentService.sumpay(Arrays.asList(cart_no_arr))));
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmssSSS");//dd/MM/yyyy
+        model.addAttribute("sumpay", this.paymentService.sumpay(Arrays.asList(cart_no_arr)));
         model.addAttribute("merchant_uid", sdfDate.format(new Date()).toString());
-
         model.addAttribute("list", list);
+
         return "payment/payment3";
     }
 //    @RequestParam("total") int total

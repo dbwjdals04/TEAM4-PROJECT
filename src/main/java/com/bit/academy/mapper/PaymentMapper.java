@@ -46,4 +46,6 @@ public interface PaymentMapper {
     //구매이후 오더데이터 생성
     OrderVO orderData(OrderVO orderVO);
 
+    Integer sumpay(List list);
+
 }

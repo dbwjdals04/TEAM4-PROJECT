@@ -78,6 +78,12 @@ public class PaymentServiceImpl implements PaymentService{
     public CartVO cartBuy(int cart_no) {
         return this.paymentMapper.cartBuy(cart_no);
     }
+    //총합계
+    @Override
+    public int sumpay(List list) {
+        return this.paymentMapper.sumpay(list);
+    }
+
     //구매후 오더데이터 생성
     @Override
     public OrderVO orderData(OrderVO orderVO) {
