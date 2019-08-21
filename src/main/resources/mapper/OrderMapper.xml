@@ -11,4 +11,21 @@
         on od.po_id = po.po_id;
     </select>
 
+    <insert id="insertOrderData" parameterType="com.bit.academy.model.OrderDataVO">
+        insert into order_data(o_no, po_id, o_amount, od_price) values (
+        (SELECT IFNULL(max(o_no),1)FROM orderinfo), #{po_id}, #{o_amount}, #{od_price}
+        )
+    </insert>
+
+    <insert id="insertOrderInfo" parameterType="com.bit.academy.model.OrderinfoVO">
+        insert into orderinfo(m_no, o_price, o_date, o_postcode, o_name, o_number, o_detailAddress, o_roadAddress)
+        value (#{m_no}, #{o_price}, now(), #{o_postcode}, #{o_name}, #{o_number}, #{o_detailAddress}, #{o_roadAddress})
+    </insert>
+
+    <select id="selectOrderData" parameterType="int" resultType="Map">
+        select * from order_data as od
+        join (select * from orderinfo where o_no=(select max(o_no) from orderinfo where m_no=#{m_no})) as oi
+        on od.o_no = oi.o_no;
+    </select>
+
 </mapper>

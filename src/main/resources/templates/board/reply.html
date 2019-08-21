@@ -1,10 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:include="include/import::import">
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
+<div style="margin-bottom: 100px" th:include="include/nav::nav"></div>
 <h1>답변 달기</h1>
 
 
@@ -36,6 +37,6 @@
         $('#insertForm').submit();
     };
 </script>
-
+<script th:include="include/script::script"/>
 </body>
 </html>

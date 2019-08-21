@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
     <meta charset="utf-8">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
     <!-- Bootstrap core CSS -->
     <!-- <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -17,10 +16,17 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/agency.min.css" rel="stylesheet">
-    <link href="/static/css/board.css" rel="stylesheet">
+
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Sunflower:300&display=swap');
+        .store{
+            color: black;
+        }
+        .categoryDetail{
+            color: black;
+        }
+
     </style>
 
 </head>
@@ -28,38 +34,35 @@
 <div th:include="include/nav::nav"></div>
 <div style="height: 80px"></div>
 <!--카테고리 모던(전체보기, 가구 소품 조명)-->
-<table>
+<table class="store">
     <tr>
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        <div class="All" id='All' name ="hi">
-                            <a href='#' class ="category" ><img src='/uploads/thumbnail/100thumb_c684eb9b-3db8-4c0f-a543-d1f897d9dc48_Screen Shot 2019-08-12 at 5.10.18 PM.png' ></a>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-        <td>
+        <td class="store">
+
 
             <table>
                 <tr>
+                    <td rowspan="4">
+                        <div class="All" id='All' name ="hi">
+                            <a class ="category" ><img src='/uploads/thumbnail/100thumb_c684eb9b-3db8-4c0f-a543-d1f897d9dc48_Screen Shot 2019-08-12 at 5.10.18 PM.png' ></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <td rowspan="3">
                         <div class="modern" id='modern' name ="hi">
-                            <a href='#' class ="category" ><img src='/uploads/thumbnail/100thumb_625dbd74-92d7-4cf2-903b-c66776b69ed5_Screen Shot 2019-08-12 at 5.10.05 PM.png' ></a>
+                            <a class ="category" ><img src='/uploads/thumbnail/100thumb_625dbd74-92d7-4cf2-903b-c66776b69ed5_Screen Shot 2019-08-12 at 5.10.05 PM.png' ></a>
                         </div>
                     </td>
                     <td>
                         <div id = "1" name = "modern-furniture">
-                            <a href = '#' class ="categoryDetail">가구</a>
+                            <a class ="categoryDetail">가구</a>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id = "2" name = "modern-furniture">
-                            <a href = '#' class ="categoryDetail">소품</a>
+                            <a class ="categoryDetail">소품</a>
                         </div>
                     </td>
                 </tr>
@@ -67,7 +70,7 @@
                     <td>
 
                         <div id = "3" name = "modern-furniture">
-                            <a href = '#' class ="categoryDetail">조명</a>
+                            <a class ="categoryDetail">조명</a>
                         </div>
                     </td>
                 </tr>
@@ -79,26 +82,26 @@
                 <tr>
                     <td rowspan="3">
                         <div class ="antique" id='antique' name ="hi">
-                            <a href='#' class ="category"><img src='/uploads/thumbnail/100thumb_a1e90413-2112-4594-8b45-53cbe0e22e6f_Screen Shot 2019-08-12 at 5.10.30 PM.png' ></a>
+                            <a class ="category"><img src='/uploads/thumbnail/100thumb_a1e90413-2112-4594-8b45-53cbe0e22e6f_Screen Shot 2019-08-12 at 5.10.30 PM.png' ></a>
                         </div>
                     </td>
                     <td>
                         <div id = "4" name = "antique-furniture">
-                            <a href = '#' class ="categoryDetail">가구</a>
+                            <a class ="categoryDetail">가구</a>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id = "5" name = "antique-furniture">
-                            <a href = '#' class ="categoryDetail">소품</a>
+                            <a class ="categoryDetail">소품</a>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id = "6" name = "antique-furniture">
-                            <a href = '#' class ="categoryDetail">조명</a>
+                            <a class ="categoryDetail">조명</a>
                         </div>
                     </td>
                 </tr>
@@ -110,26 +113,26 @@
                 <tr>
                     <td rowspan="3">
                         <div class = "warm" id='warm' name = "hi">
-                            <a href='#' class ="category"><img src='/uploads/thumbnail/100thumb_f0bfa880-5c55-4157-b9df-fd8f4fb2a7a4_Screen Shot 2019-08-12 at 5.10.09 PM.png' ></a>
+                            <a class ="category"><img src='/uploads/thumbnail/100thumb_f0bfa880-5c55-4157-b9df-fd8f4fb2a7a4_Screen Shot 2019-08-12 at 5.10.09 PM.png' ></a>
                         </div>
                     </td>
                     <td>
                         <div id = "7" name = "warm-furniture">
-                            <a href = '#' class ="categoryDetail">가구</a>
+                            <a class ="categoryDetail">가구</a>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id = "8" name = "warm-furniture">
-                            <a href = '#' class ="categoryDetail">소품</a>
+                            <a class ="categoryDetail">소품</a>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div id = "9" name = "warm-furniture">
-                            <a href = '#' class ="categoryDetail">조명</a>
+                            <a class ="categoryDetail">조명</a>
                         </div>
                     </td>
                 </tr>
@@ -286,6 +289,7 @@
 
 
             </script>
+            <script th:include="include/script::script"/>
 
 
             </body>

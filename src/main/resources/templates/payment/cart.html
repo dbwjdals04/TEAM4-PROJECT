@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:include="include/import::import">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -12,7 +12,8 @@
 
 </head>
 <body style="width: fit-content">
-<h1>장바구니</h1>
+<div style="margin-bottom: 100px" th:include="include/nav::nav"></div>
+<h1 >장바구니</h1>
 
 <!--<div><span th:text="${cartsum}"></span></div>-->
 <form name="cartForm" id="cartForm" method="get" style="width:600px;">
@@ -95,6 +96,7 @@ $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
 
     var cart_number =[];
 
+
     $.each($('input[name="cart_no"]:checked'), function(index,obj){
         console.log($(obj).val());
         $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
@@ -158,5 +160,6 @@ $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
 // console.log(total);
 
 </script>
+<script th:include="include/script::script"/>
 </body>
 </html>
