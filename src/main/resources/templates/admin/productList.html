@@ -13,104 +13,113 @@
 
 </head>
 <body>
-<checkbox id = "category">
-    <input type="checkbox" th:value="1">모던-가구
-    <input type="checkbox" th:value="2">모던-조명
-    <input type="checkbox" th:value="3">모던-소품
-    <input type="checkbox" th:value="4">앤틱-가구
-    <input type="checkbox" th:value="5">앤틱-조명
-    <input type="checkbox" th:value="6">앤틱-소품
-    <input type="checkbox" th:value="7">따뜻한-가구
-    <input type="checkbox" th:value="8">따뜻한-조명
-    <input type="checkbox" th:value="9">따뜻한-소품
-</checkbox>
-<div id ="product-div">
+<div id="wrapper">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" th:include="include/adminnav::adminnav">
+
+</ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <checkbox id = "category">
+                <input type="checkbox" th:value="1">모던-가구
+                <input type="checkbox" th:value="2">모던-조명
+                <input type="checkbox" th:value="3">모던-소품
+                <input type="checkbox" th:value="4">앤틱-가구
+                <input type="checkbox" th:value="5">앤틱-조명
+                <input type="checkbox" th:value="6">앤틱-소품
+                <input type="checkbox" th:value="7">따뜻한-가구
+                <input type="checkbox" th:value="8">따뜻한-조명
+                <input type="checkbox" th:value="9">따뜻한-소품
+            </checkbox>
+            <div id ="product-div">
 
 
 
-    <table id="example-table-1" width="100%" class="table table-bordered table-hover text-center">
-        <thead>
-        <tr>
-            <th> 제품 번호 </th>
-            <th> 제품명 </th>
-            <th> 가격 </th>
-        </tr>
-        </thead>
-        <tbody id="test-tbody">
+                <table id="example-table-1" width="100%" class="table table-bordered table-hover text-center">
+                    <thead>
+                    <tr>
+                        <th> 제품 번호 </th>
+                        <th> 제품명 </th>
+                        <th> 가격 </th>
+                    </tr>
+                    </thead>
+                    <tbody id="test-tbody">
 
-        </tbody>
-    </table>
-</div>
-
-
-<div style="text-align: center; width:100%;">
-    <table>
-        <tr id = "page-tr">
-    </tr>
-    </table>
-</div>
-
-    <input type="hidden" name="currentPage" id="currentPage"/>
-    <input type="hidden" name="articleCount" id="articleCount "/>
+                    </tbody>
+                </table>
+            </div>
 
 
+            <div style="text-align: center; width:100%;">
+                <table>
+                    <tr id = "page-tr">
+                    </tr>
+                </table>
+            </div>
 
-<input type="button" id="openModal" value="상품 등록" onclick="addProduct();" >
+            <input type="hidden" name="currentPage" id="currentPage"/>
+            <input type="hidden" name="articleCount" id="articleCount "/>
 
-<div id = "addProductModal" class="modal">
 
-    <div class="modal-content">
-        <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/productList/add">
-            <div class = "row">
-                <div class="select_thumbnail col-md-3" >
-                    썸네일<br>
-                    <img src="" style="max-width: 100%;"/>
-                    <input type="file" id="thumbnail" name = "thumbnail" style="position: relative;bottom:0px;left: 0px;width:100%">
-                </div >
-                <div class = "col-md-8">
 
-                    제품명<input type="text" id="p_name" name="p_name"><br>
-                    카테고리
-                    <select id = "category_no" name = "category_no">
-                    <option value="1">모던-가구</option>
-                    <option value="2">모던-조명</option>
-                    <option value="3">모던-소품</option>
-                    <option value="4">앤틱-가구</option>
-                    <option value="5">앤틱-조명</option>
-                    <option value="6">앤틱-소품</option>
-                    <option value="7">따뜻한-가구</option>
-                    <option value="8">따뜻한-조명</option>
-                    <option value="9">따뜻한-소품</option>
-                </select>
-                    <br>
-                    가격<input type="text" id="p_price" name="p_price"><br>
-                    제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
-                    기본 설명<input type="text" id="p_spec" name="p_spec"><br>
+            <input type="button" id="openModal" value="상품 등록" onclick="addProduct();" >
 
-                    <div id="option">
-                        옵션<input type="button"  onclick="addOption();" value="옵션 추가", id="option-button">
+            <div id = "addProductModal" class="modal">
 
-                        <div id="option-content" >
+                <div class="modal-content">
+                    <form name="insertProduct" id="insertProduct" method="post" enctype="multipart/form-data" action="/admin/productList/add">
+                        <div class = "row">
+                            <div class="select_thumbnail col-md-3" >
+                                썸네일<br>
+                                <img src="" style="max-width: 100%;"/>
+                                <input type="file" id="thumbnail" name = "thumbnail" style="position: relative;bottom:0px;left: 0px;width:100%">
+                            </div >
+                            <div class = "col-md-8">
+
+                                제품명<input type="text" id="p_name" name="p_name"><br>
+                                카테고리
+                                <select id = "category_no" name = "category_no">
+                                    <option value="1">모던-가구</option>
+                                    <option value="2">모던-조명</option>
+                                    <option value="3">모던-소품</option>
+                                    <option value="4">앤틱-가구</option>
+                                    <option value="5">앤틱-조명</option>
+                                    <option value="6">앤틱-소품</option>
+                                    <option value="7">따뜻한-가구</option>
+                                    <option value="8">따뜻한-조명</option>
+                                    <option value="9">따뜻한-소품</option>
+                                </select>
+                                <br>
+                                가격<input type="text" id="p_price" name="p_price"><br>
+                                제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
+                                기본 설명<input type="text" id="p_spec" name="p_spec"><br>
+
+                                <div id="option">
+                                    옵션<input type="button"  onclick="addOption();" value="옵션 추가", id="option-button">
+
+                                    <div id="option-content" >
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <span class="close col-md-1" onclick="document.getElementById('addProductModal').style.display='none'">&times;</span>
+                        </div>
+                        <div class="select_detailImg" style="height: 200px; overflow: scroll;">
+                            <div>상세이미지 <input type="file" id="detailImg" name = "detailImg"></div>
+                            <img src="">
                         </div>
 
-                    </div>
 
+                        <input type="submit" value="upload"/>
+
+                    </form>
                 </div>
-                <span class="close col-md-1" onclick="document.getElementById('addProductModal').style.display='none'">&times;</span>
+
             </div>
-            <div class="select_detailImg" style="height: 200px; overflow: scroll;">
-                <div>상세이미지 <input type="file" id="detailImg" name = "detailImg"></div>
-                <img src="">
-            </div>
-
-
-            <input type="submit" value="upload"/>
-
-        </form>
+        </div>
     </div>
 
 </div>
-
 
 </body>
 <script>
