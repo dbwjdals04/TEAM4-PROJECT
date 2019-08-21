@@ -2,8 +2,6 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<!--    <script src="includeHTML.js"></script>-->
-<!--    <script src="/includeHTML.js"></script>-->
     <script src="/admin/includeHTML.js"></script>
 
 
@@ -83,13 +81,16 @@
 
         </div>
         <section class="page-section" id="services">
-            <select id = "search-select">
-                <option th:value="m_no">회원번호</option>
-                <option th:value="m_name">회원 성명</option>
-                <option th:value="m_phone">전화번호</option>
-            </select>
+            <form id = "form-search">
+                <select id = "search-select">
+                    <option th:value="m_no">회원번호</option>
+                    <option th:value="m_name">회원 성명</option>
+                    <option th:value="m_phone">전화번호</option>
+                </select>
 
-            <input type="text" id="search" />
+                <input type="text" id="search" />
+            </form>
+
 
             <input type="button" value="검색" onclick="searchMember();" />
 
@@ -132,7 +133,7 @@
                 </table>
             </div>
 
-            <form name="boardPaging" id="boardPaging" method="get" action="/admin/memberList">
+            <form name="boardPaging" id="boardPaging" method="post" action="/admin/memberList">
                 <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>
                 <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>
             </form>
@@ -179,14 +180,7 @@
 </div>
 
 <script type="text/javascript" th:inline="javascript">
-    var m_no = /*[[${session.member.m_no}]]*/
 
-        console.log(m_no);
-
-        if(m_no == 3){
-            console.log("admin login!");
-        }
-    var currentPage = /*[[${boardPaging.currentPage}]]*/;
 
     var goPage = function(p){
         var page = $(p).data('page');
@@ -211,7 +205,7 @@
 
         $.ajax({
             url: '/admin/member/'+m_no,
-            type: 'get',
+            type: 'post',
             data: {
                 // data1:'abcd', data2:'bdee' // for test
             },
@@ -245,10 +239,14 @@
 
     var searchMember = function(){
 
+
         var option = $.trim(($("#search-select option:selected").val()));
         var keyword = $.trim($("#search").val());
-        console.log(option);
-        location.href = '/admin/member/'+option + '/' + keyword;
+        $("#form-search")
+            .attr('method', 'post')
+            .attr('action', '/admin/member/'+option + '/' + keyword)
+            .submit();
+        // location.href = '/admin/member/'+option + '/' + keyword;
 
     };
 

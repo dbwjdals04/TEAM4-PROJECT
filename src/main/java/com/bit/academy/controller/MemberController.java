@@ -21,7 +21,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/admin/member/{searchOption}/{searchKeyword}")
+    @PostMapping("/admin/member/{searchOption}/{searchKeyword}")
     public String searchMember(Model model, @PathVariable String searchOption, @PathVariable String searchKeyword, @ModelAttribute BoardPaging boardPaging){
         model.addAllAttributes(this.memberService.searchMemberList(searchOption, searchKeyword, boardPaging));
 //        model.addAttribute("memberList", this.memberService.searchMemberList(searchOption, searchKeyword, boardPaging));
@@ -34,21 +34,15 @@ public class MemberController {
     }
 
     @ResponseBody
-    @GetMapping("/admin/member/{m_no}")
+    @PostMapping("/admin/member/{m_no}")
     public MemberVO memberJSON(Model model, @PathVariable int m_no){
         return this.memberService.selectMember(m_no);
     }
 
 
-    @GetMapping("/admin/memberList")
+    @PostMapping("/admin/memberList")
     public String memberList(Model model, @ModelAttribute BoardPaging boardPaging){
         model.addAllAttributes(this.memberService.selectMemberList(boardPaging));
-//        model.addAttribute("memberList", this.memberService.selectMemberList(boardPaging));
-//        List<MemberVO> memberList = new ArrayList<>();
-//
-//        for(MemberVO memberVO:memberList){
-//
-//        }
 
         return "admin/memberList";
     }
