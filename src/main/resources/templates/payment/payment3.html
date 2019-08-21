@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:include="include/import::import">
+
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +17,7 @@
 
 </head>
 <body style="width: fit-content">
+<div style="margin-bottom: 100px" th:include="include/nav::nav"></div>
 <h1>주문페이지</h1>
 <div style="width: 600px; padding-top: 20px">
 
@@ -37,6 +39,7 @@
             <div><span>총 상품 금액</span><span style="float: right" th:text="${sumpay}"></span></div>
             <div><span>배송비</span><span style="float: right" th:text="2500"></span></div>
             <div><span>결제 금액</span><span style="float: right" th:text="${sumpay}+2500"></span></div>
+            <input type="hidden" id="amount" name="amount"  th:value="${sumpay}+2500"/>
         </div>
     </div>
     <h5>구매자 정보</h5>
@@ -58,6 +61,23 @@
     <input type="text" id="sample4_detailAddress" placeholder="상세주소">
     <input type="text" id="sample4_extraAddress" placeholder="참고항목">
 </form>
+    <table>
+        <tbody>
+        <tr>
+            <th>
+                결제수단
+            </td>
+            <td>
+                <select name="pay_method" id="pay_method">
+                    <option value="card">신용카드</option>
+                    <option value="vbank">가상계좌</option>
+                    <option value="phone">휴대폰소액결제</option>
+                    <option value="cultureland">문화상품권</option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 <!--<div><span>결제 금액 : </span> <span th:text="${map.total}">상품 가격</span></div>-->
 
@@ -127,9 +147,9 @@
         var pay_method = $('#pay_method:selected').val();
         var merchant_uid = /*[[${merchant_uid}]]*/;
         // var amount = $('#amount').val();
-        var amount = $('#amount').text();
+        var amount = $('#amount').val();
         console.log("################" +amount);
-        var goods_name = $('#goods_name').val();
+        var goods_name = $('#p_name').val();
         var m_name = $('#m_name').val();
         var m_id = $('#m_id').val();
         var m_phone = $('#m_phone').val();
@@ -165,7 +185,7 @@
         });
     };
 </script>
-
+    <script th:include="include/script::script"/>
 
 </body>
 </html>

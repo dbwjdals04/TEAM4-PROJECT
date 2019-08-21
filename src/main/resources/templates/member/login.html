@@ -37,7 +37,7 @@
 
 </form>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 	//css
 	$(".txtb input").on("focus",function(){
 		$(this).addClass("focus");
@@ -50,9 +50,18 @@
 		$('#loginForm')
 				.attr('action', '/member/login')
 				.submit();
-
-
 	};
+	//모든 페이지가 요청이 되었을 때
+	$(document).ready(function() {
+		// ID를 alpreah_input로 가지는 곳에서 키를 누를 경우
+		$("#m_password").keydown(function(key) {
+			//키의 코드가 13번일 경우 (13번은 엔터키)
+			if (key.keyCode == 13) {
+				//경고창을 출력한다.
+				alert(login());
+			}
+		});
+	});
 	//
 	// var idPwFind = function(){
 	//     $('#loginForm')
