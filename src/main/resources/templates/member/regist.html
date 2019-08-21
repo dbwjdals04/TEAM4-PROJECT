@@ -59,49 +59,56 @@
 
     //빈칸입력방지 및 폼 제출
 
-        var insert = function(){
+      var a =0;
+
+        var insert = function() {
+
+            if (a == 1) {
+
+                if ($.trim($('#m_name').val()) == '') {
+                    document.getElementById("checkName").innerHTML = "이름을 입력해주세요.";
+                    document.getElementById("checkName").style.color = "red";
+                    return false;
+                }
+
+                if ($.trim($('#m_id').val()) == '') {
+                    document.getElementById("checkId").innerHTML = "ID를 입력해주세요.";
+                    document.getElementById("checkId").style.color = "red";
+                    return false;
+                } else if (!/^(?=.*[@.]).{3,30}$/.test($.trim($('#m_id').val()))) {
+                    document.getElementById("checkId").innerHTML = "이메일형식으로 작성해주세요.";
+                    document.getElementById("checkId").style.color = "red";
+                }
 
 
-            if($.trim($('#m_name').val())==''){
-                document.getElementById("checkName").innerHTML = "이름을 입력해주세요.";
-                document.getElementById("checkName").style.color = "red";
-                return false;
-            }
+                if ($.trim($('#m_password').val()) == '') {
+                    document.getElementById("checkPassword").innerHTML = "비밀번호를 입력해주세요.";
+                    document.getElementById("checkPassword").style.color = "red";
+                    return false;
+                }
 
-            if($.trim($('#m_id').val())==''){
-                document.getElementById("checkId").innerHTML = "ID를 입력해주세요.";
-                document.getElementById("checkId").style.color = "red";
-                return false;
-            }
+                if ($.trim($('#m_phone').val()) == '') {
+                    document.getElementById("checkPhone").innerHTML = "휴대폰 번호를 입력해주세요.";
+                    document.getElementById("checkPhone").style.color = "red";
+                    return false;
+                }
+
+                if ($.trim($('#m_password').val()) != $.trim($('#PwCheck').val())) {
+                    document.getElementById("checkPwd").innerHTML = "비밀번호를 확인해주세요.";
+                    document.getElementById("checkPwd").style.color = "red";
+                    return false;
+                } else {
+                    alert("회원가입에 성공하셨습니다. 인테리아에 오신걸 환영합니다");
+                }
+
+                $('#insertForm')
+                    .attr('action', '/member/regist')
+                    .submit();
+            } else {
+                alert("아이디 중복체크 이후 가입해주세요.")
+            };
 
 
-
-
-            if($.trim($('#m_password').val())==''){
-                document.getElementById("checkPassword").innerHTML = "비밀번호를 입력해주세요.";
-                document.getElementById("checkPassword").style.color = "red";
-                return false;
-            }
-
-            if($.trim($('#m_phone').val())==''){
-                document.getElementById("checkPhone").innerHTML = "휴대폰 번호를 입력해주세요.";
-                document.getElementById("checkPhone").style.color = "red";
-                return false;
-            }
-
-            if($.trim($('#m_password').val())!=$.trim($('#PwCheck').val())){
-                document.getElementById("checkPwd").innerHTML = "비밀번호를 확인해주세요.";
-                document.getElementById("checkPwd").style.color = "red";
-                return false;
-            }
-
-            else{
-                alert("회원가입에 성공하셨습니다. 인테리아에 오신걸 환영합니다");
-            }
-
-            $('#insertForm')
-                .attr('action','/member/regist')
-                .submit();
         };
 
 
@@ -126,7 +133,7 @@
       }
 
 
-      var idChk =function(){
+      var idChk =function(id){
            var ck_id = $('#m_id').val();
 
            console.log(ck_id);
@@ -146,17 +153,24 @@
                    console.log(data.count);
                    if(data.count==0){
                        if(param.m_id==""){
-                           document.getElementById("checkId").innerHTML = "사용 불가능한 아이디 입니다.";
+                           document.getElementById("checkId").innerHTML = "ID를 입력해주세요.";
                            document.getElementById("checkId").style.color = "red";
-
                        }
+                       else if(!/^(?=.*[@.]).{3,30}$/.test(param.m_id)) {
+                           document.getElementById("checkId").innerHTML = "이메일형식으로 작성해주세요.";
+                           document.getElementById("checkId").style.color = "red";
+                       }
+                           // if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/.test(password)){
                        else{
                        document.getElementById("checkId").innerHTML = "사용 가능한 아이디 입니다.";
-                       document.getElementById("checkId").style.color = "blue";}
+                       document.getElementById("checkId").style.color = "blue";
+                       a=1;
+                       }
                        // 아이디 중복 없음
+
                    }
                    else{
-                       document.getElementById("checkId").innerHTML = "사용 불가능한 아이디 입니다.";
+                       document.getElementById("checkId").innerHTML = "아이디가 중복되었습니다.";
                        document.getElementById("checkId").style.color = "red";
                        // 아이디 중복
                    }

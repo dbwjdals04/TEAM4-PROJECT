@@ -26,15 +26,16 @@
             <div>
                 <input type="checkbox" name="cart_no" th:value="${cart.cart_no}" checked/>
                 <span>수량</span>
-                <select name="cart_amount">
-                    <option th:value="${cart.cart_amount}" th:text="${cart.cart_amount}"></option>
+                <select name="cart_amount" id ="cart_quantity" >
+                    <option name ="cart_amount" id = "cart_amount" th:each="i : ${#numbers.sequence(1,cart.po_stock)}" th:value="${i}" th:text="${i}" th:selected="${i==cart.cart_amount}"></option>
+<!--                    <option name = "cart_amount" th:value="${cart.cart_amount}" th:text="${#numbers.sequence(1,cart.cart_amount)}"></option>-->
                 </select>
                 </div>
         </div>
-        <div style="padding-bottom: 20px">
-            <div style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}">상품 가격</span></div>
+        <div style="padding-bottom: 20px" id = "price">
+            <div id = "p_price" style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}+'x'+${cart.cart_amount}">상품 가격</span></div>
             <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <span th:text="${cart.po_price}">옵션 가격</span></div>
-            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <span th:with="total=${cart.cart_amount*(cart.p_price+cart.po_price)}" th:text="${total}">총 가격</span></div>
+            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <span th:with="total =${cart.cart_amount*(cart.p_price+cart.po_price)}" th:text="${total}">총 가격</span></div>
         </div>
     </div>
 </form>
@@ -43,6 +44,7 @@
 <input type="button" id = "cartBuy" value="주문 하기" onclick ="cartBuy()"/>
 
 <script type="text/javascript" th:inline="javascript">
+
 
 var cartdelete = function(obj){
     var cart_no = $(obj).data("cart_no");
@@ -67,20 +69,68 @@ var cartdelete = function(obj){
             }
         });
     }
-}
+};
 
-var cartBuy = function(){
+$( '#cart_quantity' ).change(function() {
+
+var cart = /*[[${map.cart}]]*/;
+$.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
+        
+        console.log("hello world---------");
+        var amount = $(obj).val();
+        $('#p_price').remove()
+        $('#price').append('<div id = \"p_price\" style=\"border-top: 1px solid #d1d1d5; padding: 5px\"><span>상품 가격:</span> <span th:text='+cart.p_price+"x"+amount+">상품 가격</span></div>\n');
+        console.log($('#p_price').text());
+        console.log("amount: " +amount);
+
+
+
+
+})
+});
+
+
+
+    var cartBuy = function(){
+
+    var cart_number =[];
 
     $.each($('input[name="cart_no"]:checked'), function(index,obj){
         console.log($(obj).val());
-
         $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
+        cart_number.push($(obj).val());
     });
 
-    $('#cartForm')
-        .attr('action','/payment/cartBuy/')
-        .attr('method','post')
-        .submit();
+    console.log(cart_number);
+    var cart_amount = [];
+
+    $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
+        console.log($(obj).val());
+        cart_amount.push($(obj).val());
+    });
+        console.log(cart_amount);
+
+        $.ajax({
+            type: 'post',
+            url: '/payment/cartAmount',
+            data: {"cart_number":cart_number, "cart_amount":cart_amount},
+            error: function (error) {
+                console.error("Error!");
+            },
+            success: function (data) {
+                console.log("success!");
+                console.log(data);
+            },
+            complete: function () {
+                console.log("complete!");
+            }
+        });
+
+    // $('#cartForm')
+    //     .attr('action','/payment/cartBuy/')
+    //     .attr('method','post')
+    //     .submit();
+
 
     // var cart = /*[[${map.cart}]]*/;
     // var total =/*[[${map.total}]]*/;

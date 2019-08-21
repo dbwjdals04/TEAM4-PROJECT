@@ -67,6 +67,12 @@
         WHERE c.cart_no =${cart_no};
     </select>
 
+    <!--    장바구니 변경사항 실시간 반영-->
+    <update id ="cartAmount">
+        UPDATE cart
+        SET cart_amount = ${cart_amount}
+        WHERE cart_no = ${cart_no};
+    </update>
 
     <!--    장바구니에서 구매하기 총금액-->
     <select id="sumpay" parameterType="list" resultType="Integer">

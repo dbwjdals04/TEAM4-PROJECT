@@ -84,11 +84,15 @@ public class PaymentServiceImpl implements PaymentService{
         return this.paymentMapper.sumpay(list);
     }
 
+    //카트에서 변경한 값 실시간 반영(수량)
+    @Override
+    public void cartAmount(int cart_no, int cart_amount) {
+        this.paymentMapper.cartAmount(cart_no, cart_amount);
+    }
+
     //구매후 오더데이터 생성
     @Override
     public OrderVO orderData(OrderVO orderVO) {
-
-
         return this.paymentMapper.orderData(orderVO);
     }
 }

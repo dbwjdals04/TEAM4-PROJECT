@@ -35,6 +35,9 @@ public interface PaymentMapper {
     //장바구니 삭제
     void deleteCart(int cart_no);
 
+    //카트변경사항 반영(수량)
+    void cartAmount(int cart_no, int cart_amount);
+
     //구매하기
     ProductVO buyProduct(int p_id);
     MemberVO buyMember(int m_no);
