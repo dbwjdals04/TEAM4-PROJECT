@@ -77,13 +77,12 @@ var cartdelete = function(obj){
             },
             success: function (data) {
                 console.log("success!");
-                console.log(member.m_no);
-                location.href = '/payment/cart/' + member.m_no;
+                window.location.reload(true);
 
             },
             complete: function () {
                 console.log("complete!");
-                window.location.reload(true);
+
             }
         });
     }
