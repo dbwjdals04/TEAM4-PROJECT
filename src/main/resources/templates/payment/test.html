@@ -8,20 +8,29 @@
     <link href="/static/css/board.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        input:focus {outline:none;}
+    </style>
 
 
 </head>
 <body style="width: fit-content">
+<h1>주문 완료</h1>
+<div style="width: 600px; padding-top: 20px">
 
+    <div style="background-color: #0062cc; color: white; padding: 15px; text-align: center; margin-bottom: 10px">주문이 완료되었습니다.<br><span th:text="${orderDataList.orderInfo.o_date}"/></div>
+
+<h5>주문 목록</h5>
 <div th:each ="productData: ${orderDataList.productData}">
-    <div style="padding-top: 20px; border-top: 1px solid #d1d1d5"/>
-    <div style="float: left"><img th:src=|/uploads/thumbnail/${productData.thumb_300}|/> </div>
+    <div style="padding-top: 10px; border-top: 1px solid #d1d1d5"/>
+    <div style="float: left"><img style="width: 50%" th:src=|/uploads/thumbnail/${productData.thumb_100}|/> </div>
+    <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" readonly="readonly" th:value="${productData.od_price}"/>원</div>
     <div><span>상품이름</span> <input style="border: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${productData.p_name}"/></div>
-    <div><span>옵션이름</span> <input style="border: none;" type="text" id="po_name" name="po_value" readonly="readonly" th:value="${productData.po_value}"/></div>
-    <div><span>상품 가격</span> <input style="border: none;" type="text" id="p_price" name="p_price" readonly="readonly" th:value="${productData.p_price}"/></div>
-    <div><span>옵션 가격</span> <input style="border: none;" type="text" id="po_price" name="po_price" readonly="readonly" th:value="${productData.po_price}"/></div>
     <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" readonly="readonly" th:value="${productData.od_amount}"/>개</div>
-    <div><span> 총 가격 </span> <input style="border: none;" type="text" readonly="readonly" th:value="${productData.od_price}"/></div>
+    <div style="color: #818183; font-size: 12px; margin-bottom: 10px"><span>옵션이름</span> <input style="border: none; color: #818183" type="text" id="po_name" name="po_value" readonly="readonly" th:value="${productData.po_value}"/></div>
+<!--    <div><span>상품 가격</span> <input style="border: none;" type="text" id="p_price" name="p_price" readonly="readonly" th:value="${productData.p_price}"/></div>-->
+<!--    <div><span>옵션 가격</span> <input style="border: none;" type="text" id="po_price" name="po_price" readonly="readonly" th:value="${productData.po_price}"/></div>-->
+<!--    <div style="display: none"><span> 총 가격 </span> <input style="border: none;" type="text" readonly="readonly" th:value="${productData.od_price}"/></div>-->
 
 </div>
 
@@ -34,14 +43,19 @@
         </div>
     </div>
     <h5>배송지 정보</h5>
-    <div style="height: 141px; padding-top: 20px; border-top: 1px solid #d1d1d5">
-        <div><span>주문자이름</span> <span style="border: none;" type="text" th:text="${orderInfo.o_name}"></span></div>
-        <div><span>주문자번호</span> <span style="border: none;" type="text" th:text="${orderInfo.o_number}"></span></div>
-    </div>
-    <input type="text" id="sample4_postcode" name="o_postcode" placeholder="우편번호" th:text="${orderInfo.o_postcode}">
-    <input type="text" id="sample4_roadAddress" name="o_roadAddress" placeholder="도로명주소" th:text="${orderInfo.o_roadAddress}">
-    <span id="guide" style="color:#999;display:none"></span>
-    <input type="text" id="sample4_detailAddress" name="o_detailAddress" placeholder="상세주소" th:text="${orderInfo.o_detailAddress}">
+
+    <table style="border: 1px solid #d1d1d5;">
+        <tr>
+            <td style="width: 20%;border: 1px solid #d1d1d5;">수령인</td><td><span style="border: none;" type="text" th:text="${orderInfo.o_name}"></span></td>
+        </tr>
+        <tr>
+            <td style="width: 20%;border: 1px solid #d1d1d5;">휴대전화</td><td><span style="border: none;" type="text" th:text="${orderInfo.o_number}"></td>
+        </tr>
+        <tr>
+            <td style="width: 20%;border: 1px solid #d1d1d5;">주소</td><td><div><span th:text="${orderInfo.o_postcode}"/><br/><span th:text="${orderInfo.o_roadAddress}"/><br/><span th:text="${orderInfo.o_detailAddress}"/></div></td>
+        </tr>
+    </table>
+
     <table>
         <tbody>
         <tr>

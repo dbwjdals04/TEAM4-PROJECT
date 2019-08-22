@@ -194,9 +194,9 @@ public class MemberController {
     //자기정보조회
     @PostMapping("/member/mypage/{m_no}")
     public String mypage(Model model, @PathVariable int m_no){
-
+        log.debug("asdasdasdasdasd!!!!!!!!!!!!!");
         model.addAttribute("member", this.memberService.selectMember(m_no));
-
+        model.addAttribute("myOrderData",this.memberService.myOrderData(m_no));
         return "member/mypage";
     }
     @PostMapping("/member/mypage/modify/{m_no}")
@@ -204,4 +204,12 @@ public class MemberController {
         this.memberService.modify(memberVO);
         return "main/index";
     }
+//    //나의 주문정보조회
+//    @PostMapping("member/myOrder/{m_no}")
+//    public String myOrder(Model model, @PathVariable int m_no){
+//        log.debug("주문정보요청################");
+//        model.addAttribute("myOrderData",this.memberService.myOrderData(m_no));
+//        log.debug(String.valueOf(this.memberService.myOrderData(m_no)));
+//        return "member/mypage";
+//    }
 }

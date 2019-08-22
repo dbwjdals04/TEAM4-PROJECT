@@ -82,6 +82,7 @@ var cartdelete = function(obj){
             },
             complete: function () {
                 console.log("complete!");
+
             }
         });
     }
@@ -126,6 +127,7 @@ var cartdelete = function(obj){
 
 
 
+
         // $.each($('input[name="cart_no"]:checked'), function(index,obj){
     //     console.log($(obj).val());
     //     $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
@@ -139,7 +141,12 @@ var cartdelete = function(obj){
     //     console.log($(obj).val());
     //     cart_amount.push($(obj).val());
     // });
+
         console.log(cart_amount);
+    }
+    else{
+
+    }
 
         $.ajax({
             type: 'post',
@@ -160,7 +167,6 @@ var cartdelete = function(obj){
                     .submit();
             }
         });
-
 
     // var cart = /*[[${map.cart}]]*/;
     // var total =/*[[${map.total}]]*/;
