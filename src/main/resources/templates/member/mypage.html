@@ -31,12 +31,6 @@
                             .attr('action', '/payment/cart/'+memberk.m_no)
                             .submit();
                     }
-                    function gomypage() {
-                        $('#myPage')
-                            .attr('method','post')
-                            .attr('action','/member/mypage/'+memberk.m_no)
-                            .submit();
-                    }
                     if(memberk!=null && memberk.m_no!=3){
                         document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
                             "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
@@ -44,10 +38,6 @@
                         document.write("<li class=\"nav-item\" id='logOut'>\n" +
                             "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
                             "            </li>");
-                        document.write("<form style=\"margin: 0px\" name=\"mypage\" id=\"myPage\"><li class=\"nav-item\">\n" +
-                            "              <a class=\"nav-link js-scroll-trigger\"  href =\"#\" onclick=\"gomypage()\">MY PAGE</a>\n" +
-                            "            </li></form>");
-
                     }
                     else if(memberk!=null && memberk.m_no==3){
                         document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
@@ -79,14 +69,54 @@
                     }
                 </script>
 
-
-
             </ul>
         </div>
     </div>
 </nav>
+
+
+<div style="margin-top: 150px">
+<input type = "button" value = "내 정보조회" onclick="myInfo()"/>
+<input type = "button" value = "주문조회" onclick = "myOrder()"/>
+</div>
+
+
+<div id ="myOrder" style="display:none;">
+    <table>
+        <thead>
+
+        <tr>
+
+            <td class="pivateck">상품정보</td>
+            <td class="pivateck">옵션정보</td>
+            <td class="titlehead">주문자</td>
+            <td class="right">수량</td>
+            <td class="right">상품금액</td>
+            <td class="right">상태</td>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="order:${myOrderData}">
+            <td class="left" th:text="${order.p_name}" >상품정보</td>
+            <td class="left" th:text="${order.po_value}" >옵션정보</td>
+            <td class="left" th:text="${order.m_name}" >주문자</td>
+            <td class="left" th:text="${order.od_amount}" >수량</td>
+            <td class="left" th:text="${order.od_price}">상품금액</td>
+            <td class="left" th:text="${order.o_cancel}">상태</td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
 <form name = "myPage" id = "myPage"
-      class ="myPage" method="post" style = "width:600px" >
+      class ="myPage" method="post" style = "width:600px; display: none"  >
 
     <h1>내정보조회</h1>
 
@@ -94,11 +124,8 @@
         <span>Username</span></div>
     <div id="checkName"></div>
 
-
-
     <div class ="mp"><input type="text" name ="m_id" id="m_id" readonly="readonly" th:value="${member.m_id}" />
         <span>ID</span></div>
-
 
     <div class ="txtb"><input type="password" name ="m_password" id="m_password"/>
         <span data-placeholder="Password"></span></div>
@@ -119,6 +146,26 @@
 
 
 <script type = "text/javascript" th:inline="javascript">
+   var order = /*[[${myOrderData}]]*/;
+     console.log(order);
+    console.log(memberk);
+
+    var myInfo = function(){
+        $('#myOrder')
+            .attr('style','display:none');
+        $('#myPage')
+            .attr('style','display:block');
+   }
+
+   var myOrder = function(){
+        $('#myOrder')
+            .attr('style','display:block');
+        $("#myPage")
+            .attr('style','display:none');
+   }
+
+
+
     //html 설정
 
     $(".txtb input").on("focus",function(){
@@ -243,7 +290,6 @@
     }
 
 </script>
-<script th:include="include/script::script"/>
 </body>
 </html>
 

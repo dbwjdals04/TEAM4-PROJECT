@@ -125,11 +125,16 @@ var cartdelete = function(obj){
     console.log(cart_number);
     var cart_amount = [];
 
-    $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
-        console.log($(obj).val());
-        cart_amount.push($(obj).val());
-    });
+    if($.each($('input[name="cart_no"]')!=null)){
+        $.each($('option[name ="cart_amount"]:selected'), function(index, obj) {
+            console.log($(obj).val());
+            cart_amount.push($(obj).val());
+        });
         console.log(cart_amount);
+    }
+    else{
+
+    }
 
         $.ajax({
             type: 'post',
@@ -150,7 +155,6 @@ var cartdelete = function(obj){
                     .submit();
             }
         });
-
 
     // var cart = /*[[${map.cart}]]*/;
     // var total =/*[[${map.total}]]*/;
