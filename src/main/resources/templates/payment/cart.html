@@ -32,9 +32,9 @@
                 <span>수량</span>
                 <select th:name="|name${in.index}|" th:id ="|name${in.index}|" onchange="oncha(this)"th:attr="data-index=${in.index},data-price=${cart.p_price},data-po_price=${cart.po_price} " >
                     <option name="cart_amount" id="cart_amount" th:each="i : ${#numbers.sequence(1,cart.po_stock)}" th:text="${i}" th:selected="${i==cart.cart_amount}"></option>
-<!--                    <option name = "cart_amount" th:value="${cart.cart_amount}" th:text="${#numbers.sequence(1,cart.cart_amount)}"></option>-->
+                    <!--                    <option name = "cart_amount" th:value="${cart.cart_amount}" th:text="${#numbers.sequence(1,cart.cart_amount)}"></option>-->
                 </select>
-                </div>
+            </div>
         </div>
         <div style="padding-bottom: 20px" id = "price">
             <div id = "p_price" style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}+' 원'">상품 가격</span><input readonly="readonly" style="border: none"  type="text" th:id ="|span${in.index}|" th:value="' X '+${cart.cart_amount}"/></div>
@@ -47,63 +47,63 @@
 <input type="button" id = "cartBuy" value="주문 하기" onclick ="cartBuy()"/>
 <script type="text/javascript" th:inline="javascript">
 
-var oncha = function (obj) {
-    var index = $(obj).data("index");
-    var price = $(obj).data("price");
-    var po_price = $(obj).data("po_price");
-    console.log(price);
-    console.log(po_price);
+    var oncha = function (obj) {
+        var index = $(obj).data("index");
+        var price = $(obj).data("price");
+        var po_price = $(obj).data("po_price");
+        console.log(price);
+        console.log(po_price);
 
         var target = document.getElementById("name" + index);
         var val = target.options[target.selectedIndex].value;
         // 옵션 value 값
         $('#test'+index)
             .attr('value', val*(price+po_price));
-    $('#span'+index)
-        .attr('value', ' X '+val);
-}
-
-var cartdelete = function(obj){
-    var cart_no = $(obj).data("cart_no");
-
-    if(confirm("정말로 삭제하시겠습니까?")) {
-        $.ajax({
-            type: 'post',
-            url: '/payment/cart/delete/' + cart_no,
-            data: 'json',
-            error: function (error) {
-                console.error("Error!");
-            },
-            success: function (data) {
-                console.log("success!");
-                window.location.reload(true);
-
-
-            },
-            complete: function () {
-                console.log("complete!");
-            }
-        });
+        $('#span'+index)
+            .attr('value', ' X '+val);
     }
-};
 
-// $( '#cart_quantity' ).change(function() {
-//
-// var cart = /*[[${map.cart}]]*/;
-// $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
-//
-//         console.log("hello world---------");
-//         var amount = $(obj).val();
-//         $('#p_price').remove()
-//         $('#price').append('<div id = \"p_price\" style=\"border-top: 1px solid #d1d1d5; padding: 5px\"><span>상품 가격:</span> <span th:text='+cart.p_price+"x"+amount+">상품 가격</span></div>\n');
-//         console.log($('#p_price').text());
-//         console.log("amount: " +amount);
-//
-//
-//
-//
-// })
-// });
+    var cartdelete = function(obj){
+        var cart_no = $(obj).data("cart_no");
+
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            $.ajax({
+                type: 'post',
+                url: '/payment/cart/delete/' + cart_no,
+                data: 'json',
+                error: function (error) {
+                    console.error("Error!");
+                },
+                success: function (data) {
+                    console.log("success!");
+                    window.location.reload(true);
+
+
+                },
+                complete: function () {
+                    console.log("complete!");
+                }
+            });
+        }
+    };
+
+    // $( '#cart_quantity' ).change(function() {
+    //
+    // var cart = /*[[${map.cart}]]*/;
+    // $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
+    //
+    //         console.log("hello world---------");
+    //         var amount = $(obj).val();
+    //         $('#p_price').remove()
+    //         $('#price').append('<div id = \"p_price\" style=\"border-top: 1px solid #d1d1d5; padding: 5px\"><span>상품 가격:</span> <span th:text='+cart.p_price+"x"+amount+">상품 가격</span></div>\n');
+    //         console.log($('#p_price').text());
+    //         console.log("amount: " +amount);
+    //
+    //
+    //
+    //
+    // })
+    // });
 
     var cartBuy = function(){
 
@@ -127,18 +127,18 @@ var cartdelete = function(obj){
 
 
         // $.each($('input[name="cart_no"]:checked'), function(index,obj){
-    //     console.log($(obj).val());
-    //     $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
-    //     cart_number.push($(obj).val());
-    //     cart_amount.push($("#name" + index + " option:selected").val());
-    //
-    // });
-    //
-    //
-    // $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
-    //     console.log($(obj).val());
-    //     cart_amount.push($(obj).val());
-    // });
+        //     console.log($(obj).val());
+        //     $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
+        //     cart_number.push($(obj).val());
+        //     cart_amount.push($("#name" + index + " option:selected").val());
+        //
+        // });
+        //
+        //
+        // $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
+        //     console.log($(obj).val());
+        //     cart_amount.push($(obj).val());
+        // });
         console.log(cart_amount);
 
         $.ajax({
@@ -162,31 +162,31 @@ var cartdelete = function(obj){
         });
 
 
-    // var cart = /*[[${map.cart}]]*/;
-    // var total =/*[[${map.total}]]*/;
+        // var cart = /*[[${map.cart}]]*/;
+        // var total =/*[[${map.total}]]*/;
+        // console.log(cart);
+        // var map = {cart:cart, total:total};
+        // $.ajax({
+        //     url : '/payment/cartBuy/',
+        //     type : 'get',
+        //     contentType: "application/json",
+        //     data : JSON.stringify(map),
+        //
+        //     error : function(error){
+        //         console.log("something wrong");
+        //
+        //     },
+        //     success : function(){
+        //         alert("결제페이지로 이동합니다.");
+        //
+        //     }
+        // })
+
+
+    };
+
     // console.log(cart);
-    // var map = {cart:cart, total:total};
-    // $.ajax({
-    //     url : '/payment/cartBuy/',
-    //     type : 'get',
-    //     contentType: "application/json",
-    //     data : JSON.stringify(map),
-    //
-    //     error : function(error){
-    //         console.log("something wrong");
-    //
-    //     },
-    //     success : function(){
-    //         alert("결제페이지로 이동합니다.");
-    //
-    //     }
-    // })
-
-
-};
-
-// console.log(cart);
-// console.log(total);
+    // console.log(total);
 
 </script>
 </body>
