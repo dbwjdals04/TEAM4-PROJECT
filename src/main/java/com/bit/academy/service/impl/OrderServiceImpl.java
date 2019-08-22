@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderSerivce {
     private OrderMapper orderMapper;
 
     @Override
-    public List<Map<String, Object>> selectAllOrderData() {
+    public List<OrderinfoVO> selectAllOrderData() {
         return this.orderMapper.selectAllOrderData();
     }
 
