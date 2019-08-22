@@ -2,6 +2,7 @@ package com.bit.academy.service;
 
 import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.MemberVO;
+import com.bit.academy.model.OrderAfterVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -68,4 +69,7 @@ public interface MemberService {
     void logOut(HttpServletRequest request);
 
     void modify(MemberVO memberVO);
+
+    List<OrderAfterVO> myOrderData(int m_no);
+
 }

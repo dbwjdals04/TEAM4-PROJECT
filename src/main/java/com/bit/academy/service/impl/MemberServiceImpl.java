@@ -3,6 +3,7 @@ package com.bit.academy.service.impl;
 import com.bit.academy.mapper.MemberMapper;
 import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.MemberVO;
+import com.bit.academy.model.OrderAfterVO;
 import com.bit.academy.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,5 +176,9 @@ public class MemberServiceImpl implements MemberService {
         this.memberMapper.modifyMember(memberVO);
     }
 
+    @Override
+    public List<OrderAfterVO> myOrderData(int m_no) {
 
+        return this.memberMapper.myOrderData(m_no);
+    }
 }
