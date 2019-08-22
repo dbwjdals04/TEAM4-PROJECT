@@ -1,12 +1,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" dir = "ltr">
-<head>
-    <link href="/static/css/style.css" rel="stylesheet">
+<head th:include="include/import::import">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
 </head>
 <body>
+<div style="margin-bottom: 100px" th:include="include/nav::nav"></div>
 <form name = "myPage" id = "myPage"
       class ="myPage" method="post" style = "width:600px" >
 
@@ -164,13 +164,8 @@
         });
     }
 
-
-
-
-
-
-
 </script>
+<script th:include="include/script::script"/>
 </body>
 </html>
 
