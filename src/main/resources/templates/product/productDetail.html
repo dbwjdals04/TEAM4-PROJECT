@@ -64,7 +64,8 @@
 
     var cam = /*[[${session.member}]]*/;
     console.log(cam);
-
+    var a = /*[[${map.product}]]*/;
+    console.log(a.p_id);
     var buy = function(obj){
         if(cam!=null) {
             var p_id = $(obj).data("p_id");
@@ -113,8 +114,11 @@
         }
     }
 
+
     var goCart = function(obj){
+
         if(cam!=null){
+
             var po_id = parseInt($.trim(($("#po_id option:selected").val())));
             var cart_amount = parseInt($.trim(($("#cart_amount option:selected").val())));
             var p_id = $(obj).data("p_id");
@@ -137,8 +141,12 @@
                 data : ojb,
                 dataType : 'json',
                 success : function(data){
-                    console.log(data);
-                    alert("회원님의 장바구니에 담겼습니다!");
+                    if(data==1){
+                        alert("회원님의 장바구니에 담겼습니다!");
+                    }
+                    else{
+                        alert("이미 담긴 제품입니다. 장바구니를 확인 해 주세요.")
+                    }
                 },
                 error : function(error){
                     console.log(error);
@@ -157,6 +165,5 @@
 
 
 </script>
-<script th:include="include/script::script"/>
 </body>
 </html>

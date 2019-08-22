@@ -28,6 +28,12 @@
     </select>
 
 <!--카트담기-->
+    <select id ="cartOverlap" parameterType="String" resultType="com.bit.academy.model.CartVO">
+        SELECT *
+        FROM  cart
+        WHERE m_no = ${m_no}
+        AND p_id =${p_id}
+    </select>
     <insert id = "goCart">
         INSERT INTO cart (po_id, cart_amount, p_id, m_no)
         VALUES
@@ -35,6 +41,8 @@
             ${type}
         </foreach>
     </insert>
+
+<!--    카트에서 상품삭제-->
     <delete id="deleteCart" parameterType="int">
         DELETE FROM cart WHERE cart_no = #{cart_no}
     </delete>

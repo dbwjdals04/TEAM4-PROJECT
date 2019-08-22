@@ -45,6 +45,8 @@ public interface PaymentMapper {
 
     //장바구니 구매하기
     CartVO cartBuy(int cart_no);
+    //장바구니 중복체크
+    CartVO cartOverlap(int p_id, int m_no);
 
     //구매이후 오더데이터 생성
     OrderVO orderData(OrderVO orderVO);
