@@ -12,8 +12,8 @@
     </select>
 
     <insert id="insertOrderData" parameterType="com.bit.academy.model.OrderDataVO">
-        insert into order_data(o_no, po_id, o_amount, od_price) values (
-        (SELECT IFNULL(max(o_no),1)FROM orderinfo), #{po_id}, #{o_amount}, #{od_price}
+        insert into order_data(o_no, po_id, od_amount, od_price) values (
+        (SELECT IFNULL(max(o_no),1)FROM orderinfo), #{po_id}, #{od_amount}, #{od_price}
         )
     </insert>
 
@@ -22,10 +22,23 @@
         value (#{m_no}, #{o_price}, now(), #{o_postcode}, #{o_name}, #{o_number}, #{o_detailAddress}, #{o_roadAddress})
     </insert>
 
-    <select id="selectOrderData" parameterType="int" resultType="Map">
-        select * from order_data as od
-        join (select * from orderinfo where o_no=(select max(o_no) from orderinfo where m_no=#{m_no})) as oi
-        on od.o_no = oi.o_no;
+<!--    <select id="selectOrderData" parameterType="int" resultType="com.bit.academy.model.OrderAfterVO">-->
+<!--        select po_id, od_amount, od_price from order_data as od-->
+<!--        join (select * from orderinfo where o_no=(select max(o_no) from orderinfo where m_no=#{m_no})) as oi-->
+<!--        on od.o_no = oi.o_no;-->
+<!--    </select>-->
+    <select id="selectOrderData" parameterType="int" resultType="com.bit.academy.model.OrderDataVO">
+        select * from order_data where o_no = (select max(o_no) from orderinfo where m_no = #{m_no});
     </select>
 
+    <select id="selectOrderInfo" parameterType="int" resultType="com.bit.academy.model.OrderinfoVO">
+        select * from orderinfo where o_no = (select max(o_no) from orderinfo where m_no = #{m_no});
+    </select>
+
+<!--    <select id="selectProductData" parameterType="int" resultType="Map">-->
+<!--        select * from product as p join product_option as po on p.p_id = po.p_id  where po.po_id = #{po_id};-->
+<!--    </select>-->
+    <select id="selectProductData"  parameterType="int" resultType="Map">
+        select * from product as p join product_option as po on p.p_id = po.p_id  join (select * from order_data where o_no = #{o_no}) as od on po.po_id = od.po_id;
+    </select>
 </mapper>

@@ -80,7 +80,7 @@ $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
         console.log("hello world---------");
         var amount = $(obj).val();
         $('#p_price').remove()
-        $('#price').append('<div id = \"p_price\" style=\"border-top: 1px solid #d1d1d5; padding: 5px\"><span>상품 가격:</span> <span th:text='+cart.p_price+"x"+amount+">상품 가격</span></div>\n');
+        $('#price').append('<div id = \"p_price\" style=\"border-top: 1px solid #d1d1d5; padding: 5px\"><span>상품 가격:</span> <span th:text='+cart.p_price+'x'+amount+'">상품 가격</span></div>\n');
         console.log($('#p_price').text());
         console.log("amount: " +amount);
 
@@ -128,31 +128,31 @@ $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
             }
         });
 
-    // $('#cartForm')
-    //     .attr('action','/payment/cartBuy/')
-    //     .attr('method','post')
-    //     .submit();
+    $('#cartForm')
+        .attr('action','/payment/cartBuy/')
+        .attr('method','post')
+        .submit();
 
 
-    // var cart = /*[[${map.cart}]]*/;
-    // var total =/*[[${map.total}]]*/;
-    // console.log(cart);
-    // var map = {cart:cart, total:total};
-    // $.ajax({
-    //     url : '/payment/cartBuy/',
-    //     type : 'get',
-    //     contentType: "application/json",
-    //     data : JSON.stringify(map),
-    //
-    //     error : function(error){
-    //         console.log("something wrong");
-    //
-    //     },
-    //     success : function(){
-    //         alert("결제페이지로 이동합니다.");
-    //
-    //     }
-    // })
+    var cart = /*[[${map.cart}]]*/;
+    var total =/*[[${map.total}]]*/;
+    console.log(cart);
+    var map = {cart:cart, total:total};
+    $.ajax({
+        url : '/payment/cartBuy/',
+        type : 'get',
+        contentType: "application/json",
+        data : JSON.stringify(map),
+
+        error : function(error){
+            console.log("something wrong");
+
+        },
+        success : function(){
+            alert("결제페이지로 이동합니다.");
+
+        }
+    })
 
 };
 
@@ -160,6 +160,5 @@ $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
 // console.log(total);
 
 </script>
-<script th:include="include/script::script"/>
 </body>
 </html>

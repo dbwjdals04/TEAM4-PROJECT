@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class OrderinfoVO {
+    private int o_no;
     private int m_no;
     private int o_price;
     private int o_cancel;

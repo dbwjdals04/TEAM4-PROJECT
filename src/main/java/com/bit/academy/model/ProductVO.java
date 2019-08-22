@@ -17,6 +17,12 @@ public class ProductVO {
     private String detailimg_name;
     private String detailimg_route;
 
+    //option
+    private int po_id;
+    private String po_value;
+    private int po_price;
+    private int po_stock;
+
 
 
     public int getP_id() {
