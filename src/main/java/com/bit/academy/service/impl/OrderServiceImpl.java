@@ -24,11 +24,20 @@ public class OrderServiceImpl implements OrderSerivce {
     private OrderMapper orderMapper;
 
     @Override
+    public List<Map<String, Object>> selectAllOrderData() {
+        return this.orderMapper.selectAllOrderData();
+    }
+
+    @Override
     public void insertOrder(List<OrderDataVO> list, OrderinfoVO orderinfoVO) {
         this.orderMapper.insertOrderInfo(orderinfoVO);
         for(OrderDataVO orderDataVO : list){
             this.orderMapper.insertOrderData(orderDataVO);
+            log.debug("############po_id : " + orderDataVO.getPo_id());
+            log.debug("############od_amount : " + orderDataVO.getOd_amount());
+            this.orderMapper.updateStock(orderDataVO.getPo_id(), orderDataVO.getOd_amount());
         }
+
 
     }
 

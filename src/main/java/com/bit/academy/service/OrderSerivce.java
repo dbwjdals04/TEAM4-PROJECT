@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface OrderSerivce {
+    List<Map<String, Object>> selectAllOrderData();
     void insertOrder(List<OrderDataVO> list, OrderinfoVO orderinfoVO);
     Map<String, Object> selectOrderData(int m_no);
 }

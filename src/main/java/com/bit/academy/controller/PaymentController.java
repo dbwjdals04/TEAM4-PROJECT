@@ -166,7 +166,7 @@ public class PaymentController {
     //장바구니에서 결제하기
     @GetMapping("/payment/cartBuy/")
     public String cartBuyGet(){
-        return "payment/payment3";
+        return "payment/payment3_1";
     }
 
     @PostMapping("/payment/cartBuy/")

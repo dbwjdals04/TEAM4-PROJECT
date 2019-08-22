@@ -29,7 +29,7 @@
             <div style="display: none"><span>옵션NO</span> <input style="border: none;" type="text" id="po_id" th:name="|orderDataVOList[${iter.index}].po_id|" readonly="readonly" th:value="${cart.po_id}"/></div>
             <div style="display: none"><span>상품당 가격</span> <input style="border: none;" type="text" th:name="|orderDataVOList[${iter.index}].od_price|" readonly="readonly" th:value="${cart.p_price+cart.po_price}"/></div>
             <div><span>상품이름</span> <input style="border: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${cart.p_name}"/></div>
-            <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" th:name="|orderDataVOList[${iter.index}].o_amount|" readonly="readonly" th:value="${cart.cart_amount}"/>개</div>
+            <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" th:name="|orderDataVOList[${iter.index}].od_amount|" readonly="readonly" th:value="${cart.cart_amount}"/>개</div>
             <div><span>옵션이름</span> <input style="border: none;" type="text" id="po_name" name="po_value" readonly="readonly" th:value="${cart.po_value}"/></div>
             <div><span>상품 가격</span> <input style="border: none;" type="text" id="p_price" name="p_price" readonly="readonly" th:value="${cart.p_price}"/></div>
             <div><span>옵션 가격</span> <input style="border: none;" type="text" id="po_price" name="po_price" readonly="readonly" th:value="${cart.po_price}"/></div>
@@ -60,12 +60,11 @@
 <!--            <div><span>회원이름</span> <input style="border: none;" type="text" id="m_id" name="m_id"  readonly="readonly" th:value="${list[0].m_id}"/></div>-->
 <!--            <div><span>회원이름</span> <input style="border: none;" type="text" id="m_phone" name="m_phone"  readonly="readonly" th:value="${list[0].m_phone}"/></div>-->
         </div>
-        <input type="text" id="sample4_postcode" name="o_postcode" placeholder="우편번호">
+        <input type="text" id="postcode" name="o_postcode" placeholder="우편번호">
         <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-        <input type="text" id="sample4_roadAddress" name="o_roadAddress" placeholder="도로명주소">
+        <input type="text" id="roadAddress" name="o_roadAddress" placeholder="도로명주소">
         <span id="guide" style="color:#999;display:none"></span>
-        <input type="text" id="sample4_detailAddress" name="o_detailAddress" placeholder="상세주소">
-        <input type="text" id="sample4_extraAddress" placeholder="참고항목">
+        <input type="text" id="detailAddress" name="o_detailAddress" placeholder="상세주소">
     </form>
     <table>
         <tbody>
@@ -121,15 +120,15 @@
                     }
 
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById('sample4_postcode').value = data.zonecode;
-                    document.getElementById("sample4_roadAddress").value = roadAddr;
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById("roadAddress").value = roadAddr;
 
-                    // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                    if(roadAddr !== ''){
-                        document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                    } else {
-                        document.getElementById("sample4_extraAddress").value = '';
-                    }
+                    // // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                    // if(roadAddr !== ''){
+                    //     document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                    // } else {
+                    //     document.getElementById("sample4_extraAddress").value = '';
+                    // }
 
                     var guideTextBox = document.getElementById("guide");
                     // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
@@ -156,10 +155,12 @@
             // var amount = $('#amount').val();
             var amount = $('#amount').val();
             console.log("################" +amount);
-            var goods_name = $('#goods_name').val();
-            var m_name = $('#m_name').val();
+            var goods_name = $('#p_name').val();
+            var m_name = $('#o_name').val();
             var m_id = $('#m_id').val();
-            var m_phone = $('#m_phone').val();
+            var m_phone = $('#o_number').val();
+            var buyer_addr = $("#roadAddress").val() + " " + $("#detailAddress").val();
+            var buyer_postcode = $("#postcode").val()
 
             // IMP.request_pay(param, callback) 호출
             IMP.request_pay({ // param
@@ -171,8 +172,8 @@
                 buyer_email: m_id,
                 buyer_name: m_name,
                 buyer_tel: m_phone,
-                buyer_addr: "서울시 종로구 비봉길 1111",
-                buyer_postcode: "00000"
+                buyer_addr: buyer_addr,//"서울시 종로구 비봉길 1111",
+                buyer_postcode: buyer_postcode
             }, function (rsp) { // callback
 
                 if (rsp.success) {
@@ -183,7 +184,10 @@
                     });
                     $('#paymentForm')
                         .attr('method', 'post')
-                        .attr('action', '/payment')
+                        .attr('action', '/order')
+                        .submit();
+                    $("#cartForm").attr('method', 'post')
+                        .attr('action', '/order')
                         .submit();
                 } else {
                     // 결제 실패 시 로직,
