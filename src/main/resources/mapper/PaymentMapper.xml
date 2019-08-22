@@ -14,7 +14,7 @@
         WHERE m_no = #{m_no}
     </select>
     <select id="amountsum" parameterType="Integer" resultType="Integer">
-        select sum(cart_amount)
+        select count(cart_amount)
         from cart
         where m_no=#{m_no};
     </select>

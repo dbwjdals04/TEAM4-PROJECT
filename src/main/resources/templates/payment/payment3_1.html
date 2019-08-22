@@ -26,8 +26,8 @@
             <div style="padding-top: 20px; border-top: 1px solid #d1d1d5"/>
             <div style="float: left"><img th:src="'/uploads/thumbnail/'+${cart.thumb_100}"/></div>
 <!--            <div><span>상품NO</span> <input style="border: none;" type="text" id="cart_no" th:name="|cartVOList[${iter.index}].cart_no|" readonly="readonly" th:value="${cart.cart_no}"/></div>-->
-            <div><span>옵션NO</span> <input style="border: none;" type="text" id="po_id" th:name="|orderDataVOList[${iter.index}].po_id|" readonly="readonly" th:value="${cart.po_id}"/></div>
-            <div><span>상품당 가격</span> <input style="border: none;" type="text" th:name="|orderDataVOList[${iter.index}].od_price|" readonly="readonly" th:value="${cart.p_price+cart.po_price}"/></div>
+            <div style="display: none"><span>옵션NO</span> <input style="border: none;" type="text" id="po_id" th:name="|orderDataVOList[${iter.index}].po_id|" readonly="readonly" th:value="${cart.po_id}"/></div>
+            <div style="display: none"><span>상품당 가격</span> <input style="border: none;" type="text" th:name="|orderDataVOList[${iter.index}].od_price|" readonly="readonly" th:value="${cart.p_price+cart.po_price}"/></div>
             <div><span>상품이름</span> <input style="border: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${cart.p_name}"/></div>
             <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" th:name="|orderDataVOList[${iter.index}].o_amount|" readonly="readonly" th:value="${cart.cart_amount}"/>개</div>
             <div><span>옵션이름</span> <input style="border: none;" type="text" id="po_name" name="po_value" readonly="readonly" th:value="${cart.po_value}"/></div>
