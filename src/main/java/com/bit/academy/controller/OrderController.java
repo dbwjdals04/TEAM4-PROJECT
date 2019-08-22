@@ -28,7 +28,10 @@ public class OrderController {
     }
 
     @PostMapping("/admin/orderList")
-    public String adminOrderList(){
+    public String adminOrderList(Model model){
+        model.addAttribute("orderList", this.orderSerivce.selectAllOrderData());
+        log.debug(this.orderSerivce.selectAllOrderData().toString());
+
         return "admin/OrderList";
     }
 
@@ -42,15 +45,15 @@ public class OrderController {
         model.addAttribute("orderDataList", this.orderSerivce.selectOrderData(orderinfoVO.getM_no()));
         return "payment/test";
     }
-
-    @GetMapping("/order/test")
-    public String test(Model model){
-        Map<String, Object> map = new HashMap<String, Object>();
-        map = this.orderSerivce.selectOrderData(3);
-        model.addAttribute("orderDataList", this.orderSerivce.selectOrderData(3));
-
-        return "payment/test";
-
-    }
+//
+//    @GetMapping("/order/test")
+//    public String test(Model model){
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map = this.orderSerivce.selectOrderData(3);
+//        model.addAttribute("orderDataList", this.orderSerivce.selectOrderData(3));
+//
+//        return "payment/test";
+//
+//    }
 
 }

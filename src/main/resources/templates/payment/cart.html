@@ -28,10 +28,10 @@
             <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
             <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>
             <div>
-                <input type="checkbox" name="cart_no" id="cart_no" th:value="${cart.cart_no}" checked/>
+                <input type="checkbox" name="cart_no" id="cart_no" class ="cartno" th:value="${cart.cart_no}"/>
                 <span>수량</span>
                 <select th:name="|name${in.index}|" th:id ="|name${in.index}|" onchange="oncha(this)"th:attr="data-index=${in.index},data-price=${cart.p_price},data-po_price=${cart.po_price} " >
-                    <option name="cart_amount" id="cart_amount" th:each="i : ${#numbers.sequence(1,cart.po_stock)}" th:value="${i}" th:text="${i}" th:selected="${i==cart.cart_amount}"></option>
+                    <option name="cart_amount" id="cart_amount" th:each="i : ${#numbers.sequence(1,cart.po_stock)}" th:text="${i}" th:selected="${i==cart.cart_amount}"></option>
 <!--                    <option name = "cart_amount" th:value="${cart.cart_amount}" th:text="${#numbers.sequence(1,cart.cart_amount)}"></option>-->
                 </select>
                 </div>
@@ -45,7 +45,6 @@
 </form>
 
 <input type="button" id = "cartBuy" value="주문 하기" onclick ="cartBuy()"/>
-
 <script type="text/javascript" th:inline="javascript">
 
 var oncha = function (obj) {
@@ -79,6 +78,7 @@ var cartdelete = function(obj){
                 console.log("success!");
                 window.location.reload(true);
 
+
             },
             complete: function () {
                 console.log("complete!");
@@ -106,30 +106,42 @@ var cartdelete = function(obj){
 // })
 // });
 
-
-
-
-
-
     var cartBuy = function(){
 
-    var cart_number =[];
+        var cart_number =[];
+        var cart_amount = [];
+
+        $(".cartno").each(
+
+            function(index) {
+
+                if($(this).is(":checked") == true){
+
+//                console.log('checked' + index);
+                    cart_number.push($(this).val());
+                    cart_amount.push($("#name" + index + " option:selected").val());
+                    $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(this).val()+'"/>');
+                }
+
+            })
 
 
-    $.each($('input[name="cart_no"]:checked'), function(index,obj){
-        console.log($(obj).val());
-        $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
-        cart_number.push($(obj).val());
-    });
 
-    console.log(cart_number);
-    var cart_amount = [];
 
-    if($.each($('input[name="cart_no"]')!=null)){
-        $.each($('option[name ="cart_amount"]:selected'), function(index, obj) {
-            console.log($(obj).val());
-            cart_amount.push($(obj).val());
-        });
+        // $.each($('input[name="cart_no"]:checked'), function(index,obj){
+    //     console.log($(obj).val());
+    //     $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
+    //     cart_number.push($(obj).val());
+    //     cart_amount.push($("#name" + index + " option:selected").val());
+    //
+    // });
+    //
+    //
+    // $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
+    //     console.log($(obj).val());
+    //     cart_amount.push($(obj).val());
+    // });
+
         console.log(cart_amount);
     }
     else{

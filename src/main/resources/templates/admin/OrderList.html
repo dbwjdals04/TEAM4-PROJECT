@@ -18,6 +18,51 @@
 
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
+            <table class="table table-bordered table-hover text-center">
+                <thead>
+                <tr>
+
+                    <td>주문일자</td>
+                    <td>주문 회원 id</td>
+                    <td>수량</td>
+                    <td>상품금액</td>
+                </tr>
+                </thead>
+
+
+                <tbody id = "table">
+
+                <tr th:each="member: ${memberList}" onclick="selectMember(this);" th:attr="data-m_no=${member.m_no}">
+                    <td><span th:text="${member.m_no}"></span></td>
+                    <td><span th:text="${member.m_name}"></span></a></td>
+                    <td><span th:text="${member.m_id}"></span></a></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+<!--            <div style="text-align: center; width:100%;">-->
+<!--                <table>-->
+<!--                    <tr>-->
+<!--                        <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> &lt;!&ndash; 첫페이지 &ndash;&gt;-->
+<!--                        <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> &lt;!&ndash;이전페이지&ndash;&gt;-->
+
+<!--                        <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">-->
+<!--                            &lt;!&ndash;현재페이지인 경우&ndash;&gt;<a class="pagebtn blue"  th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>-->
+<!--                            &lt;!&ndash;현재페이가 아닌 경우&ndash;&gt;<a class="pagebtn blue"  th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>-->
+<!--                        </td>-->
+
+<!--                        <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> &lt;!&ndash;다음페이지&ndash;&gt;-->
+<!--                        <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> &lt;!&ndash; 마지막페이지 &ndash;&gt;-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--            </div>-->
+
+<!--            <form name="boardPaging" id="boardPaging" method="post" action="/admin/memberList">-->
+<!--                <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>-->
+<!--                <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>-->
+<!--            </form>-->
+
 
         </div>
     </div>

@@ -15,11 +15,11 @@ import java.util.Map;
 @Repository
 public interface OrderMapper {
 
-    Map<String, Object> selectAllOrderData();
+    List<Map<String, Object>> selectAllOrderData();
     void insertOrderData(OrderDataVO orderDataVO);
     void insertOrderInfo(OrderinfoVO orderinfoVO);
-//    List<OrderAfterVO> selectOrderData(int m_no);
     List<OrderDataVO> selectOrderData(int m_no);
     OrderinfoVO selectOrderInfo(int m_no);
     List<Map<String, Object>> selectProductData(int m_no);
+    void updateStock(int po_id, int od_amount);
 }

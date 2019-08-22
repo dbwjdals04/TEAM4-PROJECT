@@ -4,11 +4,7 @@
 
 <mapper namespace="com.bit.academy.mapper.OrderMapper">
     <select id ="selectAllOrderData" resultType="Map">
-        select o_date, po.po_id, m_no, o_amount, po_price, o_cancel
-        from orderinfo as oi join order_data as od
-        on oi.o_no = od.o_no
-        join product_option as po
-        on od.po_id = po.po_id;
+        select o_date, m_no, od_amount, od_price from orderinfo as oi join order_data as od on oi.o_no = od.o_no;
     </select>
 
     <insert id="insertOrderData" parameterType="com.bit.academy.model.OrderDataVO">
@@ -41,4 +37,8 @@
     <select id="selectProductData"  parameterType="int" resultType="Map">
         select * from product as p join product_option as po on p.p_id = po.p_id  join (select * from order_data where o_no = #{o_no}) as od on po.po_id = od.po_id;
     </select>
+
+    <update id ="updateStock">
+        update product_option set po_stock = po_stock - #{od_amount} where po_id = #{po_id};
+    </update>
 </mapper>
