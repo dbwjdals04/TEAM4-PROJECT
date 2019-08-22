@@ -23,6 +23,7 @@ public class OrderServiceImpl implements OrderSerivce {
     @Autowired
     private OrderMapper orderMapper;
 
+    //admin 주문 관리 페이지 출력
     @Override
     public List<OrderinfoVO> selectAllOrderData() {
         return this.orderMapper.selectAllOrderData();
