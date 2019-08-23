@@ -156,6 +156,29 @@
 
 
 <script type="text/javascript"  th:inline="javascript">
+    var product2 = /*[[${product}]]*/;
+    var length = product2.length;
+    console.log(length);
+    console.log(product2);
+
+    $( document ).ready(function() {
+        $.each(product2,function(i){
+                if(i%3 ==0){
+                    $("#ajaxData").append('<div id = "productRow'+i+'" class = "row"></div>');
+                }
+                var html = "";
+                html += "<div class = col-md-4>";
+                html += '<a href = "/product/Detail/'+product2[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+product2[i].thumb_300+'" style="width: 100%;"></a>';
+                var product = '<td>'+"상품이름 :" + product2[i].p_name + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ product2[i].p_price + '</td>'
+                html += '<div>'+product
+                html += '\</div>'+'</div>';
+
+                $("#productRow"+(i-(i%3))).append(html);
+
+
+        })
+
+    })
 
             var showdata = function(data){
             $("#ajaxData").html("");
@@ -167,7 +190,7 @@
             var html = "";
             html += "<div class = col-md-4>";
                 html += '<a href = "/product/Detail/'+data[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+data[i].thumb_300+'" style="width: 100%;"></a>';
-                var product = '<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'
+                var product = '<td>'+"상품이 :" + data[i].p_name + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'
                 html += '<div>'+product
                     html += '\</div>'+'</div>';
 
@@ -229,7 +252,6 @@
 
             success : function(data){
             $("#siyoung").empty();
-            alert("성공");
             console.log(data);
             showdata(data);
             // $("#imgArea").append('<img src = "'+'/uploads/thumbnail/'+data[i].thumb_100+'">');
@@ -256,7 +278,6 @@
 
             success : function(data){
             $("#ajaxData").empty();
-            alert("성공!");
             console.log(data);
             $("#imgArea").html("");
             showdata(data);
@@ -289,7 +310,6 @@
 
 
             </script>
-            <script th:include="include/script::script"/>
 
 
             </body>

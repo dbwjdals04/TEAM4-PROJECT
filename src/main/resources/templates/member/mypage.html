@@ -75,9 +75,9 @@
 </nav>
 
 
-<div style="margin-top: 150px">
-<input type = "button" value = "내 정보조회" onclick="myInfo()"/>
-<input type = "button" value = "주문조회" onclick = "myOrder()"/>
+<div style="margin-top: 150px;">
+<input type = "button" value = "내 정보조회" onclick="myInfo()" style="width: 300px;"/>
+<input type = "button" value = "주문조회" onclick = "myOrder()" style="width: 300px;"/>
 </div>
 
 
@@ -87,26 +87,27 @@
 
         <tr>
 
-            <td class="pivateck">상품정보</td>
-            <td class="pivateck">옵션정보</td>
-            <td class="titlehead">주문자</td>
+            <td class="right">상품정보</td>
+            <td class="right">옵션정보</td>
+            <td class="right">주문자</td>
             <td class="right">수량</td>
             <td class="right">상품금액</td>
             <td class="right">상태</td>
+            <td class="right">주문내역보기</td>
         </tr>
         </thead>
 
         <tbody>
 
-        <tr th:each="order:${myOrderData}">
-            <td class="left" th:text="${order.p_name}" >상품정보</td>
-            <td class="left" th:text="${order.po_value}" >옵션정보</td>
-            <td class="left" th:text="${order.m_name}" >주문자</td>
-            <td class="left" th:text="${order.od_amount}" >수량</td>
-            <td class="left" th:text="${order.od_price}">상품금액</td>
-            <td class="left" th:text="${order.o_cancel}">상태</td>
-
+        <tr th:each="order:${myOrderData}" >
+                <td class="left" id = "p_name" th:text="${order.p_name}" >상품정보</td>
+                <td class="left" id = "po_value" th:text="${order.po_value}" >옵션정보</td>
+                <td class="left" id = "m_name2" th:text="${order.m_name}" >주문자</td>
+                <td class="left" id = "od_amount"th:text="${order.od_amount}" >수량</td>
+                <td class="left" id = "od_price" th:text="${order.od_price}">상품금액</td>
+                <td class="left" id = "o_cancel" th:text="${order.o_cancel}">상태</td>
         </tr>
+
         </tbody>
     </table>
 
@@ -146,7 +147,10 @@
 
 
 <script type = "text/javascript" th:inline="javascript">
-   var order = /*[[${myOrderData}]]*/;
+
+
+
+        var order = /*[[${myOrderData}]]*/;
      console.log(order);
     console.log(memberk);
 

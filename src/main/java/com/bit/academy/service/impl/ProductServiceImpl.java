@@ -20,6 +20,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductMapper productMapper;
+
+    //모든상품조회
+
+    @Override
+    public List<ProductVO> productMain() {
+        return this.productMapper.productMain();
+    }
+
     //상품검색(카테고리)
     @Override
     public List<ProductVO> productSearchAll(List list) {
