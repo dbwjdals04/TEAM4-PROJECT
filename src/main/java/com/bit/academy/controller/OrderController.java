@@ -1,5 +1,6 @@
 package com.bit.academy.controller;
 
+import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.OrderDataVO;
 import com.bit.academy.model.OrderVO;
 import com.bit.academy.model.OrderinfoVO;
@@ -28,11 +29,17 @@ public class OrderController {
     }
 
     @PostMapping("/admin/orderList")
-    public String adminOrderList(Model model){
-        model.addAttribute("orderList", this.orderSerivce.selectAllOrderData());
-        log.debug(this.orderSerivce.selectAllOrderData().toString());
+    public String adminOrderList(Model model, @ModelAttribute BoardPaging boardPaging){
+        model.addAllAttributes(this.orderSerivce.selectAllOrderData(boardPaging));
 
         return "admin/OrderList";
+    }
+
+    @ResponseBody
+    @PostMapping("/admin/order/{o_no}")
+    public Map<String, Object> adimnOrder( @PathVariable int o_no){
+        this.orderSerivce.selectOrder(o_no);
+        return this.orderSerivce.selectOrder(o_no);
     }
 
     @PostMapping("/order")

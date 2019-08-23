@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -193,10 +195,13 @@ public class MemberController {
 
     //자기정보조회
     @PostMapping("/member/mypage/{m_no}")
-    public String mypage(Model model, @PathVariable int m_no){
-        log.debug("asdasdasdasdasd!!!!!!!!!!!!!");
+    public String mypage(Model model, @PathVariable int m_no, @ModelAttribute BoardPaging boardPaging){
+
         model.addAttribute("member", this.memberService.selectMember(m_no));
-        model.addAttribute("myOrderData",this.memberService.myOrderData(m_no));
+        model.addAttribute("myOrderData", this.memberService.myOrderData(m_no, boardPaging).get("myOrderData"));
+        model.addAttribute("boardPaging", this.memberService.myOrderData(m_no, boardPaging).get("boardPaging"));
+////        model.addAllAttribute(this.memberService.myOrderData(m_no, boardPaging));
+//        model.addAllAttributes(this.memberService.myOrderData(m_no, boardPaging));
         return "member/mypage";
     }
     @PostMapping("/member/mypage/modify/{m_no}")

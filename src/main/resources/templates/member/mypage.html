@@ -4,6 +4,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink " id="mainNav">
@@ -87,24 +88,21 @@
 
         <tr>
 
-            <td class="pivateck">상품정보</td>
-            <td class="pivateck">옵션정보</td>
-            <td class="titlehead">주문자</td>
-            <td class="right">수량</td>
-            <td class="right">상품금액</td>
-            <td class="right">상태</td>
+            <td class="pivateck">주문번호</td>
+            <td class="pivateck">주문 날짜</td>
+            <td class="titlehead">가격</td>
         </tr>
         </thead>
 
         <tbody>
 
-        <tr th:each="order:${myOrderData}">
-            <td class="left" th:text="${order.p_name}" >상품정보</td>
-            <td class="left" th:text="${order.po_value}" >옵션정보</td>
-            <td class="left" th:text="${order.m_name}" >주문자</td>
-            <td class="left" th:text="${order.od_amount}" >수량</td>
-            <td class="left" th:text="${order.od_price}">상품금액</td>
-            <td class="left" th:text="${order.o_cancel}">상태</td>
+        <tr th:each="order:${myOrderData}" onclick="selectOrder(this);" th:attr="data-o_no=${order.o_no}">
+            <td class="left" th:text="${order.o_no}" >주문번호</td>
+            <td class="left" th:text="${order.o_date}" >주문 날짜</td>
+            <td class="left" th:text="${order.o_price}" >가격</td>
+<!--            <td class="left" th:text="${order.od_amount}" >수량</td>-->
+<!--            <td class="left" th:text="${order.od_price}">상품금액</td>-->
+<!--            <td class="left" th:text="${order.o_cancel}">상태</td>-->
 
         </tr>
         </tbody>
@@ -144,11 +142,116 @@
 
 </form>
 
+<div style="text-align: center; width:100%;">
+    <table>
+        <tr>
+            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
+            <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.prevPage}">&lt;</a></td> <!--이전페이지-->
+
+            <td th:each="page:${boardPaging.pageRange}" style="text-align:center;">
+                <!--현재페이지인 경우--><a class="pagebtn blue"  th:if="${ boardPaging.currentPage eq page }" style="font-weight: bold; font-size: 20px;" href="#" th:text="${page}">00</a>
+                <!--현재페이가 아닌 경우--><a class="pagebtn blue"  th:if="${ boardPaging.currentPage ne page }" href="#" onclick="goPage(this);" th:attr="data-page=${page}" th:text="${page}">00</a>
+            </td>
+
+            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.nextPage}">&gt;</a></td> <!--다음페이지-->
+            <td style="text-align:center;"><a class="pagebtn blue"  href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.lastPage}">&gt;&gt;</a></td> <!-- 마지막페이지 -->
+        </tr>
+    </table>
+</div>
+
+<form name="boardPaging" id="boardPaging" method="post" action="/admin/orderList">
+    <input type="hidden" name="currentPage" id="currentPage" th:value="${boardPaging.currentPage}"/>
+    <input type="hidden" name="articleCount" id="articleCount" th:value="${boardPaging.articleCount}"/>
+</form>
+
+<div id = "OrderModal" class="modal" style="display: none;">
+
+    <div class="modal-content">
+        <span class="close col-md-1" onclick="document.getElementById('OrderModal').style.display='none'">&times;</span>
+        <div style="height: 300px; overflow: scroll;">
+            <table class="table table-bordered table-hover text-center">
+                <tbody id = "product-table">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <table class="table table-bordered table-hover text-center">
+                <tbody id = "order-table">
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
 
 <script type = "text/javascript" th:inline="javascript">
    var order = /*[[${myOrderData}]]*/;
      console.log(order);
     console.log(memberk);
+   var currentPage = /*[[${boardPaging.currentPage}]]*/;
+   var modal = document.getElementById("OrderModal");
+
+   var goPage = function(p){
+       var page = $(p).data('page');
+
+       console.log(page);
+
+       if(page>0){
+           $('#currentPage').val(page);
+           $('#boardPaging').submit();
+       }
+
+   };
+
+
+   var selectOrder = function(obj){
+       var o_no = $(obj).data('o_no');
+
+       console.log(o_no);
+
+       $.ajax({
+           url: '/admin/order/'+o_no,
+           type: 'post',
+           data: {
+               // data1:'abcd', data2:'bdee' // for test
+           },
+           dataType: 'json',
+           success : function(data) {
+               // 성공 시 동작
+               console.log('성공');
+               console.log(data);
+               $("#product-table").empty();
+               $.each(data.product, function(index, obj){
+                   $("#product-table").append('<tr><td rowspan="5"><img src="/uploads/thumbnail/'+obj.thumb_100+'" style="max-width: 100%;"/></td></tr>'+
+                       '<tr><td>제품명</td><td>'+obj.p_name+'</td></tr>'+
+                       '<tr><td>옵션</td><td>'+obj.po_value+'</td></tr>'+
+                       '<tr><td>구매 수량</td><td>'+obj.od_amount+'</td></tr>'+
+                       '<tr><td>가격</td><td>'+obj.od_price+'</td></tr>');
+               });
+               $("#order-table").empty();
+               $("#order-table").append('<tr><td>회원명</td><td>' + data.orderInfo[0].m_name + '</td></tr>');
+               $("#order-table").append('<tr><td>주문자 성명</td><td>' + data.orderInfo[0].o_name + '</td></tr>');
+               $("#order-table").append('<tr><td>주문자 연락처</td><td>' + data.orderInfo[0].o_number + '</td></tr>');
+               $("#order-table").append('<tr><td>주문자 주소</td><td> (' + data.orderInfo[0].o_postcode + ')'+data.orderInfo[0].o_roadAddress +' '+ data.orderInfo[0].o_detailAddress +'</td></tr>');
+               $("#order-table").append('<tr><td>주문 가격</td><td>' + (data.orderInfo[0].o_price+2500) + '</td></tr>');
+
+               modal.style.display = "block";
+
+           },
+           error: function(error) {
+               // 실패 시 동작
+               console.error('실패');
+               console.error(error);
+           },
+           complete: function(response) {
+               // 성공하든 실패하든 항상 할 동작
+               console.log('수행 요청이 완료되었습니다.');
+           }
+       });
+   };
 
     var myInfo = function(){
         $('#myOrder')

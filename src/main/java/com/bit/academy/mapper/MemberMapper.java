@@ -3,6 +3,7 @@ package com.bit.academy.mapper;
 import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.MemberVO;
 import com.bit.academy.model.OrderAfterVO;
+import com.bit.academy.model.OrderinfoVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -64,8 +65,9 @@ public interface MemberMapper {
 
     void modifyMember(MemberVO memberVO);
 
-    List<OrderAfterVO> myOrderData(int m_no);
+    List<OrderinfoVO> myOrderData(int m_no, BoardPaging boardPaging);
 
+    int selectOrderListCount(int m_no);
 
 
 }
