@@ -52,6 +52,20 @@ public class PaymentServiceImpl implements PaymentService{
         this.paymentMapper.goCart(list);
     }
 
+    @Override
+    public int cartOverlap(int p_id, int m_no) {
+        int result = 3;
+        log.debug(String.valueOf(this.paymentMapper.cartOverlap(p_id,m_no)));
+        if(this.paymentMapper.cartOverlap(p_id,m_no)==null){
+                result =1;
+        }
+        else if(this.paymentMapper.cartOverlap(p_id,m_no)!=null){
+                result =0;
+        }
+        log.debug("Service:" + result);
+        return result;
+    }
+
     //장바구니 삭제
     @Override
     public  void deleteCart(int cart_no){ this.paymentMapper.deleteCart(cart_no);}

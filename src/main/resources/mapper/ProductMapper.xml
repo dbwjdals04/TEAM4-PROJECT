@@ -3,6 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bit.academy.mapper.ProductMapper">
+<!--    모든상품조회(기본화면)-->
+    <select id = "productMain" resultType="com.bit.academy.model.ProductVO">
+        SELECT p_id, p_name, thumb_300,p_price
+        FROM product p
+    </select>
 <!--    카테고리별 조회(현대적인, 따듯한, 구제)-->
     <select id = "productSearchAll" resultType="com.bit.academy.model.ProductVO">
     SELECT *

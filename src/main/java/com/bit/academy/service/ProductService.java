@@ -10,6 +10,12 @@ import java.util.Map;
 public interface ProductService {
 
     /**
+     * 모든상품검색(기본화면)
+     */
+    List<ProductVO> productMain();
+
+
+    /**
      * 상품검색(카테고리)
      */
     List<ProductVO> productSearchAll(List list);

@@ -3,6 +3,7 @@ package com.bit.academy.controller;
 import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.BoardVO;
 import com.bit.academy.service.BoardService;
+import com.bit.academy.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private ProductService productService;
 
 
 //    @RequestMapping(value = "/board/insert", method = RequestMethod.GET)
@@ -126,7 +129,9 @@ public class BoardController {
     }
 
     @GetMapping("/main/index")
-    public String index(){
+    public String index(Model model) {
+        model.addAttribute("product",this.productService.productMain());
+        log.debug(String.valueOf(this.productService.productMain()));
         return "main/index";
     }
 

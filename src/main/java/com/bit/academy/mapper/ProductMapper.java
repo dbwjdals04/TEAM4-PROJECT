@@ -21,6 +21,12 @@ public interface ProductMapper {
      */
     List<ProductVO> productSearchAll(List c_no);
 
+    /**
+     * 상품메인화면 기본
+     *
+     */
+    List<ProductVO> productMain();
+
 
     /**
      * 상품 갯수 조회

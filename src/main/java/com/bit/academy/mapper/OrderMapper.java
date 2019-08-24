@@ -15,7 +15,7 @@ import java.util.Map;
 @Repository
 public interface OrderMapper {
 
-    List<Map<String, Object>> selectAllOrderData();
+    List<OrderinfoVO> selectAllOrderData();
     void insertOrderData(OrderDataVO orderDataVO);
     void insertOrderInfo(OrderinfoVO orderinfoVO);
     List<OrderDataVO> selectOrderData(int m_no);

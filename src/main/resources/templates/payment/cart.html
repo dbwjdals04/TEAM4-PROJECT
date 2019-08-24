@@ -46,6 +46,7 @@
 
 <input type="button" id = "cartBuy" value="주문 하기" onclick ="cartBuy()"/>
 <script type="text/javascript" th:inline="javascript">
+    var memberk = /*[[${session.member}]]*/;
 
     var oncha = function (obj) {
         var index = $(obj).data("index");
@@ -109,81 +110,89 @@
 
         var cart_number =[];
         var cart_amount = [];
-
+        var result = 0;
         $(".cartno").each(
 
             function(index) {
 
                 if($(this).is(":checked") == true){
-
+                    result += 1;
 //                console.log('checked' + index);
                     cart_number.push($(this).val());
                     cart_amount.push($("#name" + index + " option:selected").val());
                     $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(this).val()+'"/>');
                 }
+                else{
+                    result += 0;
+                }
+
 
             })
 
-
-
-        // $.each($('input[name="cart_no"]:checked'), function(index,obj){
-        //     console.log($(obj).val());
-        //     $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
-        //     cart_number.push($(obj).val());
-        //     cart_amount.push($("#name" + index + " option:selected").val());
-        //
-        // });
-        //
-        //
-        // $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
-        //     console.log($(obj).val());
-        //     cart_amount.push($(obj).val());
-        // });
         console.log(cart_amount);
-
-        $.ajax({
-            type: 'post',
-            url: '/payment/cartAmount',
-            data: {"cart_number":cart_number, "cart_amount":cart_amount},
-            error: function (error) {
-                console.error("Error!");
-            },
-            success: function (data) {
-                console.log("success!");
-                console.log(data);
-            },
-            complete: function () {
-                console.log("complete!");
-                $('#cartForm')
-                    .attr('action','/payment/cartBuy/')
-                    .attr('method','post')
-                    .submit();
-            }
-        });
-
-
-        // var cart = /*[[${map.cart}]]*/;
-        // var total =/*[[${map.total}]]*/;
-        // console.log(cart);
-        // var map = {cart:cart, total:total};
-        // $.ajax({
-        //     url : '/payment/cartBuy/',
-        //     type : 'get',
-        //     contentType: "application/json",
-        //     data : JSON.stringify(map),
-        //
-        //     error : function(error){
-        //         console.log("something wrong");
-        //
-        //     },
-        //     success : function(){
-        //         alert("결제페이지로 이동합니다.");
-        //
-        //     }
-        // })
-
+        if(result >= 1){
+            $.ajax({
+                type: 'post',
+                url: '/payment/cartAmount',
+                data: {"cart_number":cart_number, "cart_amount":cart_amount},
+                error: function (error) {
+                    console.error("Error!");
+                },
+                success: function (data) {
+                    console.log("success!");
+                    console.log(data);
+                },
+                complete: function () {
+                    console.log("complete!");
+                    $('#cartForm')
+                        .attr('action','/payment/cartBuy/')
+                        .attr('method','post')
+                        .submit();
+                }
+            });
+        }
+        else if(result ==0){
+            alert("구매하실 상품을 선택해주세요!");
+        }
 
     };
+
+
+    // $.each($('input[name="cart_no"]:checked'), function(index,obj){
+    //     console.log($(obj).val());
+    //     $('#cartForm').append('<input type="hidden" name="cart_no_arr" value="'+$(obj).val()+'"/>');
+    //     cart_number.push($(obj).val());
+    //     cart_amount.push($("#name" + index + " option:selected").val());
+    //
+    // });
+    //
+    //
+    // $.each($('option[name ="cart_amount"]:checked'), function(index, obj) {
+    //     console.log($(obj).val());
+    //     cart_amount.push($(obj).val());
+    // });
+
+
+    // var cart = /*[[${map.cart}]]*/;
+    // var total =/*[[${map.total}]]*/;
+    // console.log(cart);
+    // var map = {cart:cart, total:total};
+    // $.ajax({
+    //     url : '/payment/cartBuy/',
+    //     type : 'get',
+    //     contentType: "application/json",
+    //     data : JSON.stringify(map),
+    //
+    //     error : function(error){
+    //         console.log("something wrong");
+    //
+    //     },
+    //     success : function(){
+    //         alert("결제페이지로 이동합니다.");
+    //
+    //     }
+    // })
+
 
     // console.log(cart);
     // console.log(total);

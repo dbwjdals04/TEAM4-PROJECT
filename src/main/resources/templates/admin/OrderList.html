@@ -21,21 +21,21 @@
             <table class="table table-bordered table-hover text-center">
                 <thead>
                 <tr>
-
+                    <td>주문번호</td>
                     <td>주문일자</td>
-                    <td>주문 회원 id</td>
-                    <td>수량</td>
-                    <td>상품금액</td>
+                    <td>회원 id</td>
+                    <td>주문금액</td>
                 </tr>
                 </thead>
 
 
                 <tbody id = "table">
-
-                <tr th:each="member: ${memberList}" onclick="selectMember(this);" th:attr="data-m_no=${member.m_no}">
-                    <td><span th:text="${member.m_no}"></span></td>
-                    <td><span th:text="${member.m_name}"></span></a></td>
-                    <td><span th:text="${member.m_id}"></span></a></td>
+                <tr th:each="order: ${orderList}">
+<!--                <tr th:each="order: ${orderList}" onclick="selectMember(this);" th:attr="data-m_no=${member.m_no}">-->
+                    <td><span th:text="${order.o_no}"></span></td>
+                    <td><span th:text="${order.o_date}"></span></td>
+                    <td><span th:text="${order.m_no}"></span></td>
+                    <td><span th:text="${order.o_price}"></span></a></td>
                 </tr>
 
                 </tbody>
