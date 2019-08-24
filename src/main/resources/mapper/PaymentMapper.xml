@@ -7,11 +7,11 @@
 
     <select id="cartview" parameterType="Integer" resultType="com.bit.academy.model.CartVO">
         SELECT
-            c.cart_no, c.m_no, c.p_id, c.cart_amount, c.po_id, p.thumb_300, p.p_name, p.p_price, po.po_value, po.po_price, po.po_stock
+             c.cart_no, c.m_no, c.p_id, c.cart_amount, c.po_id, p.thumb_300, p.p_name, p.p_price, po.po_value, po.po_price, po.po_stock
         FROM cart c
-        join product p on c.p_id = p.p_id
-        join product_option po on p.p_id=po.p_id
-        WHERE m_no = #{m_no}
+         join product p on c.p_id = p.p_id
+         join product_option po on c.po_id = po.po_id
+        WHERE m_no = #{m_no};
     </select>
     <select id="amountsum" parameterType="Integer" resultType="Integer">
         select count(cart_amount)
