@@ -19,5 +19,39 @@
 
 <!-- Custom scripts for this template -->
 <script src="/static/js/agency.min.js"></script>
+<script>
+    $(function(){
+        $(".money").each(function () {
+            var value = $(this).val();
+            console.log(value);
+            $(this).attr('value', comma(uncomma(value))+' 원');
+        })
+    });
+    $(function(){
+        $(".phone").each(function () {
+            var value = $(this).val();
+            console.log(value);
+            $(this).attr('value', hyphen(value));
+        })
+    });
+
+    // 콤마 찍기
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    // 콤마 찍기
+    function hyphen(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{4})+(?!\d))/g, '$1-');
+    }
+
+    // 콤마 풀기
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    }
+</script>
 </body>
 </html>

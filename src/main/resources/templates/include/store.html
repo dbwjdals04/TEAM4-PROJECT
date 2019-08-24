@@ -4,8 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body th:fragment="store">
+<style>
+    a:hover{
+        cursor:pointer;
+    }
+</style>
 <!--카테고리 모던(전체보기, 가구 소품 조명)-->
 <table style="margin: auto" class="store">
     <tr>
@@ -137,8 +143,8 @@
 
             var html = "";
             html += "<div class = col-md-4>";
-            html += '<a href = "/product/Detail/'+data[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+data[i].thumb_300+'"></a>';
-            var product = '<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ data[i].p_price + '</td>'
+            html += '<a href = "/product/Detail/'+data[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+data[i].thumb_300+'" style="width: 100%;"></a>';
+            var product = '<td>'+"상품번호 :" + data[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ comma(data[i].p_price)+' 원' + '</td>'
             html += '<div>'+product
             html += '\</div>'+'</div>';
 
