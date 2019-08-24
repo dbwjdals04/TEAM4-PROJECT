@@ -177,8 +177,24 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<OrderAfterVO> myOrderData(int m_no) {
+    public Map<String, Object> myOrderData(int m_no, BoardPaging boardPaging) {
 
-        return this.memberMapper.myOrderData(m_no);
+        Map<String,Object> map = new HashMap<>();
+
+        /**
+         * 처음 진입한 경우 currentPage 등 초기화 해줍니다.
+         */
+        if(boardPaging.getCurrentPage()==0){
+            boardPaging.setCurrentPage(1); // 1page 부터 조회
+            boardPaging.setArticleCount(10); // 페이지당 게시물 갯수
+        }
+
+        boardPaging.setTotalCount(this.memberMapper.selectOrderListCount(m_no));
+
+        map.put("boardPaging", boardPaging);
+        map.put("myOrderData", this.memberMapper.myOrderData(m_no, boardPaging));
+
+        return map;
+//        return this.memberMapper.myOrderData(m_no, boardPaging);
     }
 }

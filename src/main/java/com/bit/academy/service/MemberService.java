@@ -70,6 +70,6 @@ public interface MemberService {
 
     void modify(MemberVO memberVO);
 
-    List<OrderAfterVO> myOrderData(int m_no);
+    Map<String, Object> myOrderData(int m_no, BoardPaging boardPaging);
 
 }

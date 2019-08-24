@@ -2,10 +2,7 @@ package com.bit.academy.service.impl;
 
 import com.bit.academy.mapper.MemberMapper;
 import com.bit.academy.mapper.OrderMapper;
-import com.bit.academy.model.MemberVO;
-import com.bit.academy.model.OrderAfterVO;
-import com.bit.academy.model.OrderDataVO;
-import com.bit.academy.model.OrderinfoVO;
+import com.bit.academy.model.*;
 import com.bit.academy.service.MemberService;
 import com.bit.academy.service.OrderSerivce;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +22,35 @@ public class OrderServiceImpl implements OrderSerivce {
 
     //admin 주문 관리 페이지 출력
     @Override
-    public List<OrderinfoVO> selectAllOrderData() {
-        return this.orderMapper.selectAllOrderData();
+    public Map<String,Object> selectAllOrderData(BoardPaging boardPaging) {
+        Map<String,Object> map = new HashMap<>();
+
+        /**
+         * 처음 진입한 경우 currentPage 등 초기화 해줍니다.
+         */
+        if(boardPaging.getCurrentPage()==0){
+            boardPaging.setCurrentPage(1); // 1page 부터 조회
+            boardPaging.setArticleCount(10); // 페이지당 게시물 갯수
+        }
+
+        boardPaging.setTotalCount(this.orderMapper.selectAllOrderCount(boardPaging));
+
+        map.put("boardPaging", boardPaging);
+        map.put("orderList", this.orderMapper.selectAllOrderData(boardPaging));
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> selectOrder(int o_no) {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("product", this.orderMapper.selectOrderProduct(o_no));
+        map.put("orderInfo", this.orderMapper.selectOrderData(o_no));
+
+        log.debug(map.toString());
+
+        return map;
     }
 
     @Override

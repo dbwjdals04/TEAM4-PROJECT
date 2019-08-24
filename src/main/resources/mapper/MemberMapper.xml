@@ -96,13 +96,30 @@
         WHERE m_no = #{m_no}
     </update>
 
-    <select id = "myOrderData" parameterType="int" resultType="com.bit.academy.model.OrderAfterVO">
-        SELECT o.o_date,p.thumb_100,p.p_name,po.po_value,m.m_name,od.od_amount,od.od_price,o.o_cancel, p.p_id
-        FROM orderinfo o
-        JOIN member m on o.m_no = m.m_no
-        JOIN order_data od on o.o_no = od.o_no
-        JOIN product_option po on od.po_id = po.po_id
-        JOIN product p on po.p_id = p.p_id
-        WHERE o.m_no = ${m_no}
+<!--    <select id = "myOrderData" resultType="com.bit.academy.model.OrderAfterVO">-->
+<!--        SELECT o.o_date,p.thumb_100,p.p_name,po.po_value,m.m_name,od.od_amount,od.od_price,o.o_cancel,o.o_no-->
+<!--        FROM orderinfo o-->
+<!--        JOIN member m on o.m_no = m.m_no-->
+<!--        JOIN order_data od on o.o_no = od.o_no-->
+<!--        JOIN product_option po on od.po_id = po.po_id-->
+<!--        JOIN product p on po.p_id = p.p_id-->
+<!--        WHERE o.m_no = ${m_no}-->
+<!--        ORDER BY o.o_date ASC-->
+<!--        LIMIT #{boardPaging.limitBegin}, #{boardPaging.articleCount}-->
+<!--    </select>-->
+    <select id ="myOrderData"
+            resultType="com.bit.academy.model.OrderinfoVO">
+        select o_no, o_date, o_price from orderinfo
+        where m_no = #{m_no}
+        ORDER BY o_no ASC
+        LIMIT #{boardPaging.limitBegin}, #{boardPaging.articleCount};
+    </select>
+
+
+    <select id="selectOrderListCount"
+            parameterType="int"
+            resultType="int">
+        select count(1) from orderinfo
+        WHERE m_no = #{m_no}
     </select>
 </mapper>

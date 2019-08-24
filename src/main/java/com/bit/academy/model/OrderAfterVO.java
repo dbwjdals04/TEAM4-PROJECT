@@ -8,6 +8,7 @@ import java.util.Date;
 public class OrderAfterVO {
 
     private String o_date;
+    private int o_no;
     private String thumb_100;
     private String p_name;
     private String po_value;

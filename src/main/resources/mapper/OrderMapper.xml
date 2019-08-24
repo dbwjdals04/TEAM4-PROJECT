@@ -3,8 +3,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bit.academy.mapper.OrderMapper">
-    <select id ="selectAllOrderData" resultType="com.bit.academy.model.OrderinfoVO">
-        select o_no ,o_date, m_no, o_price from orderinfo;
+    <select id ="selectAllOrderData"
+            parameterType="com.bit.academy.model.BoardPaging"
+            resultType="com.bit.academy.model.OrderinfoVO">
+        select o_no ,o_date, m_no, o_price from orderinfo
+        ORDER BY o_no ASC
+        LIMIT #{limitBegin}, #{articleCount};
+    </select>
+
+    <select id="selectAllOrderCount"
+            parameterType="com.bit.academy.model.BoardPaging"
+            resultType="int">
+        select count(1) from orderinfo
+        WHERE 1=1
+    </select>
+
+    <select id="selectOrderProduct"
+            parameterType="int"
+            resultType="Map">
+        select thumb_100, p_name, po_value, od_amount, od_price
+        from product join product_option po on product.p_id = po.p_id
+        join order_data od on po.po_id = od.po_id
+        where o_no =#{o_no};
+    </select>
+
+    <select id="selectOrderData"
+            parameterType="int"
+            resultType="Map">
+        select m_name, o_name, o_number, o_postcode, o_roadAddress, o_detailAddress, o_price
+        from member join orderinfo o on member.m_no = o.m_no
+        where o_no=#{o_no};
     </select>
 <!--    <select id ="selectAllOrderData" resultType="Map">-->
 <!--        select o_date, m_no, od_amount, od_price from orderinfo as oi join order_data as od on oi.o_no = od.o_no;-->
@@ -21,14 +49,10 @@
         value (#{m_no}, #{o_price}, now(), #{o_postcode}, #{o_name}, #{o_number}, #{o_detailAddress}, #{o_roadAddress})
     </insert>
 
-<!--    <select id="selectOrderData" parameterType="int" resultType="com.bit.academy.model.OrderAfterVO">-->
-<!--        select po_id, od_amount, od_price from order_data as od-->
-<!--        join (select * from orderinfo where o_no=(select max(o_no) from orderinfo where m_no=#{m_no})) as oi-->
-<!--        on od.o_no = oi.o_no;-->
+
+<!--    <select id="selectOrderData" parameterType="int" resultType="com.bit.academy.model.OrderDataVO">-->
+<!--        select * from order_data where o_no = (select max(o_no) from orderinfo where m_no = #{m_no});-->
 <!--    </select>-->
-    <select id="selectOrderData" parameterType="int" resultType="com.bit.academy.model.OrderDataVO">
-        select * from order_data where o_no = (select max(o_no) from orderinfo where m_no = #{m_no});
-    </select>
 
     <select id="selectOrderInfo" parameterType="int" resultType="com.bit.academy.model.OrderinfoVO">
         select * from orderinfo where o_no = (select max(o_no) from orderinfo where m_no = #{m_no});
