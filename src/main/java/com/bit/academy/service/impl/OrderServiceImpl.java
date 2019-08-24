@@ -20,6 +20,7 @@ public class OrderServiceImpl implements OrderSerivce {
     @Autowired
     private OrderMapper orderMapper;
 
+    //admin 주문 관리 페이지 출력
     @Override
     public Map<String,Object> selectAllOrderData(BoardPaging boardPaging) {
         Map<String,Object> map = new HashMap<>();

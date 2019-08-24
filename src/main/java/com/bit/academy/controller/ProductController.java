@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.ImageProducer;
 import java.util.*;
 
 @Slf4j
@@ -26,9 +27,11 @@ public class ProductController {
     private UploadService uploadService;
 
     @GetMapping("/product/main")
-    public String product(){
+    public String product(Model model) {
+        model.addAttribute("product",this.productService.productMain());
         return "/product/productMain";
     }
+
 
     //상품검색(카테고리)
     @ResponseBody
@@ -67,6 +70,7 @@ public class ProductController {
         log.debug(String.valueOf(currentPage));
 
         List c_noList = Arrays.asList(category_no.split(","));
+        log.debug(String.valueOf(c_noList));
 //        model.addAllAttributes(this.productService.selectProductList(c_noList,currentPage));
 
 //        List<ProductVO> List = this.productService.productSearchAll(c_noList);

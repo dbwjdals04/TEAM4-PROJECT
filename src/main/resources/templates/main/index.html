@@ -412,6 +412,33 @@
     </div>
   </div>
 
+
+  <script type="text/javascript"  th:inline="javascript">
+    var product2 = /*[[${product}]]*/;
+    var length = product2.length;
+    console.log(length);
+    console.log(product2);
+
+    $( document ).ready(function() {
+      $.each(product2,function(i){
+        if(i%3 ==0){
+          $("#ajaxData").append('<div id = "productRow'+i+'" class = "row"></div>');
+        }
+        var html = "";
+        html += "<div class = col-md-4>";
+        html += '<a href = "/product/Detail/'+product2[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+product2[i].thumb_300+'" style="width: 100%;"></a>';
+        var product = '<td>'+"상품번호 :" + product2[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ product2[i].p_price + '</td>'
+        html += '<div>'+product
+        html += '\</div>'+'</div>';
+
+        $("#productRow"+(i-(i%3))).append(html);
+
+
+      })
+
+    })
+  </script>
+
   <!-- Bootstrap core JavaScript -->
   <script src="/static/vendor/jquery/jquery.min.js"></script>
   <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -76,9 +76,9 @@
 </nav>
 
 
-<div style="margin-top: 150px">
-<input type = "button" value = "내 정보조회" onclick="myInfo()"/>
-<input type = "button" value = "주문조회" onclick = "myOrder()"/>
+<div style="margin-top: 150px;">
+<input type = "button" value = "내 정보조회" onclick="myInfo()" style="width: 300px;"/>
+<input type = "button" value = "주문조회" onclick = "myOrder()" style="width: 300px;"/>
 </div>
 
 
@@ -88,6 +88,7 @@
 
         <tr>
 
+
             <td class="pivateck">주문번호</td>
             <td class="pivateck">주문 날짜</td>
             <td class="titlehead">가격</td>
@@ -96,6 +97,7 @@
 
         <tbody>
 
+
         <tr th:each="order:${myOrderData}" onclick="selectOrder(this);" th:attr="data-o_no=${order.o_no}">
             <td class="left" th:text="${order.o_no}" >주문번호</td>
             <td class="left" th:text="${order.o_date}" >주문 날짜</td>
@@ -103,8 +105,8 @@
 <!--            <td class="left" th:text="${order.od_amount}" >수량</td>-->
 <!--            <td class="left" th:text="${order.od_price}">상품금액</td>-->
 <!--            <td class="left" th:text="${order.o_cancel}">상태</td>-->
-
         </tr>
+
         </tbody>
     </table>
 
@@ -188,7 +190,10 @@
 </div>
 
 <script type = "text/javascript" th:inline="javascript">
-   var order = /*[[${myOrderData}]]*/;
+
+
+
+        var order = /*[[${myOrderData}]]*/;
      console.log(order);
     console.log(memberk);
    var currentPage = /*[[${boardPaging.currentPage}]]*/;

@@ -34,6 +34,9 @@
         from member join orderinfo o on member.m_no = o.m_no
         where o_no=#{o_no};
     </select>
+<!--    <select id ="selectAllOrderData" resultType="Map">-->
+<!--        select o_date, m_no, od_amount, od_price from orderinfo as oi join order_data as od on oi.o_no = od.o_no;-->
+<!--    </select>-->
 
     <insert id="insertOrderData" parameterType="com.bit.academy.model.OrderDataVO">
         insert into order_data(o_no, po_id, od_amount, od_price) values (
