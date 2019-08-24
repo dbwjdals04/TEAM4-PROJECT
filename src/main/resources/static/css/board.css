@@ -51,8 +51,8 @@ td.zzz{
     text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 50px;
+    padding-left: 0px;
+    padding-right: 30px;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
@@ -87,6 +87,11 @@ td.page{
 td.lockimg{
     width: 20px;
     padding: 0px;
+}
+td.pno{
+    width: 80px;
+    border-left: 1px solid #ddd;
+    text-align: center;
 }
 
 .boardbtn {
@@ -123,9 +128,19 @@ td.lockimg{
     background-color: black;
     color: white;
 }
+.button:hover{
+    background-color: #5a5c69;
+}
 .button-delete {
     background-color: #be2617;
 }
-.button-modify{
-    background-color: #c69500;
+.button-delete:hover{
+    background-color: #78261f;
 }
+.button-modify{
+    background-color: #f6c23e;
+}
+.button-modify:hover{
+    background-color: #ba8b00;
+}
+

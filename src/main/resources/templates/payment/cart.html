@@ -8,9 +8,6 @@
     <link href="/static/css/board.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        input:focus {outline:none;}
-    </style>
 
 
 </head>
@@ -22,9 +19,9 @@
 <form name="cartForm" id="cartForm" method="get" style="width:600px;">
     <div style="padding: 5px; border-top: 1px solid #d1d1d5; text-align: right"><span>총 개수 : </span><span th:text="${map.amount}"></span></div>
     <div th:each="cart,in:${map.cart}">
-        <div style="height: 321px; padding-top: 20px; border-top: 1px solid #d1d1d5">
-            <div style="float: left; position: relative"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>
-            <div style="float: right"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>
+        <div style="height: 321px; padding-top: 10px; border-top: 1px solid #d1d1d5">
+            <div style="float: left; position: relative; margin-right: 10px"><img th:src="'/uploads/thumbnail/'+${cart.thumb_300}"></img></div>
+            <div style="float: right; padding-right: 10px"><img onclick="cartdelete(this)"th:attr="data-cart_no=${cart.cart_no}" src="/static/img/엑스.png"></div>
             <div style="padding-top: 20px"><span th:text="${cart.p_name}">상품이름</span></div>
             <div><span style="font-size: 12px; color: #6e707e">Option :</span> <span style="font-size: 12px; color: #6e707e" th:text="${cart.po_value}">옵션 이름</span></div>
             <div>
@@ -37,9 +34,12 @@
             </div>
         </div>
         <div style="padding-bottom: 20px" id = "price">
-            <div id = "p_price" style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}+' 원'">상품 가격</span><input readonly="readonly" style="border: none"  type="text" th:id ="|span${in.index}|" th:value="' X '+${cart.cart_amount}"/></div>
-            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <span th:text="${cart.po_price}">옵션 가격</span></div>
-            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <input readonly="readonly" style="border: none" th:id="|test${in.index}|" type="text" th:value="${cart.cart_amount*(cart.p_price+cart.po_price)}"/></div>
+<!--            <div id = "p_price" style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <span th:text="${cart.p_price}+' 원'">상품 가격</span><input readonly="readonly" style="border: none"  type="text" th:id ="|span${in.index}|" th:value="' X '+${cart.cart_amount}"/></div>-->
+<!--            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <span th:text="${cart.po_price}">옵션 가격</span></div>-->
+<!--            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <input readonly="readonly" style="border: none" th:id="|test${in.index}|" type="text" th:value="${cart.cart_amount*(cart.p_price+cart.po_price)}"/></div>-->
+            <div id = "p_price" style="border-top: 1px solid #d1d1d5; padding: 5px"><span>상품 가격:</span> <input class="money" style="border: none; outline:none; width: 80px" readonly="readonly" th:value="${cart.p_price}"/><input readonly="readonly" style="border: none"  type="text" th:id ="|span${in.index}|" th:value="' X '+${cart.cart_amount}"/></div>
+            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>옵션 추가 가격:</span> <input class="money" style="border: none; outline:none;" readonly="readonly" th:value="${cart.po_price}"/></div>
+            <div style="border-bottom: 1px solid #d1d1d5; padding: 5px"><span>총 가격:</span> <input readonly="readonly" class="money" style="border: none; outline:none;" th:id="|test${in.index}|" type="text" th:value="${cart.cart_amount*(cart.p_price+cart.po_price)}"/></div>
         </div>
     </div>
 </form>
@@ -59,7 +59,7 @@
         var val = target.options[target.selectedIndex].value;
         // 옵션 value 값
         $('#test'+index)
-            .attr('value', val*(price+po_price));
+            .attr('value', comma(val*(price+po_price))+' 원');
         $('#span'+index)
             .attr('value', ' X '+val);
     }
@@ -197,6 +197,31 @@
     // console.log(cart);
     // console.log(total);
 
+
+    $(function(){
+        $(".money").each(function () {
+            var value = $(this).val();
+            console.log(value);
+            $(this).attr('value', comma(uncomma(value))+' 원');
+        })
+    });
+
+    // 콤마 찍기
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    // 콤마 풀기
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    }
+    function numberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+
 </script>
+<script th:include="include/script::script"/>
 </body>
 </html>

@@ -37,16 +37,20 @@
         
         var qna_no = /*[[ ${board.qna_no} ]]*/;
         var m_no = /*[[ ${board.m_no} ]]*/;
-        var session_m_no = /*[[${session.member.m_no}]]*/;
+        var session = /*[[${session.member}]]*/
+
         console.log(m_no);
-        console.log(session_m_no);
+
 
         var replyBoard = function () {
-            if(session_m_no==3){
-            $('#viewForm')
-                .attr('action','/board/reply/' + qna_no)
-                .attr('method','get')
-                .submit();}
+            if(session!=null){
+                if(session.m_no==2){
+                $('#viewForm')
+                    .attr('action','/board/reply/' + qna_no)
+                    .attr('method','post')
+                    .submit();
+                }
+            }
             else{
                 alert("권한이 없습니다.");
             }
@@ -54,11 +58,17 @@
         }
 
         var modifyBoard = function(){
-            if(m_no==session_m_no){
-            $('#viewForm')
-                .attr('action','/board/update/' + qna_no)
-                .attr('method','get')
-                .submit();}
+            if(session!=null) {
+                if (m_no == session.m_no) {
+                    $('#viewForm')
+                        .attr('action', '/board/update/' + qna_no)
+                        .attr('method', 'post')
+                        .submit();
+                }
+                else{
+                    alert("작성자와 일치하지 않습니다.");
+                }
+            }
             else{
                 alert("작성자와 일치하지 않습니다.");
             }
@@ -80,7 +90,8 @@
         var passcheck = function(obj) {
             var qna_no = $(obj).data("qna_no");
 
-            if (m_no == session_m_no) {
+            if(session!=null) {
+            if (m_no == session.m_no) {
                 var passwd = prompt("비밀번호를 입력하세요");
 
                 console.log(passwd);
@@ -120,7 +131,9 @@
             else{
                 alert("작성자와 일치하지 않습니다.");
             }
-        }
+        }else{
+            alert("로그인 해주세요.");
+        }}
 
 
         

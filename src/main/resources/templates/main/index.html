@@ -30,90 +30,7 @@
 <body id="page-top">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink " id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="/main/index">INTERIA</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/product/main">STORE</a>
-
-
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href='/board/list'>Q&A</a>
-          </li>
-            <script th:inline="javascript">
-              var memberk = /*[[${session.member}]]*/
-
-                      console.log("세션정보");
-                     function gocart() {
-                        $('#cart')
-                                .attr('method', 'post')
-                                .attr('action', '/payment/cart/'+memberk.m_no)
-                                .submit();
-                      }
-                     function gomypage() {
-                        $('#myPage')
-                                .attr('method','post')
-                                .attr('action','/member/mypage/'+memberk.m_no)
-                                .submit();
-                      }
-
-
-              if(memberk!=null && memberk.m_no!=2){
-                document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
-                        "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
-                        "          </li></form>")
-                document.write("<li class=\"nav-item\" id='logOut'>\n" +
-                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
-                        "            </li>")
-                document.write("<form style=\"margin: 0px\" name=\"mypage\" id=\"myPage\"><li class=\"nav-item\">\n" +
-                        "              <a class=\"nav-link js-scroll-trigger\"  href =\"#\" onclick=\"gomypage()\">MY PAGE</a>\n" +
-                        "            </li></form>")
-              }
-
-              else if(memberk!=null && memberk.m_no==2){
-                document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
-                        "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
-                        "          </li></form>")
-                document.write("<li class=\"nav-item\" id='logOut'>\n" +
-                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
-                        "            </li>");
-                document.write("<li class=\"nav-item\">\n" +
-                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/admin/\">ADMIN PAGE</a>\n" +
-                        "            </li>");
-              }
-              else{
-                document.write("<li class=\"nav-item\">\n" +
-                        "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=carterror()>CART</a>\n" +
-                        "          </li>");
-                document.write("<li class=\"nav-item\">\n" +
-                        "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/login\">LOGIN</a>\n" +
-                        "            </li>\n");
-                document.write("<li class=\"nav-item\">\n" +
-                        "            <a class=\"nav-link js-scroll-trigger\" href=\"/member/regist\">REGIST</a>\n" +
-                        "          </li>");
-
-              }
-
-              function carterror() {
-                alert("로그인 하세요");
-                location.href='/member/login'
-              }
-
-            </script>
-
-
-
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <div style="margin-bottom: 0px" th:include="include/nav::nav"></div>
 
   <!-- Header -->
   <header class="masthead">
@@ -427,7 +344,7 @@
         var html = "";
         html += "<div class = col-md-4>";
         html += '<a href = "/product/Detail/'+product2[i].p_id+'"><img src = "'+"/uploads/thumbnail/"+product2[i].thumb_300+'" style="width: 100%;"></a>';
-        var product = '<td>'+"상품번호 :" + product2[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ product2[i].p_price + '</td>'
+        var product = '<td>'+"상품번호 :" + product2[i].p_id + '<br>'+'</td>'+'<td>'+ "상품가격 :"+ comma(product2[i].p_price)+' 원' + '</td>'
         html += '<div>'+product
         html += '\</div>'+'</div>';
 
@@ -438,20 +355,7 @@
 
     })
   </script>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="/static/vendor/jquery/jquery.min.js"></script>
-  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Plugin JavaScript -->
-  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Contact form JavaScript -->
-  <script src="/static/js/jqBootstrapValidation.js"></script>
-  <script src="/static/js/contact_me.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="/static/js/agency.min.js"></script>
+  <script th:include="include/script::script"/>
   <script type="text/javascript" th:inline="javascript">
 
     var logOut = function(){

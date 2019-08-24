@@ -6,7 +6,7 @@
 </head>
 <body>
 <div style="margin-bottom: 100px" th:include="include/nav::nav"></div>
-    <h1>Board Insert</h1>
+    <h1>수정하기</h1>
 
 
     <form name="updateForm" id="updateForm" method="post"
@@ -20,29 +20,68 @@
             <input type="text" name="m_no" id="m_no" value="1" th:value="${board.m_no}"/>
         </div>
         <div>
-            <span>비밀번호</span>
-            <input type="password" name="qna_passwd" id="qna_passwd" value="" />
-        </div>
-        <div>
             <span>상세</span>
             <textarea name="qna_context" id="qna_context" style="width: 100%; height: 100px;"><th:block th:text="${board.qna_context}"></th:block></textarea>
         </div>
     </form>
 
-    <input type="button" value="수정" onclick="update();"/>
+    <input type="button" value="수정" onclick="passcheck(this)" th:attr="data-qna_no = ${board.qna_no}, data-m_no = ${board.m_no}"/>
 
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
         var update = function(){
-
-            if($.trim($('#qna_passwd').val())==''){
-                alert('비밀번호를 입력해주세요');
-                return;
-            }
 
             $('#updateForm')
                 .attr('action','/board/update')
                 .submit();
         };
+
+        var passcheck = function(obj) {
+            var qna_no = $(obj).data("qna_no");
+            var m_no = $(obj).data("m_no");
+            var session = /*[[${session.member}]]*/
+            if(session!=null){
+
+            if (m_no == session.m_no) {
+                var passwd = prompt("비밀번호를 입력하세요");
+
+                console.log(passwd);
+
+                var param = {qna_no: qna_no, qna_passwd: passwd};
+
+                // ajax
+                $.ajax({
+                    type: 'get',
+                    url: '/board/passck',
+                    data: param,
+                    error: function (error) {
+                        console.error("Error!");
+                    },
+                    success: function (data) {
+                        console.log("success!");
+                        console.log(data);
+                        console.log(data.count);
+
+
+                        if (data.count == 0) {
+                            alert("비밀번호 틀림")
+                            // 비밀번호 틀림
+                        } else {
+                            update();
+                        }
+
+                    },
+                    complete: function () {
+                        console.log("complete!");
+                    }
+                });
+
+                console.log('aaa');
+
+            }
+            else{
+                alert("작성자와 일치하지 않습니다.");
+            }
+        }}
     </script>
     <script th:include="include/script::script"/>
 </body>

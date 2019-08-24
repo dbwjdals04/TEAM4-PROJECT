@@ -50,7 +50,7 @@ public class BoardController {
         return "board/insert_after";
     }
 
-    @GetMapping("/board/reply/{qna_no}")
+    @PostMapping("/board/reply/{qna_no}")
     public String replyInsert(Model model, @PathVariable int qna_no){
         model.addAttribute("board", this.boardService.selectBoard(qna_no));
         return "board/reply";
@@ -89,7 +89,7 @@ public class BoardController {
         return "board/delete_after";
     }
 
-    @GetMapping("/board/update/{qna_no}")
+    @PostMapping("/board/update/{qna_no}")
     public String boardUpdate(Model model, @PathVariable int qna_no){
         model.addAttribute("board", this.boardService.selectBoard(qna_no));
         return "board/update";

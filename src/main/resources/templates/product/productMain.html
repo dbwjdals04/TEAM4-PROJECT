@@ -34,7 +34,8 @@
 <div th:include="include/nav::nav"></div>
 <div style="height: 80px"></div>
 <!--카테고리 모던(전체보기, 가구 소품 조명)-->
-<table class="store">
+<div >
+<table style="margin: auto" class="store">
     <tr>
         <td class="store">
 
@@ -144,7 +145,7 @@
 <!--카테고리 antique(전체보기, 가구 소품 조명)-->
 
 <!--카테고리 따듯한(전체보기, 가구 소품 조명)-->
-<table>
+<table style="margin: auto">
     <tr>
         <td>
             <table>
@@ -154,7 +155,7 @@
     </tr>
 </table>
 
-
+</div>
 <script type="text/javascript"  th:inline="javascript">
     var product2 = /*[[${product}]]*/;
     var length = product2.length;
