@@ -4,6 +4,7 @@ import com.bit.academy.model.BoardPaging;
 import com.bit.academy.model.OptionVO;
 import com.bit.academy.model.ProductVO;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,7 @@ public interface ProductService {
      * 상품상세페이지조회
      */
     Map<String, Object> productDetail(Integer p_id);
+    Map<String, Object> poamount(Integer po_id);
     /**
      * 상품조회
      */
