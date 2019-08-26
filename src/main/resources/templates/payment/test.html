@@ -23,7 +23,7 @@
 <h5>주문 목록</h5>
 <div th:each ="productData: ${orderDataList.productData}">
     <div style="padding-top: 10px; border-top: 1px solid #d1d1d5"/>
-    <div style="float: left"><img style="width: 50%" th:src=|/uploads/thumbnail/${productData.thumb_100}|/> </div>
+    <div style="float: left"><img style="width: 50%; height: max-content;" th:src=|/uploads/thumbnail/${productData.thumb_100}|/> </div>
     <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" readonly="readonly" th:value="${productData.od_price}"/>원</div>
     <div><span>상품이름</span> <input style="border: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${productData.p_name}"/></div>
     <div style="float: right"><input style="width: 50px; border: none;" type="text" id="p_amount" readonly="readonly" th:value="${productData.od_amount}"/>개</div>
