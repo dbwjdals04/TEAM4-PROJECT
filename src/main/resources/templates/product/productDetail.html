@@ -81,11 +81,14 @@
                 },
                 success: function (data) {
                     console.log("success!");
-
+                    var po_stock = data.poamount[0].po_stock;
+                    console.log(po_stock);
+                    $("#cart_amount").empty();
+                    for(i=1; i<=po_stock; i++){
+                    $("#cart_amount").append("<option value="+i+">"+i+"</option>");}
                 },
                 complete: function () {
                     console.log("complete!");
-                    console.log(/*[[${kkk}]]*/);
                 }
             });
         });

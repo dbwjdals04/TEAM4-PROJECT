@@ -6,49 +6,50 @@
 <body>
 <div th:include="include/nav::nav"></div>
 <div style="height: 80px"></div>
-<h1>Payment</h1>
 
-<form name="paymentForm" id="paymentForm">
-    <h2>상품 정보</h2>
+
+<form name="paymentForm" id="paymentForm" style="width: 600px; margin: auto">
+    <h1>주문페이지</h1>
+    <h5>상품 정보</h5>
     <div style="height: 121px; padding-top: 20px; border-top: 1px solid #d1d1d5">
-        <div style="float: left"><img th:src="'/uploads/thumbnail/'+${map.product.thumb_100}"/></div>
-
-        <div><span>상품이름</span> <input style="border: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${map.product.p_name}"/></div>
-        <div><span>옵션이름</span> <input style="border: none;" type="text" id="po_name" name="po_name" readonly="readonly" th:value="${map.option.po_value}"/></div>
-        <div><span>선택수량</span> <input style="border: none;" type="text" id="p_amount" name="p_amount" readonly="readonly" th:value="${map.cart_amount}"/></div>
-
+        <div style="float: left; margin-right: 10px"><img th:src="'/uploads/thumbnail/'+${map.product.thumb_100}"/></div>
+        <div><span>상품이름</span> <input style="border: none;outline: none;" type="text" id="p_name" name="p_name" readonly="readonly" th:value="${map.product.p_name}"/></div>
+        <div style="float: right"><input style="width: 50px; border: none; outline: none;" type="text" id="p_amount" name="p_amount" readonly="readonly" th:value="${map.cart_amount}"/>개</div>
+        <div style="font-size: 14px; color: #6e707e"><span>옵션이름</span> <input style="border: none; color: #6e707e; outline: none;" type="text" id="po_name" name="po_value" readonly="readonly" th:value="${map.option.po_value}"/></div>
+        <div><span>상품 가격 : </span> <input class="money" style="border: none; outline: none;" type="text" id="p_price" name="p_price" readonly="readonly" th:value="${map.product.p_price}"/></div>
+        <div style="font-size: 14px; color: #6e707e"><span>옵션 가격 : </span> <input class="money" style="border: none; color: #6e707e; outline: none;" type="text" id="po_price" name="po_price" readonly="readonly" th:value="${map.option.po_price}"/></div>
     </div>
-    <h2>구매자정보</h2>
-    <div><span>회원이름</span> <input type="text" name="m_name" id="m_name" th:value="${map.member.m_name}"/></div>
-    <div><span>이메일</span> <input type="text" name="m_id" id="m_id"
-                                th:value="${map.member.m_id}" /></div>
-    <div><span>휴대폰번호</span> <input type="text" name="m_phone" id="m_phone"
-                                th:value="${map.member.m_phone}" /></div>
+    <div style="background-color: #cfcfd6; margin-top: 10px; margin-bottom: 20px">
+        <div style="width: 360px; margin: auto">
+            <div><span>총 상품 금액 : </span><input class="money" readonly="readonly" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="${map.product.p_price*map.cart_amount}"></div>
+            <div><span>배 송 비 : </span><input class="money" readonly="readonly" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="2500"></div>
+            <div><span>결제 금액 : </span><input class="money" readonly="readonly" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="${map.product.p_price*map.cart_amount}+2500"></div>
+            <input type="hidden" th:value="${sumpay}+2500" name="o_price"/>
+        </div>
+    </div>
 
-    <h2>받는사람</h2>
-    <div><span>회원이름</span> <input type="text" name="m_name"  th:value="${map.member.m_name}"/></div>
-    <div><span>이메일</span> <input type="text" name="m_id"
-                                 th:value="${map.member.m_id}" /></div>
-    <div><span>휴대폰번호</span> <input type="text" name="m_phone"
-                                   th:value="${map.member.m_phone}" /></div>
+    <h5>구매자 정보</h5>
+    <div style="height: 121px; padding-top: 20px; border-top: 1px solid #d1d1d5">
+        <div style="display: none"><span>회원no</span> <input style="border: none; outline: none;" type="text" name="m_no" id="m_no" readonly="readonly" th:value="${map.member.m_no}"/></div>
+        <div><span>회원 이름 : </span> <input style="border: none; outline: none;" type="text" name="m_name" readonly="readonly" th:value="${map.member.m_name}"/></div>
+        <div><span>이 메 일 : </span> <input style="width: 300px; border: none; outline: none;" type="text" name="m_id" readonly="readonly" th:value="${map.member.m_id}"/></div>
+        <div><span>휴대 전화 : </span> <input class="phone" style="border: none; outline: none;" type="text" name="m_phone" readonly="readonly" th:value="${map.member.m_phone}"/></div>
+    </div>
 
-    <input type="text" id="sample4_postcode" placeholder="우편번호">
-    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-    <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-    <span id="guide" style="color:#999;display:none"></span>
-    <input type="text" id="sample4_detailAddress" placeholder="상세주소">
-    <input type="text" id="sample4_extraAddress" placeholder="참고항목">
-
-
-    <h2>결제정보</h2>
-
-    <div><span>상품가격</span> <input type="text" id="p_price" name="p_price"  th:value="${map.product.p_price}"/></div>
-    <div><span>선택수량</span> <input type="text" id="p_amount" name="p_amount"  th:value="${map.cart_amount}"/></div>
-    <div><span>옵션이름</span> <input type="text" id="po_name" name="po_name"  th:value="${map.option.po_value}"/></div>
-    <div><span>옵션가격</span> <input type="text" id="po_price" name="po_price"  th:value="${map.option.po_price}"/></div>
-    <input type="hidden" id="amount" name="amount"  th:value="(${map.product.p_price}*${map.cart_amount})+${map.option.po_price}"/></div>
-    <br>
-    <div >총 결제금액 :<sapn th:text="${total}" th:with="total=(${map.product.p_price}*${map.cart_amount})+${map.option.po_price}"></sapn></div>
+    <h5>배송지 정보</h5>
+    <div style="height: 180px; padding-top: 20px; border-top: 1px solid #d1d1d5">
+        <div><span>수령인</span> <input style="margin: 3px" type="text" id="o_name" name="m_name"/></div>
+        <div><span>연락처</span> <input style="margin: 3px" type="text" id="o_number" name="m_phone"/></div>
+        <!--            <div><span>주문자이름</span> <input style="border: none;" type="text" id="m_name" name="m_name" readonly="readonly" th:value="${list[0].m_name}"/></div>-->
+        <!--            <div><span>회원이름</span> <input style="border: none;" type="text" id="m_id" name="m_id"  readonly="readonly" th:value="${list[0].m_id}"/></div>-->
+        <!--            <div><span>회원이름</span> <input style="border: none;" type="text" id="m_phone" name="m_phone"  readonly="readonly" th:value="${list[0].m_phone}"/></div>-->
+        <div><input type="text" id="sample4_postcode" name="o_postcode" placeholder="우편번호">
+            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+            <input type="text" id="sample4_roadAddress" name="o_roadAddress" placeholder="도로명주소">
+            <span id="guide" style="color:#999;display:none"></span>
+            <input type="text" id="sample4_detailAddress" name="o_detailAddress" placeholder="상세주소"></div>
+    </div>
+    <input type="hidden" id="amount" name="amount"  th:value="(${map.product.p_price}*${map.cart_amount})+${map.option.po_price}+2500"/></div>
 
 
     <table>
@@ -68,8 +69,6 @@
         </tr>
         </tbody>
     </table>
-    <span>/*[[${merchant_uid}]]*/</span>
-
     <input type="button" value="Payment" onclick="payment();"/>
 </form>
 

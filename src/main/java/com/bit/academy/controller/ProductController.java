@@ -128,13 +128,13 @@ public class ProductController {
 
     }
 
+    @ResponseBody
     @GetMapping("/product/Detail/poamount/{po_id}")
-    public String poamount(Model model, @PathVariable Integer po_id){
+    public Map<String ,Object> poamount(Model model, @PathVariable Integer po_id){
         Map<String, Object> map = new HashMap<>();
         map = this.productService.poamount(po_id);
         log.debug(String.valueOf(map));
-        model.addAttribute("kkk",map);
-        return "product/productDetail";
+        return map;
     }
 
     @PostMapping("/admin/product/modify")
