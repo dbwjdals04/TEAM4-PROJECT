@@ -27,7 +27,7 @@ public interface PaymentService {
      * @param list
      */
     void goCart(List list);
-    int cartOverlap(int p_id, int m_no);
+    int cartOverlap(int po_id, int m_no);
 
 
     void deleteCart(int cart_no);

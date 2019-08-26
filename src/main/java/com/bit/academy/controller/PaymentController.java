@@ -69,13 +69,13 @@ public class PaymentController {
     public Integer goCart(@RequestParam("cart[]") List cart){
         int result = 3;
 
-        int p_id = Integer.parseInt((String) cart.get(2));
-        log.debug(String.valueOf(p_id));
+        int po_id = Integer.parseInt((String) cart.get(0));
+        log.debug(String.valueOf(po_id));
         int m_no = Integer.parseInt((String) cart.get(3));
         log.debug(String.valueOf(m_no));
 
         log.debug("장바구니요청!!!!!!!!!!!!!!");
-        if(this.paymentService.cartOverlap(p_id,m_no)==1){
+        if(this.paymentService.cartOverlap(po_id,m_no)==1){
             this.paymentService.goCart(cart);
             result = 1;
         }
