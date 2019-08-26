@@ -103,6 +103,12 @@
         WHERE p_id = ${p_id};
     </select>
 
+    <select id = "productOptionAmount" parameterType="Integer" resultType="com.bit.academy.model.OptionVO">
+        SELECT *
+        FROM product_option
+        WHERE po_id = ${po_id};
+    </select>
+
     <select id ="productAmount" parameterType="Integer" resultType="com.bit.academy.model.CartVO">
         SELECT cart_amount
         FROM  cart
@@ -116,6 +122,7 @@
         category_product c on p.p_id = c.p_id
         WHERE p.p_id = ${p_id};
     </select>
+
 
     <select id="selectOption" parameterType="Integer" resultType="com.bit.academy.model.OptionVO">
         SELECT *

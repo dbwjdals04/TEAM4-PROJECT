@@ -41,7 +41,7 @@
         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
     }
 
-    // 콤마 찍기
+    // 하이픈 찍기
     function hyphen(str) {
         str = String(str);
         return str.replace(/(\d)(?=(?:\d{4})+(?!\d))/g, '$1-');

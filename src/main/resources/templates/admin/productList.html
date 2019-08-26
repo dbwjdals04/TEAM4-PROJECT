@@ -20,17 +20,25 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <checkbox id = "category">
-                <input type="checkbox" th:value="1">모던-가구
-                <input type="checkbox" th:value="2">모던-조명
-                <input type="checkbox" th:value="3">모던-소품
-                <input type="checkbox" th:value="4">앤틱-가구
-                <input type="checkbox" th:value="5">앤틱-조명
-                <input type="checkbox" th:value="6">앤틱-소품
-                <input type="checkbox" th:value="7">따뜻한-가구
-                <input type="checkbox" th:value="8">따뜻한-조명
-                <input type="checkbox" th:value="9">따뜻한-소품
+                <table style="margin: 0 auto; border: 1px solid #3158c9; width: 800px; text-align: center; ">
+                    <tr>
+                        <td><input type="checkbox" th:value="1">모던-가구</td>
+                        <td><input type="checkbox" th:value="2">모던-조명</td>
+                        <td><input type="checkbox" th:value="3">모던-소품</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" th:value="4">앤틱-가구</td>
+                        <td><input type="checkbox" th:value="5">앤틱-조명</td>
+                        <td><input type="checkbox" th:value="6">앤틱-소품</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" th:value="7">따뜻한-가구</td>
+                        <td><input type="checkbox" th:value="8">따뜻한-조명</td>
+                        <td><input type="checkbox" th:value="9">따뜻한-소품</td>
+                    </tr>
+                </table>
             </checkbox>
-            <div id ="product-div">
+            <div id ="product-div" style="margin-top : 20px">
 
 
 
@@ -74,27 +82,62 @@
                                 <input type="file" id="thumbnail" name = "thumbnail" style="position: relative;bottom:0px;left: 0px;width:100%">
                             </div >
                             <div class = "col-md-8">
-
-                                제품명<input type="text" id="p_name" name="p_name"><br>
-                                카테고리
-                                <select id = "category_no" name = "category_no">
-                                    <option value="1">모던-가구</option>
-                                    <option value="2">모던-조명</option>
-                                    <option value="3">모던-소품</option>
-                                    <option value="4">앤틱-가구</option>
-                                    <option value="5">앤틱-조명</option>
-                                    <option value="6">앤틱-소품</option>
-                                    <option value="7">따뜻한-가구</option>
-                                    <option value="8">따뜻한-조명</option>
-                                    <option value="9">따뜻한-소품</option>
-                                </select>
-                                <br>
-                                가격<input type="text" id="p_price" name="p_price"><br>
-                                제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>
-                                기본 설명<input type="text" id="p_spec" name="p_spec"><br>
+                                <table>
+                                    <tr>
+                                        <td>제품명</td>
+                                        <td><input type="text" id="p_name" name="p_name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>카테고리</td>
+                                        <td><select id = "category_no" name = "category_no">
+                                            <option value="1">모던-가구</option>
+                                            <option value="2">모던-조명</option>
+                                            <option value="3">모던-소품</option>
+                                            <option value="4">앤틱-가구</option>
+                                            <option value="5">앤틱-조명</option>
+                                            <option value="6">앤틱-소품</option>
+                                            <option value="7">따뜻한-가구</option>
+                                            <option value="8">따뜻한-조명</option>
+                                            <option value="9">따뜻한-소품</option>
+                                        </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>가격</td>
+                                        <td><input type="text" id="p_price" name="p_price"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>제품 브랜드</td>
+                                        <td><input type="text" id="p_brand" name="p_brand"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>기본 설명</td>
+                                        <td><input type="text" id="p_spec" name="p_spec"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>옵션</td>
+                                        <td><input type="button"  onclick="addOption();" value="옵션 추가", id="option-button"></td>
+                                    </tr>
+                                </table>
+<!--                                제품명<input type="text" id="p_name" name="p_name"><br>-->
+<!--                                카테고리-->
+<!--                                <select id = "category_no" name = "category_no">-->
+<!--                                    <option value="1">모던-가구</option>-->
+<!--                                    <option value="2">모던-조명</option>-->
+<!--                                    <option value="3">모던-소품</option>-->
+<!--                                    <option value="4">앤틱-가구</option>-->
+<!--                                    <option value="5">앤틱-조명</option>-->
+<!--                                    <option value="6">앤틱-소품</option>-->
+<!--                                    <option value="7">따뜻한-가구</option>-->
+<!--                                    <option value="8">따뜻한-조명</option>-->
+<!--                                    <option value="9">따뜻한-소품</option>-->
+<!--                                </select>-->
+<!--                                <br>-->
+<!--                                가격<input type="text" id="p_price" name="p_price"><br>-->
+<!--                                제품 브랜드<input type="text" id="p_brand" name="p_brand"><br>-->
+<!--                                기본 설명<input type="text" id="p_spec" name="p_spec"><br>-->
 
                                 <div id="option">
-                                    옵션<input type="button"  onclick="addOption();" value="옵션 추가", id="option-button">
+<!--                                    옵션<input type="button"  onclick="addOption();" value="옵션 추가", id="option-button">-->
 
                                     <div id="option-content" >
                                     </div>

@@ -32,7 +32,7 @@
         SELECT *
         FROM  cart
         WHERE m_no = ${m_no}
-        AND p_id =${p_id}
+        AND po_id =${po_id}
     </select>
     <insert id = "goCart">
         INSERT INTO cart (po_id, cart_amount, p_id, m_no)

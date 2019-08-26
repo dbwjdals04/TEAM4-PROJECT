@@ -38,9 +38,9 @@
 <!--                <div><span>총 상품 금액</span><span style="float: right" th:text="${sumpay}"></span></div>-->
 <!--                <div><span>배송비</span><span style="float: right" th:text="2500"></span></div>-->
 <!--                <div><span>결제 금액</span><span style="float: right" th:text="${sumpay}+2500"></span></div>-->
-                <div><span>총 상품 금액 : </span><input class="money" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="${sumpay}"></div>
-                <div><span>배 송 비 : </span><input class="money" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="2500"></div>
-                <div><span>결제 금액 : </span><input class="money" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="${sumpay}+2500"></div>
+                <div><span>총 상품 금액 : </span><input class="money" readonly="readonly" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="${sumpay}"></div>
+                <div><span>배 송 비 : </span><input class="money" readonly="readonly" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="2500"></div>
+                <div><span>결제 금액 : </span><input class="money" readonly="readonly" style="text-align: right; background-color: #cfcfd6; height: 24px; float: right;border: none;outline: none;" th:value="${sumpay}+2500"></div>
                 <input type="hidden" id="amount" th:value="${sumpay}+2500" name="o_price"/>
             </div>
         </div>
@@ -89,6 +89,14 @@
 
     <input type="button" value="Payment" onclick="payment();"/>
     <input type="button" value="test" onclick="test();"/>
+<script type="text/javascript" th:inline="javascript">
+    var test = function(){
+        $("#cartForm").attr('method', 'post')
+            .attr('action', '/order')
+            .submit();
+    }
+
+</script>
 
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>

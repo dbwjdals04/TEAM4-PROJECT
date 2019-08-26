@@ -76,9 +76,9 @@
 </nav>
 
 
-<div style="margin-top: 150px;">
-<input type = "button" value = "내 정보조회" onclick="myInfo()" style="width: 300px;"/>
-<input type = "button" value = "주문조회" onclick = "myOrder()" style="width: 300px;"/>
+<div style="margin-top: 150px;padding-left: 10px; margin-bottom: 10px">
+<input type = "button" value = "내 정보조회" onclick="myInfo()" style="width: 49%;"/>
+<input type = "button" value = "주문조회" onclick = "myOrder()" style="width: 49%;"/>
 </div>
 
 
@@ -97,11 +97,10 @@
 
         <tbody>
 
-
         <tr th:each="order:${myOrderData}" onclick="selectOrder(this);" th:attr="data-o_no=${order.o_no}">
-            <td class="left" th:text="${order.o_no}" >주문번호</td>
-            <td class="left" th:text="${order.o_date}" >주문 날짜</td>
-            <td class="left" th:text="${order.o_price}" >가격</td>
+            <td th:text="${order.o_no}" >주문번호</td>
+            <td th:text="${#dates.format(order.o_date,'YYYY-MM-dd HH:mm')}" >주문 날짜</td>
+            <td th:text="${order.o_price}" >가격</td>
 <!--            <td class="left" th:text="${order.od_amount}" >수량</td>-->
 <!--            <td class="left" th:text="${order.od_price}">상품금액</td>-->
 <!--            <td class="left" th:text="${order.o_cancel}">상태</td>-->
@@ -141,12 +140,10 @@
     <div id="checkPhone" style="padding-top: 20px"></div>
 </div>
     <input type = "button" class= "logbtn" value = "회원 정보 수정" onclick="insert();"/>
-
+</div>
 </form>
 
-
-
-<div style="text-align: center; width:100%;">
+<div id="page" style="text-align: center; width:100%; display: none">
     <table>
         <tr>
             <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
@@ -170,7 +167,7 @@
 
 <div id = "OrderModal" class="modal" style="display: none;">
 
-    <div class="modal-content">
+    <div class="modal-content" style="width: 80%; margin: auto; margin-top: 50px">
         <span class="close col-md-1" onclick="document.getElementById('OrderModal').style.display='none'">&times;</span>
         <div style="height: 300px; overflow: scroll;">
             <table class="table table-bordered table-hover text-center">
@@ -263,6 +260,8 @@
     var myInfo = function(){
         $('#myOrder')
             .attr('style','display:none');
+        $('#page')
+            .attr('style','display:none');
         $('#myPage')
             .attr('style','display:block');
    }
@@ -270,6 +269,8 @@
    var myOrder = function(){
         $('#myOrder')
             .attr('style','display:block');
+       $('#page')
+           .attr('style','display:block');
         $("#myPage")
             .attr('style','display:none');
    }

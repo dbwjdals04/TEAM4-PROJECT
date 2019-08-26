@@ -53,13 +53,13 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public int cartOverlap(int p_id, int m_no) {
+    public int cartOverlap(int po_id, int m_no) {
         int result = 3;
-        log.debug(String.valueOf(this.paymentMapper.cartOverlap(p_id,m_no)));
-        if(this.paymentMapper.cartOverlap(p_id,m_no)==null){
+        log.debug(String.valueOf(this.paymentMapper.cartOverlap(po_id,m_no)));
+        if(this.paymentMapper.cartOverlap(po_id,m_no)==null){
                 result =1;
         }
-        else if(this.paymentMapper.cartOverlap(p_id,m_no)!=null){
+        else if(this.paymentMapper.cartOverlap(po_id,m_no)!=null){
                 result =0;
         }
         log.debug("Service:" + result);

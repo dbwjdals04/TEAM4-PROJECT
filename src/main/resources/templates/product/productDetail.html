@@ -34,13 +34,13 @@
                 <div class="col col-10">
                     <label class="select">
                         <select class="select" name="option" id="po_id">
-                            <option th:each="option : ${map.option}" th:value="${option.po_id}" th:text="${option.po_value} + '  : + ' + ${option.po_price}
+                            <option class="option" th:each="option : ${map.option}" th:value="${option.po_id}" th:text="${option.po_value} + '  : + ' + ${option.po_price}
                                     +'   재고량=   '+${option.po_stock}">
                             </option>
                         </select>
                         <select class="form-control select-checkbox" id="cart_amount" multiple="multiple">
-                            <th:block th:each="option : ${map.option}">
-                                <option th:each="i : ${#numbers.sequence(1,option.po_stock)}" th:value="${i}" th:text="${i}" th:selected="${i==1}">
+                            <th:block th:each="option : ${map.option[0]}">
+                                <option th:each="i : ${#numbers.sequence(1,option.po_stock)}" th:value="${i}" th:text="${i}" th:selected="${i==1}"></option>
                             </th:block>
                         </select>
                     </label>
@@ -67,6 +67,31 @@
     var a = /*[[${map.product}]]*/;
     console.log(a.p_id);
 
+    $(document).ready(function(){
+        $("#po_id").on("change", function(){
+            var po_id =$(this).val();
+            console.log($(this).val());
+            $.ajax({
+                type: 'get',
+                url: '/product/Detail/poamount/'+po_id,
+                data: 'json',
+                error: function (error) {
+                    console.error("Error!");
+                },
+                success: function (data) {
+                    console.log("success!");
+                    var po_stock = data.poamount[0].po_stock;
+                    console.log(po_stock);
+                    $("#cart_amount").empty();
+                    for(i=1; i<=po_stock; i++){
+                    $("#cart_amount").append("<option value="+i+">"+i+"</option>");}
+                },
+                complete: function () {
+                    console.log("complete!");
+                }
+            });
+        });
+    });
 
     var buy = function(obj){
         if(cam!=null) {

@@ -97,8 +97,15 @@ public class ProductServiceImpl implements ProductService {
         map.put("option", this.productMapper.productOption(p_id));
         map.put("amount", this.productMapper.productAmount(p_id));
         return map;
-
     }
+    @Override
+    public Map<String, Object> poamount(Integer po_id){
+        Map<String, Object> map = new HashMap<>();
+        map.put("poamount", this.productMapper.productOptionAmount(po_id));
+        return map;
+    }
+
+
 
     //상품 조회
     @Override
