@@ -128,6 +128,15 @@ public class ProductController {
 
     }
 
+    @ResponseBody
+    @GetMapping("/product/Detail/poamount/{po_id}")
+    public Map<String ,Object> poamount(Model model, @PathVariable Integer po_id){
+        Map<String, Object> map = new HashMap<>();
+        map = this.productService.poamount(po_id);
+        log.debug(String.valueOf(map));
+        return map;
+    }
+
     @PostMapping("/admin/product/modify")
     public String productModify(@ModelAttribute ProductVO productVO, @ModelAttribute OptionVO optionVO, @RequestParam("category_no") Integer category_no,
                                 @RequestParam("thumbnail") MultipartFile thumbnail, @RequestParam("detailImg") MultipartFile imageFile) throws Exception {

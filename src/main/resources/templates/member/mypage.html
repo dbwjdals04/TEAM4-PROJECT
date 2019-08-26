@@ -76,9 +76,9 @@
 </nav>
 
 
-<div style="margin-top: 150px;">
-<input type = "button" value = "내 정보조회" onclick="myInfo()" style="width: 300px;"/>
-<input type = "button" value = "주문조회" onclick = "myOrder()" style="width: 300px;"/>
+<div style="margin-top: 150px;padding-left: 10px; margin-bottom: 10px">
+<input type = "button" value = "내 정보조회" onclick="myInfo()" style="width: 49%;"/>
+<input type = "button" value = "주문조회" onclick = "myOrder()" style="width: 49%;"/>
 </div>
 
 
@@ -97,11 +97,10 @@
 
         <tbody>
 
-
         <tr th:each="order:${myOrderData}" onclick="selectOrder(this);" th:attr="data-o_no=${order.o_no}">
-            <td class="left" th:text="${order.o_no}" >주문번호</td>
-            <td class="left" th:text="${order.o_date}" >주문 날짜</td>
-            <td class="left" th:text="${order.o_price}" >가격</td>
+            <td th:text="${order.o_no}" >주문번호</td>
+            <td th:text="${#dates.format(order.o_date,'YYYY-MM-dd HH:mm')}" >주문 날짜</td>
+            <td th:text="${order.o_price}" >가격</td>
 <!--            <td class="left" th:text="${order.od_amount}" >수량</td>-->
 <!--            <td class="left" th:text="${order.od_price}">상품금액</td>-->
 <!--            <td class="left" th:text="${order.o_cancel}">상태</td>-->
@@ -117,34 +116,25 @@
 
 <form name = "myPage" id = "myPage"
       class ="myPage" method="post" style = "width:600px; display: none"  >
+<div style="width: 400px; margin: auto">
+    <h3 style="text-align: center">내 정보 조회</h3>
 
-    <h1>내정보조회</h1>
-
-    <div class ="mp"><input type = "text" name = "m_name" id ="m_name" readonly="readonly" th:value="${member.m_name}"/>
-        <span>Username</span></div>
+    <div class ="mp"><span>이 름 : </span><input type = "text" name = "m_name" id ="m_name" readonly="readonly" th:value="${member.m_name}"/></div>
     <div id="checkName"></div>
 
-    <div class ="mp"><input type="text" name ="m_id" id="m_id" readonly="readonly" th:value="${member.m_id}" />
-        <span>ID</span></div>
+    <div class ="mp"><span>이메일 : </span><input type="text" name ="m_id" id="m_id" readonly="readonly" th:value="${member.m_id}" /></div>
 
-    <div class ="txtb"><input type="password" name ="m_password" id="m_password"/>
-        <span data-placeholder="Password"></span></div>
+    <div class ="txtb"><span style="width: 100px">비밀번호 : </span><input type="password" name ="m_password" id="m_password"/></div>
     <div id =checkPassword></div>
-
-
-    <div class ="txtb"><input type="password" id="PwCheck"/>
-        <span data-placeholder="Password check"></span></div>
+    <div class ="txtb"><span>비밀번호확인 : </span><input type="password" id="PwCheck"/></div>
     <div id="checkPwd"></div>
-
-    <div class ="mp"><input type="text" name ="m_phone" id="m_phone" th:value="${member.m_phone}"/>
-        <span>Phone number</span></div>
+    <div class ="mp"><span>전화번호 : </span><input type="text" name ="m_phone" id="m_phone" th:value="${member.m_phone}"/></div>
     <div id="checkPhone"></div>
-
     <input type = "button" class= "logbtn" value = "회원 정보 수정" onclick="insert();"/>
-
+</div>
 </form>
 
-<div style="text-align: center; width:100%;">
+<div id="page" style="text-align: center; width:100%; display: none">
     <table>
         <tr>
             <td style="text-align:center;"><a class="pagebtn blue" href="#" onclick="goPage(this);" th:attr="data-page=${boardPaging.beginPage}">&lt;&lt;</a></td> <!-- 첫페이지 -->
@@ -168,7 +158,7 @@
 
 <div id = "OrderModal" class="modal" style="display: none;">
 
-    <div class="modal-content">
+    <div class="modal-content" style="width: 80%; margin: auto; margin-top: 50px">
         <span class="close col-md-1" onclick="document.getElementById('OrderModal').style.display='none'">&times;</span>
         <div style="height: 300px; overflow: scroll;">
             <table class="table table-bordered table-hover text-center">
@@ -261,6 +251,8 @@
     var myInfo = function(){
         $('#myOrder')
             .attr('style','display:none');
+        $('#page')
+            .attr('style','display:none');
         $('#myPage')
             .attr('style','display:block');
    }
@@ -268,6 +260,8 @@
    var myOrder = function(){
         $('#myOrder')
             .attr('style','display:block');
+       $('#page')
+           .attr('style','display:block');
         $("#myPage")
             .attr('style','display:none');
    }

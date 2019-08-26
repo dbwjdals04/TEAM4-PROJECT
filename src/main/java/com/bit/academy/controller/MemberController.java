@@ -95,6 +95,10 @@ public class MemberController {
     public String index(){
         return "admin/adminMain";
     }
+    @GetMapping("/admin/qnaSetting")
+    public String qna(){
+        return "admin/qnaSetting";
+    }
 
     // 회원가입 처리
 
