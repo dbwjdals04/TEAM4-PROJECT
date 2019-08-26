@@ -88,12 +88,14 @@
         ]]>
     </insert>
 
-
+<!--상품상세화면-->
     <select id ="productDetail" parameterType="Integer" resultType="com.bit.academy.model.ProductVO">
         SELECT *
         FROM product
         WHERE p_id = ${p_id};
     </select>
+
+
 
     <select id = "productOption" parameterType="Integer" resultType="com.bit.academy.model.OptionVO">
         SELECT *
