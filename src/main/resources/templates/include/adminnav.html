@@ -112,10 +112,18 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" onclick="goqnasetting()">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>게시판관리</span></a>
     </li>
+    <script type="text/javascript" th:inline="javascript">
+
+        var goqnasetting = function () {
+            $('#memberList').attr('method','get')
+                .attr('action', '/admin/qnaSetting')
+                .submit();
+        }
+    </script>
 
 
     <!-- Divider -->
