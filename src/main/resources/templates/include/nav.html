@@ -37,6 +37,11 @@
                             .attr('action','/member/mypage/'+memberk.m_no)
                             .submit();
                     }
+                    var productList = function () {
+                        $('#productList').attr('method','post')
+                            .attr('action', '/admin/productList')
+                            .submit();
+                    }
                     if(memberk!=null && memberk.m_no!=2){
                         document.write("<form style=\"margin: 0px\" name=\"cart\" id=\"cart\"><li class=\"nav-item\">\n" +
                             "            <a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick=\"gocart()\">CART</a>\n" +
@@ -57,7 +62,7 @@
                             "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
                             "            </li>");
                         document.write("<li class=\"nav-item\">\n" +
-                            "              <a class=\"nav-link js-scroll-trigger\" href=\"/admin/\">ADMIN PAGE</a>\n" +
+                            "              <form id=\"productList\"><a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick='productList();'>ADMIN PAGE</a></form>\n" +
                             "            </li>");
                     }
                     else{

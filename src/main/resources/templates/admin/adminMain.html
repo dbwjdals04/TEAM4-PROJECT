@@ -1,6 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/admin/includeHTML.js"></script>
+
+
+
+
+
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -12,199 +19,81 @@
 <body>
 <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" th:include="include/adminnav::adminnav">
-
-    </ul>
     <div id="content-wrapper" class="d-flex flex-column">
-    <div id="content">
+        <div id="content" style="padding:10px">
 
-        <div class="row">
+            <div class="row" id="test-div">
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Manage Membership</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">회원 관리</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Manage Product</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">상품 관리</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Manage Order</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">주문 관리</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Manage Q&A Board</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Q&A 게시판 관리</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <section class="page-section" id="services">
-            <select id = "search-select">
-                <option th:value="m_no">회원번호</option>
-                <option th:value="m_name">회원 성명</option>
-                <option th:value="m_phone">전화번호</option>
-            </select>
-
-            <input type="text" id="search" />
-
-            <input type="button" value="검색" onclick="searchMember();" />
-
-            <table>
-                <thead>
-                <tr>
-
-                    <td>회원번호</td>
-                    <td>성명</td>
-                    <td>아이디</td>
-                </tr>
-                </thead>
-
-
-                <tbody id = "table">
-
-                <tr th:each="member: ${memberList}" onclick="selectMember(this);" th:attr="data-m_no=${member.m_no}">
-                    <td><span th:text="${member.m_no}"></span></td>
-                    <td><span th:text="${member.m_name}"></span></a></td>
-                    <td><span th:text="${member.m_id}"></span></a></td>
-                </tr>
-
-                </tbody>
-            </table>
-            <div id = "memberModal" style="display: none" class = "w3-modal">
-                <div class="w3-modal-content w3-animate-opacity w3-card-4">
-                    <header class="w3-container w3-teal">
-        <span onclick="document.getElementById('memberModal').style.display='none'"
-              class="w3-button w3-display-topright">&times;</span>
-                        <h2>상세 회원 정보</h2>
-                    </header>
-                    <table>
-                        <thead>
-                        <tr>
-
-                            <td>회원번호</td>
-                            <td>성명</td>
-                            <td>아이디</td>
-                            <td>전화번호</td>
-                            <td>주소</td>
-                            <td>등록날짜</td>
-                        </tr>
-                        </thead>
-
-
-                        <tbody id = "modal-table">
-
-
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2019</span>
-                </div>
-            </div>
-        </footer>
     </div>
 </div>
-</div>
-
-
-<script type="text/javascript" th:inline="javascript">
-
-    // var test = function () {
-    //     $('#test').attr('method','post')
-    //         .attr('action', '/admin/productList')
-    //         .submit();
-    // }
-
-    var selectMember = function(obj){
-        var modal = document.getElementById("memberModal");
-        var m_no = $(obj).data('m_no');
-        if(m_no == undefined){
-            var m_no = obj.data.m_no;
-        }
-
-        console.log(m_no);
-
-        $.ajax({
-            url: '/admin/member/'+m_no,
-            type: 'get',
-            data: {
-                // data1:'abcd', data2:'bdee' // for test
-            },
-            dataType: 'json',
-            success : function(data) {
-                // 성공 시 동작
-                console.log('성공');
-                console.log(data);
-                $("#modal-table").empty();
-                $("#modal-table").append('<td>' + data.m_no + '</td>');
-                $("#modal-table").append('<td>' + data.m_name + '</td>');
-                $("#modal-table").append('<td>' + data.m_id + '</td>');
-                $("#modal-table").append('<td>' + data.m_phone + '</td>');
-                $("#modal-table").append('<td>' + data.m_address + '</td>');
-                $("#modal-table").append('<td>' + data.m_regdate + '</td>');
-
-                modal.style.display = "block";
-
-            },
-            error: function(error) {
-                // 실패 시 동작
-                console.error('실패');
-                console.error(error);
-            },
-            complete: function(response) {
-                // 성공하든 실패하든 항상 할 동작
-                console.log('수행 요청이 완료되었습니다.');
-            }
-        });
-    };
-
-    var searchMember = function(){
-
-        var option = $.trim(($("#search-select option:selected").val()));
-        var keyword = $.trim($("#search").val());
-        console.log(option);
-        location.href = '/admin/member/'+option + '/' + keyword;
-    };
-
-
-</script>
 </body>
 </html>

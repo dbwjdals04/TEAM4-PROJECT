@@ -291,8 +291,8 @@
                             $("#p_spec").val(data.p_spec);
                             $("#p_price").val(data.p_price);
                             $("#category_no").val(data.category_no);
-                            $(".select_thumbnail img").attr("src", "http://localhost/uploads/thumbnail/"+data.thumb_name);
-                            $(".select_detailImg img").attr("src", "http://localhost/uploads/detailImg/"+data.detailimg_name);
+                            $(".select_thumbnail img").attr("src", "/uploads/thumbnail/"+data.thumb_name);
+                            $(".select_detailImg img").attr("src", "/uploads/detailImg/"+data.detailimg_name);
                             data.option.forEach(function (value, index) {
                                 $("#option-content").append('<div class="row"><input type="text" name="OptionVOList['+index+'].po_value" value='+value.po_value+'> <input type="text" name="OptionVOList['+index+'].po_price" value='+value.po_price+'> <input type="text" name="OptionVOList['+index+'].po_stock" value='+value.po_stock+'></div>');
                             });
