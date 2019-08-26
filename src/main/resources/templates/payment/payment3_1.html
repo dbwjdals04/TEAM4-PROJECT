@@ -147,7 +147,17 @@
             }).open();
         }
     </script>
+<script type="text/javascript" th:inline="javascript">
+    var test = function(){
+        $("#cartForm").attr('method', 'post')
+            .attr('action', '/order')
+            .submit();
+    }
+
+</script>
     <script type="text/javascript" th:inline="javascript">
+
+
         var payment = function(){
             var IMP = window.IMP; // 생략해도 괜찮습니다.
             IMP.init("imp10150755"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
