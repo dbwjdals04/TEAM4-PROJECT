@@ -116,20 +116,29 @@
 
 <form name = "myPage" id = "myPage"
       class ="myPage" method="post" style = "width:600px; display: none"  >
-<div style="width: 400px; margin: auto">
-    <h3 style="text-align: center">내 정보 조회</h3>
-
-    <div class ="mp"><span>이 름 : </span><input type = "text" name = "m_name" id ="m_name" readonly="readonly" th:value="${member.m_name}"/></div>
+    <h1>내정보조회</h1>
+<div style="height: 321px; padding-top: 10px; border-top: 1px solid #d1d1d5">
+    <div style="padding-top: 20px">
+        <span>Username : </span><input style="border: none" type = "text" name = "m_name" id ="m_name" readonly="readonly" th:value="${member.m_name}"/>
+    </div>
     <div id="checkName"></div>
 
-    <div class ="mp"><span>이메일 : </span><input type="text" name ="m_id" id="m_id" readonly="readonly" th:value="${member.m_id}" /></div>
+    <div class ="mp" style="padding-top: 20px"><span>ID : </span><input style="border: none" type="text" name ="m_id" id="m_id" readonly="readonly" th:value="${member.m_id}" />
+    </div>
 
-    <div class ="txtb"><span style="width: 100px">비밀번호 : </span><input type="password" name ="m_password" id="m_password"/></div>
+    <div class ="txtb" style="padding-top: 20px"><span>비밀번호 : </span><input style="border: none" type="password" name ="m_password" id="m_password"/>
+        <span data-placeholder="Password"></span></div>
     <div id =checkPassword></div>
-    <div class ="txtb"><span>비밀번호확인 : </span><input type="password" id="PwCheck"/></div>
-    <div id="checkPwd"></div>
-    <div class ="mp"><span>전화번호 : </span><input type="text" name ="m_phone" id="m_phone" th:value="${member.m_phone}"/></div>
-    <div id="checkPhone"></div>
+
+
+    <div class ="txtb" style="padding-top: 20px"><span>비밀번호확인 : </span><input type="password" id="PwCheck"/>
+        <span data-placeholder="Password check"></span></div>
+    <div id="checkPwd" style="padding-top: 20px"></div>
+
+    <div class ="mp" style="padding-top: 20px">  <span>Phone number : </span><input type="text" name ="m_phone" id="m_phone" th:value="${member.m_phone}"/>
+    </div>
+    <div id="checkPhone" style="padding-top: 20px"></div>
+</div>
     <input type = "button" class= "logbtn" value = "회원 정보 수정" onclick="insert();"/>
 </div>
 </form>
