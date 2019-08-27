@@ -24,7 +24,7 @@
                 <script th:inline="javascript">
                     var memberk = /*[[${session.member}]]*/
 
-                        console.log("세션정보");
+                        console.log(memberk);
                     function gocart() {
                         $('#cart')
                             .attr('method', 'post')
@@ -62,7 +62,7 @@
                             "              <a class=\"nav-link js-scroll-trigger\" href=\"/member/logOut\" onclick='logOut()'>LOGOUT</a>\n" +
                             "            </li>");
                         document.write("<li class=\"nav-item\">\n" +
-                            "              <form id=\"productList\"><a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick='productList();'>ADMIN PAGE</a></form>\n" +
+                            "              <form style=\"margin: 0px\" id=\"productList\"><a class=\"nav-link js-scroll-trigger\" href=\"#\" onclick='productList();'>ADMIN PAGE</a></form>\n" +
                             "            </li>");
                     }
                     else{
